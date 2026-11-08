@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>KritZaar Uploader</title>
+<style>
+  :root{--bg:#111213;--card:#191a1c;--line:rgba(255,255,255,.09);--txt:#cae6d3;--mut:#808890;--acc:#5fe3be;--err:#ff6b81;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5;padding:20px 16px 60px;max-width:640px;margin:0 auto}
+  h1{font-size:20px;letter-spacing:2px;text-transform:uppercase;margin:6px 0 4px}
+  h1 span{color:var(--acc)}
+  p.sub{color:var(--mut);font-size:13px;margin-bottom:18px}
+  label.lbl{display:block;font-size:12px;color:var(--mut);margin:0 0 4px;letter-spacing:.5px}
+  input[type=password]{width:100%;background:#0e0f10;border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:11px 12px;font-size:16px;margin-bottom:14px}
+  input:focus{outline:none;border-color:var(--acc)}
+  .drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border:1.5px dashed rgba(95,227,190,.45);border-radius:14px;padding:28px 16px;background:rgba(95,227,190,.04);cursor:pointer;text-align:center}
+  .drop.over{background:rgba(95,227,190,.12)}
+  .drop strong{font-size:15px;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc)}
+  .drop small{color:var(--mut);font-size:12px}
+  input[type=file]{display:none}
+  .btn{background:var(--acc);color:#06110d;border:none;border-radius:8px;padding:9px 16px;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--acc);border:1px solid rgba(95,227,190,.5)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .bar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+  .item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px}
+  .item img{width:72px;height:72px;object-fit:cover;border-radius:8px;background:#0e0f10;flex-shrink:0}
+  .meta{min-width:0;flex:1}
+  .name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .size{font-size:12px;color:var(--mut)}
+  .size b{color:var(--acc);font-weight:600}
+  .status{font-size:12px;margin-top:2px;color:var(--mut)}
+  .status.err{color:var(--err)}
+  .link{display:flex;gap:6px;margin-top:6px}
+  .link input{flex:1;min-width:0;background:#0e0f10;border:1px solid var(--line);color:var(--txt);border-radius:8px;font-size:12px;padding:7px 8px}
+  .link button{white-space:nowrap;padding:7px 12px;font-size:12px}
+  .note{font-size:12px;color:var(--mut);margin-top:22px;border-top:1px solid var(--line);padding-top:14px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#1d2a25;border:1px solid rgba(95,227,190,.5);color:var(--txt);padding:9px 16px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+</style>
+</head>
+<body>
+  <h1>Krit<span>Zaar</span> Uploader</h1>
+  <p class="sub">Pick photos, get permanent fast links. Nothing is saved on this device.</p>
+
+  <label class="lbl" for="pw">Password</label>
+  <input type="password" id="pw" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type your upload password">
+
+  <label class="drop" id="drop" for="file">
+    <strong>Choose photos</strong>
+    <small>Tap here, or drop images on this page</small>
+  </label>
+  <input type="file" id="file" accept="image/*" multiple>
+
+  <div class="bar" id="bar" hidden>
+    <button class="btn" id="uploadBtn">Upload all</button>
+    <button class="btn ghost" id="copyAllBtn" disabled>Copy all links</button>
+    <button class="btn ghost" id="clearBtn">Clear</button>
+  </div>
+  <div id="list"></div>
+
+  <p class="note">Photos are shrunk to small WebP files in your browser, then saved to your images repo through your private upload service. Copy each link into the <code>image</code> field on your site. Close this page and everything is forgotten.</p>
+  <div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  // ── the only setting: the address of your Cloudflare Worker (set once, when you publish this page) ──
+  var WORKER_URL = 'https://YOUR-WORKER.YOUR-NAME.workers.dev';
+  var MAX_DIM = 1280, QUALITY = 0.82;
+
+  var $ = function(id){return document.getElementById(id);};
+  var items = [];
+
+  function toast(msg){ var t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(function(){t.classList.remove('show');},1800); }
+  function kb(n){ return n>1048576 ? (n/1048576).toFixed(2)+' MB' : Math.max(1,Math.round(n/1024))+' KB'; }
+  function slug(n){ return n.replace(/\.[^.]+$/,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40)||'photo'; }
+  function rand(){ return Math.random().toString(36).slice(2,6); }
+
+  async function compress(file){
+    var bmp;
+    try { bmp = await createImageBitmap(file, {imageOrientation:'from-image'}); }
+    catch(e){ bmp = await new Promise(function(res,rej){ var im=new Image(); im.onload=function(){res(im);}; im.onerror=rej; im.src=URL.createObjectURL(file); }); }
+    var w = bmp.width, h = bmp.height, sc = Math.min(1, MAX_DIM/Math.max(w,h));
+    var cw = Math.round(w*sc), ch = Math.round(h*sc);
+    var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+    cv.getContext('2d').drawImage(bmp,0,0,cw,ch);
+    if (bmp.close) bmp.close();
+    var blob = await new Promise(function(r){ cv.toBlob(r,'image/webp',QUALITY); });
+    var ext = 'webp';
+    if (!blob || blob.type !== 'image/webp'){ blob = await new Promise(function(r){ cv.toBlob(r,'image/jpeg',QUALITY); }); ext = 'jpg'; }
+    return {blob:blob, ext:ext, w:cw, h:ch};
+  }
+  function toBase64(blob){
+    return new Promise(function(res,rej){ var fr=new FileReader(); fr.onload=function(){res(String(fr.result).split(',')[1]);}; fr.onerror=rej; fr.readAsDataURL(blob); });
+  }
+
+  function render(){
+    var list = $('list'); list.innerHTML = '';
+    items.forEach(function(it){
+      var d = document.createElement('div'); d.className='item';
+      var img = document.createElement('img'); img.src = it.preview; img.alt='';
+      var m = document.createElement('div'); m.className='meta';
+      var nm = document.createElement('div'); nm.className='name'; nm.textContent = it.file.name;
+      var sz = document.createElement('div'); sz.className='size';
+      sz.innerHTML = it.out ? (kb(it.file.size)+' &rarr; <b>'+kb(it.out.blob.size)+'</b> ('+it.out.w+'&times;'+it.out.h+')') : kb(it.file.size);
+      var st = document.createElement('div'); st.className='status'+(it.err?' err':''); st.textContent = it.err || it.status;
+      m.appendChild(nm); m.appendChild(sz); m.appendChild(st);
+      if (it.url){
+        var lk = document.createElement('div'); lk.className='link';
+        var inp = document.createElement('input'); inp.type='text'; inp.readOnly=true; inp.value=it.url;
+        inp.addEventListener('focus',function(){inp.select();});
+        var cp = document.createElement('button'); cp.className='btn'; cp.textContent='Copy';
+        cp.addEventListener('click',function(){ copy(it.url); });
+        lk.appendChild(inp); lk.appendChild(cp); m.appendChild(lk);
+      }
+      d.appendChild(img); d.appendChild(m); list.appendChild(d);
+    });
+    $('bar').hidden = !items.length;
+    $('copyAllBtn').disabled = !items.some(function(i){return i.url;});
+  }
+  function copy(text){
+    var done = function(){ toast('Link copied'); };
+    function fallback(){ var t=document.createElement('textarea'); t.value=text; document.body.appendChild(t); t.select(); try{document.execCommand('copy'); done();}catch(e){toast('Press and hold the link to copy');} t.remove(); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+  }
+
+  async function addFiles(fl){
+    for (var i=0;i<fl.length;i++){
+      var f = fl[i];
+      if (!/^image\//.test(f.type)) continue;
+      var it = {file:f, preview:URL.createObjectURL(f), status:'Shrinking…', out:null, url:null, err:null};
+      items.push(it); render();
+      try { it.out = await compress(f); it.status = 'Ready to upload'; }
+      catch(e){ it.err = 'Could not read this image'; }
+      render();
+    }
+  }
+
+  async function uploadOne(it, password){
+    var name = slug(it.file.name) + '-' + rand() + '.' + it.out.ext;
+    it.status = 'Uploading…'; it.err = null; render();
+    var res, data = {};
+    try {
+      res = await fetch(WORKER_URL, {method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({password:password, name:name, content: await toBase64(it.out.blob)})});
+      data = await res.json().catch(function(){return {};});
+    } catch(e){ throw new Error('Could not reach the upload service. Check your internet.'); }
+    if (!res.ok) throw new Error(data.error || ('Upload failed ('+res.status+')'));
+    it.url = data.url; it.status = 'Uploaded';
+  }
+  async function uploadAll(){
+    var pw = $('pw').value;
+    if (!pw){ toast('Type your password first'); $('pw').focus(); return; }
+    $('uploadBtn').disabled = true;
+    for (var i=0;i<items.length;i++){
+      var it = items[i];
+      if (it.url || !it.out) continue;
+      try { await uploadOne(it, pw); }
+      catch(e){ it.err = e.message || 'Upload failed'; if (/password/i.test(it.err)) { render(); break; } }
+      render();
+    }
+    $('uploadBtn').disabled = false;
+    var n = items.filter(function(i){return i.url;}).length;
+    if (n) toast(n+' link'+(n>1?'s':'')+' ready');
+  }
+
+  $('file').addEventListener('change', function(e){ addFiles(e.target.files); e.target.value=''; });
+  $('uploadBtn').addEventListener('click', uploadAll);
+  $('copyAllBtn').addEventListener('click', function(){ copy(items.filter(function(i){return i.url;}).map(function(i){return i.url;}).join('\n')); });
+  $('clearBtn').addEventListener('click', function(){ items=[]; render(); });
+  var drop = $('drop');
+  ['dragenter','dragover'].forEach(function(ev){ document.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave','drop'].forEach(function(ev){ document.addEventListener(ev,function(e){ e.preventDefault(); drop.classList.remove('over'); }); });
+  document.addEventListener('drop', function(e){ if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files); });
+})();
+</script>
+</body>
+</html>
