@@ -39,7 +39,7 @@ export async function prepareDroppedFiles(files) {
     const f = list[0], e = ext(f.name);
     if (ARCHIVE_EXT.includes(e)) return f;
     if (UNSUPPORTED_ARCHIVES.includes(e)) throw err('This player cannot open ' + e + ' files. Extract it on your device and choose the files inside, or make a .zip of the game folder.');
-    if (!RUN_EXT.includes(e) && !IMAGE_EXT.includes(e)) throw err('That file type is not supported. Choose a ' + SUPPORTED_EXT.join(', ') + ' file.');
+    if (!RUN_EXT.includes(e) && !IMAGE_EXT.includes(e)) throw err('KritZaar could not recognise that file. It runs DOS games, NES, Game Boy / Color / Advance and Flash (.swf) files.');
   }
 
   const total = list.reduce((a, f) => a + f.size, 0);

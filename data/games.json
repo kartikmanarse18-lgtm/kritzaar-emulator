@@ -8,7 +8,9 @@
       "platform": "dos",
       "year": 1992,
       "developer": "Epic MegaGames",
-      "genres": ["platformer"],
+      "genres": [
+        "platformer"
+      ],
       "description": "A side-scrolling platformer trilogy from the early days of Epic MegaGames, the studio now known as Epic Games. All three episodes are offered free by the rights holder.",
       "editorial": [
         "Jill of the Jungle was one of the first hits for Epic MegaGames, a small shareware publisher that decades later became Epic Games. It was designed by Tim Sweeney and arrived in 1992, when shareware platformers were competing for attention on bulletin boards and floppy disks. The trilogy follows Jill, a jungle heroine who runs, jumps, and climbs through levels full of hazards, collecting keys and items to open the way forward.",
@@ -21,7 +23,10 @@
       "officialUrl": "https://www.gog.com/en/game/jill_of_the_jungle_the_complete_trilogy",
       "sourceName": "GOG (Epic Games)",
       "expectedFile": {
-        "extensions": [".zip", ".jsdos"],
+        "extensions": [
+          ".zip",
+          ".jsdos"
+        ],
         "approxSizeMB": 13
       },
       "instructions": [
@@ -30,13 +35,26 @@
         "Come back to KritZaar and drop that zip into the box. If KritZaar asks which program to start, pick the main game file once and it will be remembered."
       ],
       "controls": [
-        { "keys": "Arrow keys", "action": "Move and climb" },
-        { "keys": "In-game Controls menu", "action": "Shows the jump and action keys" }
+        {
+          "keys": "Arrow keys",
+          "action": "Move and climb"
+        },
+        {
+          "keys": "In-game Controls menu",
+          "action": "Shows the jump and action keys"
+        }
       ],
       "touchLayout": "dpad-2btn",
-      "emulator": { "type": "jsdos", "options": {} },
+      "emulator": {
+        "type": "jsdos",
+        "options": {}
+      },
       "status": "approved",
-      "addedAt": "2026-11-13"
+      "addedAt": "2026-11-13",
+      "compat": {
+        "status": "untested",
+        "notes": "Needs a test with the official GOG files before it can be marked tested."
+      }
     }
   ]
 }

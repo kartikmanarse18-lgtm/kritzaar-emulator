@@ -8,3 +8,9 @@
   X-Robots-Tag: noindex
 /emulator/vendor/*
   Cache-Control: public, max-age=31536000, immutable
+/originals/*
+  Cache-Control: no-cache
+/emulator/vendor/*.wasm
+  Content-Type: application/wasm
+/data/*
+  Cache-Control: no-cache

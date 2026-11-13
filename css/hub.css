@@ -1,0 +1,13 @@
+.kz-compat{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.75rem;font-weight:700;background:#2a2a40;color:#cfc8ee;white-space:nowrap}
+.kz-compat--verified{background:#12361f;color:#8ff0a4}.kz-compat--playable{background:#3a3412;color:#ffe27a}
+.kz-compat--issues{background:#40270f;color:#ffb36b}.kz-compat--broken{background:#40161a;color:#ff8a8f}
+.kz-hub{box-sizing:border-box;max-width:960px;margin:0 auto;padding:12px 16px}
+.kz-hub h2{margin:28px 0 4px;font-size:1.3rem}.kz-hub-lead{margin:0 0 12px;color:var(--kz-muted,#a5a3c2)}
+.kz-hub-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.kz-hub-card{display:flex;flex-direction:column;gap:6px;height:100%;box-sizing:border-box;padding:10px;border-radius:14px;background:var(--kz-surface,#191a2e);border:1px solid var(--kz-border,#2c2d4a)}
+.kz-hub-card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#000}
+.kz-hub-card h3{margin:2px 0 0;font-size:1.05rem}.kz-hub-card p{margin:0;font-size:.9rem;color:var(--kz-muted,#a5a3c2)}
+.kz-hub-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:auto}
+.kz-hub-open{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px;border-radius:14px;border:1px dashed var(--kz-border,#3a3b60);margin-top:18px}
+.kz-hub-open p{margin:0;flex:1 1 220px}
+.kz-legal-note{font-size:.85rem;color:var(--kz-muted,#a5a3c2);margin-top:10px}

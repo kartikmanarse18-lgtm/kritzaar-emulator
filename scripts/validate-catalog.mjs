@@ -8,6 +8,9 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LICENSES = ['freeware', 'shareware', 'open-source', 'homebrew', 'commercial-official'];
 const STATUSES = ['draft', 'approved', 'removed'];
 const LAYOUTS = ['dpad-2btn', 'dpad-4btn', 'mouse-pad'];
+// Third-party platforms and the engine each one must use (mirrors js/engines.js; native is for Originals only).
+const PLATFORM_ENGINE = { dos: 'jsdos', nes: 'emulatorjs', gb: 'emulatorjs', gbc: 'emulatorjs', gba: 'emulatorjs', flash: 'ruffle' };
+const COMPAT_STATUSES = ['verified', 'playable', 'issues', 'broken', 'untested'];
 const ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -32,7 +35,7 @@ for (const [i, g] of (catalog.games || []).entries()) {
   else if (seen.has(g.id)) err(w, 'duplicate id');
   else seen.add(g.id);
   if (!g.title) err(w, 'title is required');
-  if (g.platform !== 'dos') err(w, 'platform must be "dos" in v1');
+  if (!PLATFORM_ENGINE[g.platform]) err(w, `platform must be one of ${Object.keys(PLATFORM_ENGINE).join(', ')}`);
   if (!Number.isInteger(g.year) || g.year < 1970 || g.year > 2026) err(w, 'year must be a sensible integer');
   if (!g.developer) err(w, 'developer is required');
   if (!Array.isArray(g.genres) || !g.genres.length) err(w, 'genres must be a non-empty array');
@@ -68,7 +71,12 @@ for (const [i, g] of (catalog.games || []).entries()) {
 
   if (!Array.isArray(g.instructions) || !g.instructions.length) err(w, 'instructions must be a non-empty array');
   if (!Array.isArray(g.controls) || !g.controls.every((c) => c && c.keys && c.action)) err(w, 'controls must be an array of { keys, action }');
-  if (!g.emulator || g.emulator.type !== 'jsdos') err(w, 'emulator.type must be "jsdos"');
+  if (!g.emulator || g.emulator.type !== PLATFORM_ENGINE[g.platform]) err(w, `emulator.type must be "${PLATFORM_ENGINE[g.platform]}" for platform ${g.platform}`);
+  if (g.compat !== undefined) {
+    if (!g.compat || !COMPAT_STATUSES.includes(g.compat.status)) err(w, `compat.status must be one of ${COMPAT_STATUSES.join(', ')}`);
+    else if (g.compat.status !== 'untested' && !DATE_RE.test(g.compat.testedAt || '')) err(w, 'compat.testedAt (YYYY-MM-DD) is required once a game has been tested');
+    else if (g.compat.status !== 'untested' && !(Array.isArray(g.compat.browsers) && g.compat.browsers.length)) err(w, 'compat.browsers must list what it was tested on');
+  }
 }
 
 if (errors.length) {

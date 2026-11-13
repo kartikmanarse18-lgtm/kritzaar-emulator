@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/icons/icon-192.png">
+<title>KritZaar Originals: free browser games | KritZaar</title>
+<meta name="description" content="Games made by KritZaar. Play free in your browser, on phone or desktop, with local saves and offline play.">
+<meta name="theme-color" content="#7c5cff">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="/css/emulator-shared.css">
+<link rel="stylesheet" href="/css/hub.css">
+<style>body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}a{color:var(--kz-link,#b9a8ff)}</style>
+</head>
+<body>
+<div class="kz-hub">
+  <p><a href="/" style="font-weight:800;font-size:1.25rem;text-decoration:none;color:inherit">KritZaar</a></p>
+  <h1>KritZaar Originals</h1>
+  <p class="kz-hub-lead">Games we made ourselves. They are the only games KritZaar hosts. Your progress is saved on this device, backed up with My Games, and works offline once you have played.</p>
+  <main><div id="kz-originals"><noscript>Games need JavaScript.</noscript></div></main>
+  <p class="kz-legal-note">Everything here is © KritZaar: our own code and art, no third-party game files. <a href="/originals/LICENSE.txt">License</a> · <a href="/games/">All games</a> · <a href="/library/">My Games</a></p>
+</div>
+<script type="module">import { mountOriginals } from '/js/hub.js'; mountOriginals(document.getElementById('kz-originals'));</script>
+<script type="module">import { initPwa } from '/js/pwa-install.js'; initPwa();</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+KRITZAAR ORIGINALS: LICENSE AND OWNERSHIP
+
+Everything inside /originals/ (game code, art, sound generation, covers, text) was written for KritZaar
+and is © KritZaar. These are the only games KritZaar hosts and serves itself.
+
+Default terms (the site owner may replace this file with different terms):
+  - Players may play these games on KritZaar for free.
+  - Copying, re-hosting or selling them requires written permission from KritZaar.
+
+Nothing in this folder contains third-party game code, ROMs, images, music or fonts.
+Third-party games are never stored here. They are never hosted by KritZaar at all (see /legal/how-it-works.html).
+Emulator engines used for third-party games live in /emulator/vendor/ with their own licenses.

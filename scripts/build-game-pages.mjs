@@ -8,6 +8,8 @@ import { dirname, join } from 'node:path';
 
 // Public origin of the site, used for canonical URLs and the sitemap. Change if the domain differs.
 const SITE_ORIGIN = process.env.SITE_ORIGIN || 'https://emulator.kritzaar.online';
+const PLATFORM_LABEL = { dos: 'MS-DOS', nes: 'NES', gb: 'Game Boy', gbc: 'Game Boy Color', gba: 'Game Boy Advance', flash: 'Flash' };
+const COMPAT_LABEL = { verified: 'Tested: works', playable: 'Works, with notes', issues: 'Known issues', broken: 'Not working', untested: 'Not yet tested' };
 const MARKER = '<!-- Generated pages are made from this file';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -25,7 +27,7 @@ function render(g) {
     '@type': 'VideoGame',
     name: g.title,
     description: g.description,
-    gamePlatform: 'MS-DOS',
+    gamePlatform: PLATFORM_LABEL[g.platform] || g.platform,
     genre: g.genres,
     datePublished: String(g.year),
     author: { '@type': 'Organization', name: g.developer },
@@ -33,6 +35,8 @@ function render(g) {
     url,
   };
   const vars = {
+    platformLabel: PLATFORM_LABEL[g.platform] || g.platform,
+    compatLabel: esc(((g.compat && COMPAT_LABEL[g.compat.status]) || COMPAT_LABEL.untested) + (g.compat && g.compat.testedAt ? ' (' + g.compat.testedAt + ')' : '')),
     title: esc(g.title), year: g.year, description: esc(g.description), url, id: g.id,
     coverUrl: SITE_ORIGIN + g.cover, cover: esc(g.cover), coverCredit: esc(g.coverCredit),
     license: esc(g.license), developer: esc(g.developer), officialUrl: esc(g.officialUrl), sourceName: esc(g.sourceName),

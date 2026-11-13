@@ -3,12 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>KritZaar Games</title>
+<link rel="icon" href="/icons/icon-192.png">
+<title>KritZaar Games: play in your browser</title>
 <meta name="description" content="Browse classic PC games that are free or legally available, then play them in your browser. Your games stay on your device.">
 <meta name="theme-color" content="#7c5cff">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="/css/emulator-shared.css">
+<link rel="stylesheet" href="/css/hub.css">
 <style>
   body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
   .kz-home{box-sizing:border-box;max-width:720px;margin:0 auto;padding:20px 16px}
@@ -23,13 +25,17 @@
 <div class="kz-home">
   <div class="kz-home-brand">KritZaar</div>
   <main>
-    <h1>Play classic PC games in your browser</h1>
-    <p class="kz-home-lead">Find games that are free or legally available, get them from the official page, then play them here. KritZaar hosts no game files. Your games and saves stay on your device.</p>
+    <h1>Play games in your browser</h1>
+    <p class="kz-home-lead">Start with KritZaar's own games, one click and you are playing. Or bring a game you legally own (DOS, NES, Game Boy, Flash) and KritZaar works out the rest. Your games and saves stay on your device.</p>
     <div class="kz-home-actions">
-      <a class="kz-btn kz-btn--primary" href="/games/">Browse the catalog</a>
+      <a class="kz-btn kz-btn--primary" href="/games/">Browse games</a>
+      <a class="kz-btn" href="/emulator/index.html">Open a game file</a>
       <a class="kz-btn" href="/library/">My Games</a>
     </div>
     <div id="kz-continue" hidden></div>
+    <h2 style="margin:26px 0 8px;font-size:1.2rem">Play now</h2>
+    <div id="kz-originals"></div>
+    <section id="kz-arcade-section" hidden><h2 style="margin:26px 0 8px;font-size:1.2rem">Arcade</h2><div id="kz-arcade"></div></section>
   </main>
   <footer class="kz-home-footer">
     <a href="/legal/how-it-works.html">How it works</a>
@@ -41,6 +47,11 @@
 <script type="module">
 import { mountContinuePlaying } from '/js/continue-playing.js';
 mountContinuePlaying(document.getElementById('kz-continue'));
+</script>
+<script type="module">
+import { mountOriginals, mountArcade } from '/js/hub.js';
+mountOriginals(document.getElementById('kz-originals'));
+mountArcade(document.getElementById('kz-arcade-section'), document.getElementById('kz-arcade'));
 </script>
 <script type="module">import { initPwa } from '/js/pwa-install.js'; initPwa();</script>
 </body>

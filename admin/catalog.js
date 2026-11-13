@@ -10,7 +10,14 @@ const $ = (id) => document.getElementById(id);
 const state = { games: [], current: -1, domains: [], updatedAt: null };
 
 // ---------- validation ----------
-export function hostAllowed(host, domains) {
+export const PLATFORM_ENGINE = { dos: 'jsdos', nes: 'emulatorjs', gb: 'emulatorjs', gbc: 'emulatorjs', gba: 'emulatorjs', flash: 'ruffle' };
+const COMPAT_STATUSES = ['verified', 'playable', 'issues', 'broken', 'untested'];
+// Marking a game tested records today's date and the browser in use; the owner confirms the real test matrix in notes.
+function gameCompat(status) {
+  if (!status || status === 'untested') return { status: 'untested' };
+  return { status, testedAt: new Date().toISOString().slice(0, 10), browsers: [navigator.userAgent.replace(/\s*\(.*?\)\s*/g, ' ').trim().slice(0, 80)], notes: '' };
+}
+function hostAllowed(host, domains) {
   host = host.toLowerCase();
   return domains.some((d) => host === d || host.endsWith('.' + d));
 }
@@ -26,7 +33,7 @@ export function validateEntry(g, allGames, domains) {
   if (!STATUSES.includes(g.status)) e('Status must be draft, approved or removed.');
   if (g.status === 'removed') return { errors, warnings }; // tombstone: only id and status matter
   if (!g.title) e('Title is required.');
-  if (g.platform !== 'dos') e('Platform must be "dos" in v1.');
+  if (!PLATFORM_ENGINE[g.platform]) e('Platform must be one of: ' + Object.keys(PLATFORM_ENGINE).join(', ') + '.');
   if (!Number.isInteger(g.year)) e('Year must be a whole number.');
   if (!g.developer) e('Developer is required.');
   if (!Array.isArray(g.genres) || !g.genres.length) e('At least one genre is required.');
@@ -49,7 +56,12 @@ export function validateEntry(g, allGames, domains) {
   if (!Array.isArray(g.instructions) || !g.instructions.length) e('At least one instruction step is required.');
   if (!Array.isArray(g.controls) || !g.controls.length) e('At least one control is required.');
   if (!LAYOUTS.includes(g.touchLayout)) e('Touch layout is not an allowed value.');
-  if (!g.emulator || g.emulator.type !== 'jsdos') e('Emulator type must be jsdos.');
+  if (!g.emulator || g.emulator.type !== PLATFORM_ENGINE[g.platform]) e('Emulator type must be ' + PLATFORM_ENGINE[g.platform] + ' for platform ' + g.platform + '.');
+  if (g.compat !== undefined) {
+    if (!g.compat || !COMPAT_STATUSES.includes(g.compat.status)) e('compat.status must be one of: ' + COMPAT_STATUSES.join(', ') + '.');
+    else if (g.compat.status !== 'untested' && !/^\d{4}-\d{2}-\d{2}$/.test(g.compat.testedAt || '')) e('compat.testedAt (YYYY-MM-DD) is required once tested.');
+    else if (g.compat.status !== 'untested' && !(Array.isArray(g.compat.browsers) && g.compat.browsers.length)) e('compat.browsers must list what it was tested on.');
+  }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(g.addedAt || '')) e('Added at must be a date.');
   return { errors, warnings };
 }
@@ -66,7 +78,7 @@ function blank() {
     officialUrl: '', sourceName: '',
     expectedFile: { extensions: ['.zip'], approxSizeMB: 1, exeHint: '' },
     instructions: [], controls: [], touchLayout: 'dpad-2btn',
-    emulator: { type: 'jsdos', options: {} }, status: 'draft', addedAt: today(),
+    emulator: { type: 'jsdos', options: {} }, compat: { status: 'untested' }, status: 'draft', addedAt: today(),
   };
 }
 
@@ -88,14 +100,14 @@ function readForm() {
       const [keys, ...rest] = l.split('|');
       return { keys: keys.trim(), action: rest.join('|').trim() };
     }),
-    touchLayout: $('f-touch').value, emulator: { type: 'jsdos', options: {} },
+    touchLayout: $('f-touch').value, emulator: { type: PLATFORM_ENGINE[$('f-platform').value] || 'jsdos', options: {} }, compat: gameCompat($('f-compat').value),
     status: $('f-status').value, addedAt: $('f-addedAt').value,
   };
 }
 
 function fillForm(g) {
   const set = (id, v) => { $(id).value = v ?? ''; };
-  set('f-id', g.id); set('f-title', g.title); set('f-platform', g.platform); set('f-year', g.year);
+  set('f-id', g.id); set('f-title', g.title); set('f-platform', g.platform); set('f-compat', (g.compat && g.compat.status) || 'untested'); set('f-year', g.year);
   set('f-developer', g.developer); set('f-genres', (g.genres || []).join(', '));
   set('f-description', g.description); set('f-editorial', (g.editorial || []).join('\n\n'));
   set('f-cover', g.cover); set('f-coverCredit', g.coverCredit); set('f-license', g.license);

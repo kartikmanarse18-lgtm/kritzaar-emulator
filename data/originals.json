@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-13",
+  "note": "KritZaar Originals: first-party games, hosted by KritZaar. Third-party games live in games.json and are never hosted.",
+  "games": [
+    {
+      "id": "kz-lantern-run",
+      "title": "Lantern Run",
+      "genres": [
+        "runner",
+        "arcade"
+      ],
+      "module": "/originals/games/lantern-run.js",
+      "cover": "/originals/covers/kz-lantern-run.svg",
+      "tagline": "Carry a lantern through the night and reach dawn.",
+      "description": "A one-button night runner. Leap stones and pits, gather lanterns, and watch the sky brighten as you go.",
+      "controls": [
+        {
+          "keys": "Space, Up arrow, click or tap",
+          "action": "Jump (hold for a higher jump)"
+        },
+        {
+          "keys": "R",
+          "action": "Restart after a fall"
+        }
+      ],
+      "minutes": 3,
+      "touch": true,
+      "platform": "native",
+      "year": 2026,
+      "developer": "KritZaar",
+      "license": "original",
+      "status": "published",
+      "addedAt": "2026-11-13",
+      "emulator": {
+        "type": "native"
+      },
+      "rights": "© KritZaar. Original game, hosted and licensed by KritZaar. See /originals/LICENSE.txt.",
+      "compat": {
+        "status": "verified",
+        "testedAt": "2026-11-13",
+        "browsers": [
+          "Chromium (desktop, keyboard + mouse)",
+          "Chromium (390x780 touch emulation)"
+        ],
+        "notes": "Automated test: starts, responds to input, saves automatically, restores after reload, plays offline. Not yet checked on real iPhone/Android hardware."
+      }
+    },
+    {
+      "id": "kz-tidepool",
+      "title": "Tidepool",
+      "genres": [
+        "puzzle"
+      ],
+      "module": "/originals/games/tidepool.js",
+      "cover": "/originals/covers/kz-tidepool.svg",
+      "tagline": "Flood the whole pool with a single colour.",
+      "description": "A calm colour-flooding puzzle with a fresh pool every day. Every colour also has its own shape, so it is readable without telling colours apart.",
+      "controls": [
+        {
+          "keys": "1 to 6, or click / tap a colour",
+          "action": "Flood from the top-left corner"
+        },
+        {
+          "keys": "N",
+          "action": "New random pool"
+        }
+      ],
+      "minutes": 5,
+      "touch": true,
+      "platform": "native",
+      "year": 2026,
+      "developer": "KritZaar",
+      "license": "original",
+      "status": "published",
+      "addedAt": "2026-11-13",
+      "emulator": {
+        "type": "native"
+      },
+      "rights": "© KritZaar. Original game, hosted and licensed by KritZaar. See /originals/LICENSE.txt.",
+      "compat": {
+        "status": "verified",
+        "testedAt": "2026-11-13",
+        "browsers": [
+          "Chromium (desktop, keyboard + mouse)",
+          "Chromium (390x780 touch emulation)"
+        ],
+        "notes": "Automated test: starts, responds to input, saves automatically, restores after reload, plays offline. Not yet checked on real iPhone/Android hardware."
+      }
+    },
+    {
+      "id": "kz-starling-drift",
+      "title": "Starling Drift",
+      "genres": [
+        "arcade",
+        "collect"
+      ],
+      "module": "/originals/games/starling-drift.js",
+      "cover": "/originals/covers/kz-starling-drift.svg",
+      "tagline": "Gather seeds. Dodge the storm clouds.",
+      "description": "Steer a small bird through a drifting sky. Chain seeds for a combo, weave round the storm clouds, and see how long you can stay on course.",
+      "controls": [
+        {
+          "keys": "Arrow keys or WASD",
+          "action": "Steer"
+        },
+        {
+          "keys": "Drag with mouse or finger",
+          "action": "Fly toward the pointer"
+        }
+      ],
+      "minutes": 4,
+      "touch": true,
+      "platform": "native",
+      "year": 2026,
+      "developer": "KritZaar",
+      "license": "original",
+      "status": "published",
+      "addedAt": "2026-11-13",
+      "emulator": {
+        "type": "native"
+      },
+      "rights": "© KritZaar. Original game, hosted and licensed by KritZaar. See /originals/LICENSE.txt.",
+      "compat": {
+        "status": "verified",
+        "testedAt": "2026-11-13",
+        "browsers": [
+          "Chromium (desktop, keyboard + mouse)",
+          "Chromium (390x780 touch emulation)"
+        ],
+        "notes": "Automated test: starts, responds to input, saves automatically, restores after reload, plays offline. Not yet checked on real iPhone/Android hardware."
+      }
+    }
+  ]
+}

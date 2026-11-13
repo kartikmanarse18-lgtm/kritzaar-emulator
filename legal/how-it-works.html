@@ -22,13 +22,13 @@
 <h1>How KritZaar Games Works</h1>
 <p class="muted">Last updated: 2026-11-13</p>
 
-<h2>We do not host games</h2>
-<p>KritZaar does not store, host, or distribute any game files. We provide a player and a catalog of guides that point to each game's official source.</p>
+<h2>Two kinds of games, kept apart</h2>
+<p><strong>KritZaar Originals</strong> are made by KritZaar. We own them, host them, and they live in their own folder of the site. <strong>Everything else</strong> is third-party: KritZaar does not store, host, or distribute those game files. We provide a player and a catalog of guides that point to each game's official source.</p>
 <h2>You bring your own legal copy</h2>
 <ol>
 <li>Pick a game in the catalog and read its page.</li>
 <li>Follow the link to the official source (the publisher, developer, or an official store) and download the file there.</li>
-<li>Come back to KritZaar and drop the file into the box.</li>
+<li>Come back to KritZaar and drop the file into the box. KritZaar looks at the file and works out the type (DOS, NES, Game Boy, Flash) by itself.</li>
 <li>The game is saved in your browser and plays on your device, even offline.</li>
 </ol>
 <p>Only use files you have the right to use, such as freeware, shareware, open-source, homebrew, or games you own.</p>
@@ -36,11 +36,18 @@
 <p>Game files and their file names never leave your device. They are not uploaded and not logged. They live in your browser's storage (IndexedDB) and only you can open them.</p>
 <h2>Keeping your saves safe</h2>
 <p>Browsers can clear website storage, especially on iPhone and iPad if you do not visit for about a week. Add KritZaar to your home screen and use the backup option in My Games to export your games and saves.</p>
+<h2>When a game does not work</h2>
+<p>If a game cannot start, the player says why in plain words. You can press "Report this problem" to get a short report (game, error, browser details; never the game file or your saves). Nothing is sent unless you choose to send it. Each catalog entry also shows whether we have tested it.</p>
 <h2>Something wrong?</h2>
 <p>If you are a rights holder, see our <a href="/legal/dmca.html">copyright policy</a>.</p>
 <p class="muted"><a href="/legal/how-it-works.html">How it works</a> · <a href="/legal/terms.html">Terms</a> · <a href="/legal/privacy.html">Privacy</a> · <a href="/legal/dmca.html">Copyright / DMCA</a></p>
 <h2>Credits</h2>
-<p>Emulation by js-dos and DOSBox (GPL-2.0). Source code: <a href="https://github.com/caiiiycuk/js-dos">github.com/caiiiycuk/js-dos</a>. Zip handling by fflate (MIT).</p>
+<ul>
+<li>DOS: js-dos and DOSBox (GPL-2.0). Source: <a href="https://github.com/caiiiycuk/js-dos">github.com/caiiiycuk/js-dos</a>.</li>
+<li>NES and Game Boy / Color / Advance: EmulatorJS (GPL-3.0) with the FCEUmm core (GPL-2.0) and the mGBA core (MPL-2.0). Source: <a href="https://github.com/EmulatorJS/EmulatorJS">github.com/EmulatorJS/EmulatorJS</a>, <a href="https://github.com/mgba-emu/mgba">github.com/mgba-emu/mgba</a>. KritZaar's small modifications are listed in <a href="/emulator/vendor/emulatorjs/PATCHES.md">PATCHES.md</a>.</li>
+<li>Flash (.swf): Ruffle (MIT or Apache-2.0). Source: <a href="https://github.com/ruffle-rs/ruffle">github.com/ruffle-rs/ruffle</a>.</li>
+<li>Zip handling: fflate (MIT).</li>
+</ul>
 </main>
 </body>
 </html>

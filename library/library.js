@@ -2,6 +2,7 @@
 import { listGames, deleteGame, getStorageInfo, importBackup, requestPersistence, onStorageChange } from '/js/storage.js';
 import { downloadBackup } from '/js/pwa-install.js';
 import { formatBytes, formatRelativeTime, tileHue, recordBackupDone } from '/js/continue-playing.js';
+import { platformLabel } from '/js/engines.js';
 
 const $ = (id) => document.getElementById(id);
 const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text !== undefined) n.textContent = text; return n; };
@@ -26,7 +27,7 @@ function card(game) {
   const info = el('div');
   info.append(
     el('h2', 'kz-lib-name', game.title || game.id),
-    el('p', 'kz-lib-meta', `${formatBytes(game.size)} · ${game.lastPlayedAt ? 'Played ' + formatRelativeTime(game.lastPlayedAt) : 'Not played yet'}`)
+    el('p', 'kz-lib-meta', `${game.platform === 'native' ? 'KritZaar Original' : platformLabel(game.platform) + ' · ' + formatBytes(game.size)} · ${game.lastPlayedAt ? 'Played ' + formatRelativeTime(game.lastPlayedAt) : 'Not played yet'}`)
   );
   const row = el('div', 'kz-lib-row');
   const play = el('a', 'kz-btn kz-btn--primary', 'Play');

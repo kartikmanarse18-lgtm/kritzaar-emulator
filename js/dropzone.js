@@ -54,7 +54,7 @@ function el(tag, cls, text) {
 
 const fmtMB = (bytes) => `${Math.round(bytes / 1048576)} MB`;
 
-const ALWAYS = ['.zip', '.jsdos', '.exe', '.com', '.bat', '.iso', '.img', '.ima'];
+const ALWAYS = ['.zip', '.jsdos', '.exe', '.com', '.bat', '.iso', '.img', '.ima', '.nes', '.gb', '.gbc', '.gba', '.swf'];
 
 export function createDropZone(containerEl, options = {}) {
   const accept = [...new Set([...(options.accept || []), ...ALWAYS].map((e) => e.toLowerCase()))];
@@ -69,7 +69,7 @@ export function createDropZone(containerEl, options = {}) {
   zone.setAttribute('aria-label', `Choose a game file (${accept.join(', ')}) or drop it here`);
   const title = el('p', 'kz-drop-title', 'Drop your game file here');
   const sub = el('p', 'kz-drop-sub', 'or tap to choose a file');
-  const hint = el('p', 'kz-drop-hint', `Accepted: ${accept.join(', ')}. You can pick several files at once (for example the program and its data files). Your files stay on this device.`);
+  const hint = el('p', 'kz-drop-hint', `KritZaar detects the game type for you (DOS, NES, Game Boy, Flash). You can pick several files at once for DOS games. Your files stay on this device.`);
   const progress = el('progress', 'kz-drop-progress');
   progress.max = 1;
   progress.hidden = true;
@@ -88,6 +88,7 @@ export function createDropZone(containerEl, options = {}) {
 
   let busy = false;
   let destroyed = false;
+  let detection = null; // result of automatic format detection for the file being delivered
 
   function setProgress(fraction, text) {
     progress.hidden = fraction == null;
@@ -110,16 +111,16 @@ export function createDropZone(containerEl, options = {}) {
     confirmBox.replaceChildren();
     input.value = '';
   }
-  function fail(message) {
+  function fail(message, d) {
     reset();
     status.textContent = message;
-    onError(message);
+    onError(message, d);
   }
 
   async function deliver(file) {
     setBusy(true, 'Working…');
     try {
-      await onFile(file, { setProgress });
+      await onFile(file, { setProgress, detection });
       status.textContent = '';
     } catch (e) {
       fail((e && e.message) || 'Something went wrong with that file.');
@@ -146,9 +147,13 @@ export function createDropZone(containerEl, options = {}) {
     const picked = Array.from(files);
     reset();
     setBusy(true, 'Preparing…');
-    import('./game-files.js').then((m) => m.prepareDroppedFiles(picked)).then((file) => {
+    setBusy(true, 'Detecting the game type…');
+    import('./detect.js').then((m) => m.detectFormat(picked)).then((d) => {
       busy = false;
-      if (file.size > maxWarnMB * 1048576) askConfirm(file); else deliver(file);
+      if (!d.ok) { fail(d.problem.message, d); return; }
+      detection = d;
+      status.textContent = 'Detected: ' + d.label + '.';
+      if (d.file.size > maxWarnMB * 1048576) askConfirm(d.file); else deliver(d.file);
     }).catch((e) => fail((e && e.message) || 'Something went wrong with that file.'));
   }
 

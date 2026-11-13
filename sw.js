@@ -14,9 +14,13 @@
  * "A new version is ready" and posts SKIP_WAITING when the person taps Reload.
  * On the very first install it activates immediately so offline works right away.
  * Bump VERSION when you rename/remove files or change this list.
+ *
+ * Engines: DOSBox/js-dos is precached (OPTIONAL list). The bigger engines (EmulatorJS cores, Ruffle) are NOT
+ * precached; the /emulator/vendor/ rule caches each file the first time a game of that type is played, so that
+ * game type then works offline. KritZaar Originals are small and are always precached.
  */
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL_CACHE = `kz-shell-${VERSION}`;
 const RUNTIME_CACHE = `kz-runtime-${VERSION}`;
 const NETWORK_TIMEOUT_MS = 3000;
@@ -29,14 +33,18 @@ const CORE = [
   '/css/emulator-shared.css', '/css/catalog.css',
   '/js/storage.js', '/js/dropzone.js', '/js/pwa-install.js', '/js/catalog.js', '/js/search-ui.js',
   '/js/touch-controls.js', '/js/continue-playing.js', '/js/game-files.js',
-  '/data/games.json', '/data/allowed-sources.json',
+  '/js/detect.js', '/js/engines.js', '/js/report.js', '/js/compat-ui.js', '/js/hub.js', '/css/hub.css',
+  '/emulator/engines/native.js', '/emulator/engines/emulatorjs.js', '/emulator/engines/ruffle.js',
+  '/originals/kit.js', '/originals/index.html', '/originals/games/lantern-run.js', '/originals/games/tidepool.js', '/originals/games/starling-drift.js',
+  '/originals/covers/kz-lantern-run.svg', '/originals/covers/kz-tidepool.svg', '/originals/covers/kz-starling-drift.svg',
+  '/data/games.json', '/data/originals.json', '/data/arcade.json', '/data/site-config.json', '/data/allowed-sources.json',
   '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png'
 ];
 
 // Cached if reachable; a miss does not block install. The Combiner fills in the real
 // vendor file names (js-dos, zip library) and the catalog page once they are known.
 const OPTIONAL = [
-  '/', '/games/', '/games/index.html', '/legal/how-it-works.html',
+  '/', '/games/', '/games/index.html', '/originals/', '/legal/how-it-works.html',
   '/emulator/vendor/js-dos.js', '/emulator/vendor/js-dos.css',
   '/emulator/vendor/emulators/emulators.js', '/emulator/vendor/emulators/wdosbox.js',
   '/emulator/vendor/emulators/wdosbox.wasm', '/emulator/vendor/emulators/wlibzip.js',

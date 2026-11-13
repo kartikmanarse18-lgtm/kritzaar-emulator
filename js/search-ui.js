@@ -1,6 +1,8 @@
 // Catalog search UI. Usage: mountCatalogSearch(el, { suggestUrl: 'mailto:...' })
 // All catalog text is inserted with textContent; no innerHTML.
 import { loadCatalog, searchGames } from '/js/catalog.js';
+import { compatBadge } from '/js/compat-ui.js';
+import { platformLabel } from '/js/engines.js';
 
 function el(tag, props = {}, ...kids) {
   const n = document.createElement(tag);
@@ -37,6 +39,7 @@ export async function mountCatalogSearch(container, { suggestUrl = '' } = {}) {
 
   const uniq = (f) => [...new Set(all.flatMap(f))].sort();
   const platform = select('Platform', 'kz-cat-platform', uniq((g) => [g.platform]));
+  platform.querySelectorAll('option').forEach((o) => { if (o.value) o.textContent = platformLabel(o.value); });
   const genre = select('Genre', 'kz-cat-genre', uniq((g) => g.genres));
   const license = select('License', 'kz-cat-license', uniq((g) => [g.license]));
   filters.append(platform, genre, license);
@@ -54,7 +57,8 @@ export async function mountCatalogSearch(container, { suggestUrl = '' } = {}) {
         el('img', { src: g.cover, alt: '', width: '160', height: '100', loading: 'lazy' }),
         el('span', { class: 'kz-cat-title', text: g.title }),
         el('span', { class: 'kz-cat-meta', text: `${g.year} · ${g.developer}` }),
-        el('span', { class: 'kz-badge', text: g.license }));
+        el('span', { class: 'kz-badge', text: g.license }),
+        compatBadge(g.compat));
       list.append(el('li', {}, a));
     }
   }

@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Game Catalog | KritZaar</title>
+<link rel="icon" href="/icons/icon-192.png">
+<title>Games | KritZaar</title>
 <meta name="description" content="Browse classic PC games that are free or legally available. Get each one from its official page, then play it right in your browser on KritZaar.">
 <link rel="canonical" href="https://emulator.kritzaar.online/games/">
 <meta name="theme-color" content="#7c5cff">
@@ -11,6 +12,7 @@
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="/css/emulator-shared.css">
 <link rel="stylesheet" href="/css/catalog.css">
+<link rel="stylesheet" href="/css/hub.css">
 <style>
   body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
   .kz-cat-page{box-sizing:border-box;max-width:960px;margin:0 auto;padding:12px 16px}
@@ -22,12 +24,32 @@
 </style>
 </head>
 <body>
-<a class="kz-skip" href="#kz-catalog">Skip to games</a>
+<a class="kz-skip" href="#h-orig">Skip to games</a>
 <div class="kz-cat-page">
   <div class="kz-cat-top"><a class="kz-cat-brand" href="/">KritZaar</a><a class="kz-btn kz-secondary" href="/library/">My Games</a></div>
-  <h1>Game Catalog</h1>
-  <p class="kz-cat-lead">Classic PC games that are free or legally available. Get each one from its official page, then play it in your browser. KritZaar hosts no game files.</p>
-  <main id="kz-catalog"></main>
+  <h1>Games</h1>
+  <p class="kz-cat-lead">Play KritZaar's own games with one click, or bring a game you legally own. KritZaar detects the type (DOS, NES, Game Boy, Flash) for you and keeps your saves on this device.</p>
+  <main>
+    <section aria-labelledby="h-orig">
+      <h2 id="h-orig">Play now: KritZaar Originals</h2>
+      <p class="kz-hub-lead">Made by KritZaar. Free to play, works offline after the first visit.</p>
+      <div id="kz-originals"></div>
+    </section>
+    <section id="kz-arcade-section" aria-labelledby="h-arcade" hidden>
+      <h2 id="h-arcade">Arcade</h2>
+      <div id="kz-arcade"></div>
+    </section>
+    <section aria-labelledby="h-own">
+      <h2 id="h-own">Bring your own game</h2>
+      <p class="kz-hub-lead">Classic games that are free or legally available. Get each one from its official page, then add the file here. Each entry shows whether we have tested it.</p>
+      <div id="kz-catalog"></div>
+      <div class="kz-hub-open">
+        <p><strong>Have a game file already?</strong> Open it directly. KritZaar works out what it is.</p>
+        <a class="kz-btn kz-btn--primary" href="/emulator/index.html">Open a game file</a>
+      </div>
+      <p class="kz-legal-note">KritZaar hosts only its own Originals. Third-party games are never uploaded to or stored on our servers; they stay on your device. <a href="/legal/how-it-works.html">How it works</a></p>
+    </section>
+  </main>
 </div>
 <noscript><p>The game catalog needs JavaScript to search. You can still open each game page directly.</p></noscript>
 <footer class="kz-catalog-footer">
@@ -39,6 +61,9 @@
 </footer>
 <script type="module">
 import { mountCatalogSearch } from '/js/search-ui.js';
+import { mountOriginals, mountArcade } from '/js/hub.js';
+mountOriginals(document.getElementById('kz-originals'));
+mountArcade(document.getElementById('kz-arcade-section'), document.getElementById('kz-arcade'));
 mountCatalogSearch(document.getElementById('kz-catalog'), {});
 </script>
 <script type="module">import { initPwa } from '/js/pwa-install.js'; initPwa();</script>

@@ -59,3 +59,23 @@ export function searchGames(query, { platform, genre, license } = {}) {
     .sort((a, b) => b.s - a.s || a.g.title.localeCompare(b.g.title))
     .map((r) => r.g);
 }
+
+// ---- Originals: KritZaar's own games. Kept in a separate file from third-party catalog entries. ----
+const ORIGINALS_URL = '/data/originals.json';
+let originals = null;
+export async function loadOriginals() {
+  if (originals) return originals;
+  let data;
+  try {
+    const res = await fetch(ORIGINALS_URL, { cache: 'no-cache' });
+    if (!res.ok) throw new Error('bad status');
+    data = await res.json();
+  } catch {
+    const cached = 'caches' in self ? await caches.match(ORIGINALS_URL) : null;
+    if (!cached) throw fail('NETWORK', 'The game list could not be loaded. Check your connection and try again.');
+    data = await cached.json();
+  }
+  originals = (data.games || []).filter((g) => g.status === 'published');
+  return originals;
+}
+export async function getOriginal(id) { return (await loadOriginals()).find((g) => g.id === id) || null; }

@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#0f0f14">
-  <title>Player | KritZaar</title>
+  <link rel="icon" href="/icons/icon-192.png">
+<title>Player | KritZaar</title>
   <!-- No ads and no third-party scripts on this page (Global Rules 7 and 13). -->
   <link rel="stylesheet" href="/css/emulator-shared.css">
   <link rel="stylesheet" href="/emulator/player.css">
@@ -63,7 +64,9 @@
       <p class="kzp-row">
         <button type="button" class="kzp-btn kzp-btn-primary" id="kzp-error-retry">Try again</button>
         <a class="kzp-btn" href="/library/">My Games</a>
+        <button type="button" class="kzp-btn" id="kzp-report" hidden>Report this problem</button>
       </p>
+      <p class="kzp-note" id="kzp-error-detail" hidden></p>
     </section>
 
     <!-- Emulator stage -->
@@ -89,6 +92,19 @@
     <p class="kzp-note">Saves keep the game's own save files on this device, so they work offline. Loading restarts the game from the save.</p>
     <ul class="kzp-list" id="kzp-states-list"></ul>
     <p class="kzp-status" id="kzp-states-status" role="status"></p>
+    <form method="dialog"><button class="kzp-btn">Close</button></form>
+  </dialog>
+
+  <dialog class="kzp-dialog" id="kzp-report-dialog" aria-labelledby="kzp-report-h">
+    <h2 id="kzp-report-h">Report this problem</h2>
+    <p class="kzp-note">Nothing is sent automatically. The report has no game file, file name or save data: only the game, the error, and your browser details. Review it, then choose how to share it.</p>
+    <textarea id="kzp-report-text" class="kzp-report-text" readonly rows="9" aria-label="Report contents"></textarea>
+    <p class="kzp-row">
+      <button type="button" class="kzp-btn kzp-btn-primary" id="kzp-report-copy">Copy</button>
+      <button type="button" class="kzp-btn" id="kzp-report-download">Download</button>
+      <a class="kzp-btn" id="kzp-report-mail" hidden>E-mail</a>
+    </p>
+    <p class="kzp-status" id="kzp-report-status" role="status"></p>
     <form method="dialog"><button class="kzp-btn">Close</button></form>
   </dialog>
 

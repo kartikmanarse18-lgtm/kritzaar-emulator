@@ -235,7 +235,7 @@ function cleanRecord(r) {
     size: Number(r.size) || 0,
     sha256: String(r.sha256 || ''),
     config: r.config && typeof r.config === 'object' ? r.config : {},
-    source: r.source === 'catalog' ? 'catalog' : 'custom',
+    source: r.source === 'catalog' ? 'catalog' : r.source === 'original' ? 'original' : 'custom',
     addedAt: Number(r.addedAt) || Date.now(),
     lastPlayedAt: r.lastPlayedAt == null ? null : Number(r.lastPlayedAt)
   };
