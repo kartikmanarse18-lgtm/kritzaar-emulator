@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KritZaar Games</title>
+<meta name="description" content="Browse classic PC games that are free or legally available, then play them in your browser. Your games stay on your device.">
+<meta name="theme-color" content="#7c5cff">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="/css/emulator-shared.css">
+<style>
+  body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .kz-home{box-sizing:border-box;max-width:720px;margin:0 auto;padding:20px 16px}
+  .kz-home-brand{font-weight:800;font-size:1.3rem}
+  .kz-home h1{margin:28px 0 8px;font-size:1.9rem;line-height:1.2}
+  .kz-home-lead{color:var(--kz-muted,#a5a3c2);margin:0 0 22px}
+  .kz-home-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px}
+  .kz-home-footer{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.9rem;margin-top:36px}
+</style>
+</head>
+<body>
+<div class="kz-home">
+  <div class="kz-home-brand">KritZaar</div>
+  <main>
+    <h1>Play classic PC games in your browser</h1>
+    <p class="kz-home-lead">Find games that are free or legally available, get them from the official page, then play them here. KritZaar hosts no game files. Your games and saves stay on your device.</p>
+    <div class="kz-home-actions">
+      <a class="kz-btn kz-btn--primary" href="/games/">Browse the catalog</a>
+      <a class="kz-btn" href="/library/">My Games</a>
+    </div>
+    <div id="kz-continue" hidden></div>
+  </main>
+  <footer class="kz-home-footer">
+    <a href="/legal/how-it-works.html">How it works</a>
+    <a href="/legal/terms.html">Terms</a>
+    <a href="/legal/privacy.html">Privacy</a>
+    <a href="/legal/dmca.html">Copyright / DMCA</a>
+  </footer>
+</div>
+<script type="module">
+import { mountContinuePlaying } from '/js/continue-playing.js';
+mountContinuePlaying(document.getElementById('kz-continue'));
+</script>
+<script type="module">import { initPwa } from '/js/pwa-install.js'; initPwa();</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+
+Sitemap: https://emulator.kritzaar.online/data/sitemap-games.xml
