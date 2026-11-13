@@ -54,8 +54,10 @@ function el(tag, cls, text) {
 
 const fmtMB = (bytes) => `${Math.round(bytes / 1048576)} MB`;
 
+const ALWAYS = ['.zip', '.jsdos', '.exe', '.com', '.bat', '.iso', '.img', '.ima'];
+
 export function createDropZone(containerEl, options = {}) {
-  const accept = (options.accept || ['.zip', '.jsdos']).map((e) => e.toLowerCase());
+  const accept = [...new Set([...(options.accept || []), ...ALWAYS].map((e) => e.toLowerCase()))];
   const maxWarnMB = options.maxWarnMB ?? 500;
   const onFile = options.onFile || (async () => {});
   const onError = options.onError || (() => {});
@@ -67,7 +69,7 @@ export function createDropZone(containerEl, options = {}) {
   zone.setAttribute('aria-label', `Choose a game file (${accept.join(', ')}) or drop it here`);
   const title = el('p', 'kz-drop-title', 'Drop your game file here');
   const sub = el('p', 'kz-drop-sub', 'or tap to choose a file');
-  const hint = el('p', 'kz-drop-hint', `Accepted: ${accept.join(', ')}. Your file stays on this device.`);
+  const hint = el('p', 'kz-drop-hint', `Accepted: ${accept.join(', ')}. You can pick several files at once (for example the program and its data files). Your files stay on this device.`);
   const progress = el('progress', 'kz-drop-progress');
   progress.max = 1;
   progress.hidden = true;
@@ -78,7 +80,7 @@ export function createDropZone(containerEl, options = {}) {
   confirmBox.hidden = true;
   const input = el('input', 'kz-drop-input');
   input.type = 'file';
-  input.accept = accept.join(',');
+  input.multiple = true; // any file type can be picked; they are checked in code
   input.tabIndex = -1;
   input.setAttribute('aria-hidden', 'true');
   zone.append(title, sub, hint, progress, status, confirmBox, input);
@@ -141,16 +143,13 @@ export function createDropZone(containerEl, options = {}) {
 
   function handle(files) {
     if (busy || !files || !files.length) return;
-    if (files.length > 1) { fail('Please choose one file at a time.'); return; }
-    const file = files[0];
-    const name = (file.name || '').toLowerCase();
-    if (!accept.some((ext) => name.endsWith(ext))) {
-      fail(`That file type is not supported. Choose a ${accept.join(' or ')} file.`);
-      return;
-    }
-    if (file.size === 0) { fail('That file is empty. Download it again from the official page.'); return; }
+    const picked = Array.from(files);
     reset();
-    if (file.size > maxWarnMB * 1048576) askConfirm(file); else deliver(file);
+    setBusy(true, 'Preparing…');
+    import('./game-files.js').then((m) => m.prepareDroppedFiles(picked)).then((file) => {
+      busy = false;
+      if (file.size > maxWarnMB * 1048576) askConfirm(file); else deliver(file);
+    }).catch((e) => fail((e && e.message) || 'Something went wrong with that file.'));
   }
 
   const on = (target, type, fn) => { target.addEventListener(type, fn); return () => target.removeEventListener(type, fn); };

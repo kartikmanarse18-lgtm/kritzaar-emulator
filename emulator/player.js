@@ -1,7 +1,7 @@
 // KritZaar player: runs a game stored in this browser with js-dos (DOSBox).
 // Game data comes from IndexedDB only. Nothing is uploaded. Text is set with textContent.
 import * as storage from '/js/storage.js';
-import { inspectArchive, buildBundle, applyState } from '/emulator/bundler.js';
+import { inspectArchive, buildBundle, applyState, verifyRunnable, WINDOWS_MESSAGE } from '/emulator/bundler.js';
 
 const VENDOR = '/emulator/vendor/';
 const AUTOSAVE_SLOT = 3;
@@ -36,12 +36,13 @@ const MESSAGES = {
   STORAGE_UNAVAILABLE: 'Your browser is not letting KritZaar save games. Private browsing or blocked site data can cause this.',
   BAD_ARCHIVE: 'This file could not be opened. Download it again from the official page and do not unzip it.',
   NO_EXECUTABLE: 'We could not find a program to start in this file.',
+  WINDOWS_EXE: WINDOWS_MESSAGE,
   UNSUPPORTED_BROWSER: 'This browser cannot run the emulator. Try a recent Chrome, Firefox, Edge or Safari.',
   EMULATOR_CRASH: 'The emulator stopped unexpectedly. Try again, or restart the game.',
   NETWORK: 'The emulator files could not be loaded. Check your connection and try again.',
 };
 function friendly(err) {
-  if (err && MESSAGES[err.code]) return err.message && err.code === 'BAD_ARCHIVE' ? err.message : MESSAGES[err.code];
+  if (err && MESSAGES[err.code]) return err.message && (err.code === 'BAD_ARCHIVE' || err.code === 'NO_EXECUTABLE') ? err.message : MESSAGES[err.code];
   if (err && err.name === 'QuotaExceededError') return MESSAGES.QUOTA_EXCEEDED;
   return MESSAGES.EMULATOR_CRASH;
 }
@@ -150,6 +151,7 @@ async function onDropped(file) {
     if (info.kind === 'zip') {
       const exe = info.suggestedExe || (await pickExe(info.executables));
       config = { ...config, exe };
+      await verifyRunnable(file, exe);
     }
     S.record = await storage.saveGame(id, file, { title, platform: 'dos', sha256: sha, config, source: S.entry ? 'catalog' : 'custom' });
     S.id = id; S.blob = file;

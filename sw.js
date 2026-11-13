@@ -16,7 +16,7 @@
  * Bump VERSION when you rename/remove files or change this list.
  */
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL_CACHE = `kz-shell-${VERSION}`;
 const RUNTIME_CACHE = `kz-runtime-${VERSION}`;
 const NETWORK_TIMEOUT_MS = 3000;
@@ -28,7 +28,7 @@ const CORE = [
   '/library/index.html', '/library/library.js', '/library/library.css',
   '/css/emulator-shared.css', '/css/catalog.css',
   '/js/storage.js', '/js/dropzone.js', '/js/pwa-install.js', '/js/catalog.js', '/js/search-ui.js',
-  '/js/touch-controls.js', '/js/continue-playing.js',
+  '/js/touch-controls.js', '/js/continue-playing.js', '/js/game-files.js',
   '/data/games.json', '/data/allowed-sources.json',
   '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png'
 ];
