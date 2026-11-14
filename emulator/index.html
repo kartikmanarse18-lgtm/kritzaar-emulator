@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0f0f14">
   <link rel="icon" href="/icons/icon-192.png">
 <title>Player | KritZaar</title>
-  <!-- No ads and no third-party scripts on this page (Global Rules 7 and 13). -->
+  <!-- No third-party scripts on this page (Global Rule 13). Direct-sponsor banners (images from this site, no ad network) appear only on the start screen, never while a game runs. -->
   <link rel="stylesheet" href="/css/emulator-shared.css">
   <link rel="stylesheet" href="/css/cards.css">
   <link rel="stylesheet" href="/emulator/player.css">
@@ -47,12 +47,32 @@
 
     <!-- Ready to play: one tap unlocks audio -->
     <section class="kzp-screen kzp-ready" id="kzp-ready" hidden>
-      <div class="kzp-poster" id="kzp-poster" hidden></div>
-      <h2 id="kzp-ready-title"></h2>
-      <p class="kzp-note" id="kzp-ready-tag" hidden></p>
-      <button type="button" class="kzp-btn kzp-btn-primary kzp-big" id="kzp-play">Play</button>
-      <label class="kzp-check"><input type="checkbox" id="kzp-autosave"> Auto-save when I exit (uses slot 3)</label>
-      <div class="kzp-shots" id="kzp-shots" hidden></div>
+      <div class="kzp-rg" id="kzp-rg">
+        <aside class="kzp-rail kzp-rail-l" id="kzp-rail-l" aria-label="More games" hidden></aside>
+        <div class="kzp-ready-main">
+          <div class="kzp-hero" id="kzp-hero">
+            <div class="kzp-hero-media" id="kzp-poster"></div>
+            <div class="kzp-hero-cap">
+              <span class="kzp-kicker">Ready to play</span>
+              <h2 id="kzp-ready-title"></h2>
+              <p class="kzp-hero-tag" id="kzp-ready-tag" hidden></p>
+              <ul class="kzp-tags" id="kzp-ready-tags"></ul>
+            </div>
+          </div>
+          <div class="kzp-playbar">
+            <button type="button" class="kzp-btn kzp-btn-primary kzp-big" id="kzp-play"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span>Play</span></button>
+          </div>
+          <div class="kzp-options">
+            <label class="kzp-switch"><input type="checkbox" id="kzp-autosave"><span class="kzp-switch-ui" aria-hidden="true"></span><span>Auto-save when I exit</span></label>
+            <span class="kzp-hint">Uses slot 3</span>
+          </div>
+          <div class="kzp-shots" id="kzp-shots" hidden></div>
+        </div>
+        <aside class="kzp-rail kzp-rail-r" id="kzp-rail-r" aria-label="More games" hidden></aside>
+        <div class="kzp-ad-l" id="kzp-ad-l"></div>
+        <div class="kzp-ad-c"><div id="kzp-ad-under"></div><div id="kzp-ad-contact"></div></div>
+        <div class="kzp-ad-r" id="kzp-ad-r"></div>
+      </div>
     </section>
 
     <!-- Program picker, shown once for plain zips with several programs -->
@@ -78,6 +98,7 @@
     <section class="kzp-stage" id="kzp-stage" hidden>
       <div id="kzp-dos" class="kzp-dos"></div>
       <div id="kzp-touch" class="kzp-touch"></div>
+      <button type="button" class="kzp-tc-toggle" id="kzp-tc-toggle" aria-pressed="false" hidden>Controls</button>
       <div class="kzp-paused" id="kzp-paused" hidden>
         <p>Paused</p>
         <button type="button" class="kzp-btn kzp-btn-primary" id="kzp-resume">Resume</button>
@@ -97,7 +118,7 @@
     <p class="kzp-note" id="kzp-pad-unsupported" hidden>This kind of game has its own on-screen and gamepad controls built into the emulator.</p>
     <div id="kzp-pad-body">
       <fieldset class="kzp-fs" id="kzp-tc-fs"><legend>On-screen controls</legend>
-        <label class="kzp-field">Show them <select id="kzp-tc-mode"><option value="auto">Automatically on touch screens</option><option value="on">Always</option><option value="off">Never</option></select></label>
+        <label class="kzp-field">Show them <select id="kzp-tc-mode"><option value="auto">Only when I tap the Controls button</option><option value="on">Always open</option><option value="off">Never show</option></select></label>
         <label class="kzp-field">Layout <select id="kzp-tc-layout"></select></label>
         <label class="kzp-field">Size <input type="range" id="kzp-tc-size" min="0.7" max="1.5" step="0.05"></label>
         <label class="kzp-field">Opacity <input type="range" id="kzp-tc-alpha" min="0.3" max="1" step="0.05"></label>

@@ -298,14 +298,15 @@ export function mountTouchControls(containerEl, layout = DEFAULT_LAYOUT, opts = 
 
   const onKeyDown = (e) => {
     // Ignore synthetic events and keys pressed on the controls themselves
-    if (editing || !e.isTrusted || root.contains(e.target)) return;
+    if (opts.manual || editing || !e.isTrusted || root.contains(e.target)) return;
     if (!opts.force) setVisible(false);
   };
-  const onPointerDown = (e) => { if (e.pointerType === 'touch') setVisible(true); };
-  const onGamepad = () => { if (!opts.force && !editing) setVisible(false); };
+  const onPointerDown = (e) => { if (!opts.manual && e.pointerType === 'touch') setVisible(true); };
+  const onGamepad = () => { if (!opts.manual && !opts.force && !editing) setVisible(false); };
   const onVisibility = () => { if (document.hidden) releaseEverything(); };
 
-  setVisible(!!opts.force || window.matchMedia('(pointer: coarse)').matches);
+  // manual: the player opens and closes the controls (show/hide); nothing else toggles them.
+  setVisible(opts.manual ? !!opts.open : (!!opts.force || window.matchMedia('(pointer: coarse)').matches));
   if (hasCustom) requestAnimationFrame(() => { if (!root.hidden) activateCustom(); });
   document.addEventListener('keydown', onKeyDown, true);
   document.addEventListener('pointerdown', onPointerDown, true);

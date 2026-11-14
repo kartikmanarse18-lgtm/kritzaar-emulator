@@ -7,7 +7,8 @@ import { PLATFORMS, ENGINES, ALL_EXTS, platformLabel } from '/js/engines.js';
 import * as report from '/js/report.js';
 import { mountTouchControls, loadPrefs, savePrefs, LAYOUT_INFO } from '/js/touch-controls.js';
 import { startGamepad, GP_BUTTONS, KEY_CHOICES, GP_MODES } from '/js/gamepad.js';
-import { asset, previewVideo, previewsAllowed } from '/js/cards.js';
+import { asset, hue, previewVideo, previewsAllowed, cardGrid, loadWebGames, webCardData, pickMore } from '/js/cards.js';
+import { mountSlot, mountContact } from '/js/ads.js';
 
 const VENDOR = '/emulator/vendor/';
 const AUTOSAVE_SLOT = 3;
@@ -63,6 +64,7 @@ function friendly(err) {
 function show(name) {
   for (const id of ['loading', 'missing', 'ready', 'picker', 'error', 'stage']) $('kzp-' + id).hidden = id !== name;
   $('kzp-tools').hidden = name !== 'stage';
+  if (name !== 'ready') clearExtras(); // rails and ad slots exist only on the start screen
 }
 function setProgress(text, pct) { $('kzp-loading-text').textContent = text; $('kzp-progress').value = pct; show('loading'); }
 function showError(err, title) {
@@ -148,19 +150,23 @@ async function lookupCatalog(id) {
 // Poster above the Play button: the game's preview clip (or banner) and screenshots, when KritZaar has them.
 function renderPoster() {
   const e = S.entry, poster = $('kzp-poster'), shots = $('kzp-shots');
-  poster.replaceChildren(); shots.replaceChildren();
-  poster.hidden = shots.hidden = true;
+  poster.replaceChildren(); shots.replaceChildren(); poster.classList.remove('is-previewing');
+  shots.hidden = true;
+  poster.parentElement.style.setProperty('--h', String(hue(S.id || 'x'))); // generated colour card when there is no artwork
   const tag = $('kzp-ready-tag'); tag.hidden = !(e && e.tagline); tag.textContent = (e && e.tagline) || '';
+  const tags = $('kzp-ready-tags'); tags.replaceChildren();
+  const labels = (e && e.genres && e.genres.length ? e.genres : [(S.record && PLATFORMS[S.record.platform] && PLATFORMS[S.record.platform].label) || (S.record && S.record.platform) || '']).filter(Boolean).slice(0, 3);
+  labels.forEach((t) => tags.append(el('li', {}, el('span', { text: String(t) }))));
   if (!e || !e.assets) return;
-  const img = el('img', { src: asset(e.id, 'banner.webp'), alt: '' });
-  img.addEventListener('error', () => { img.remove(); poster.hidden = !poster.children.length; });
+  // The hero is close to 16:9 on every screen, so the 16:9 cover frames the game better than the 3:1 banner.
+  const img = el('img', { src: asset(e.id, 'cover.webp'), alt: '' });
+  img.addEventListener('error', () => img.remove());
   poster.append(img);
   if (e.preview && previewsAllowed()) {
     const v = previewVideo(e); v.classList.add('kzp-poster-video');
     v.addEventListener('playing', () => poster.classList.add('is-previewing'), { once: true });
     poster.append(v); v.play().catch(() => {});
   }
-  poster.hidden = false;
   for (let n = 1; n <= (e.shots || 0); n++) {
     const im = el('img', { src: asset(e.id, 'shots/' + n + '.webp'), alt: e.title + ' screenshot ' + n, loading: 'lazy' });
     im.addEventListener('error', () => im.remove());
@@ -175,8 +181,12 @@ function showReady(title) {
   $('kzp-ready-title').textContent = title;
   renderPoster();
   show('ready');
-  $('kzp-play').focus();
+  renderExtras();
 }
+// Shortcut: Enter or Space starts the game from the start screen (no permanent focus ring on the button).
+document.addEventListener('keydown', (e) => {
+  if ((e.key === 'Enter' || e.key === ' ') && !$('kzp-ready').hidden && (e.target === document.body || e.target === document.documentElement) && !document.querySelector('dialog[open]')) { e.preventDefault(); $('kzp-play').click(); }
+});
 
 async function showMissing() {
   const e = S.entry;
@@ -362,6 +372,7 @@ let touchCtl = null, gpCtl = null;
 function stopInput() {
   if (touchCtl) { touchCtl.destroy(); touchCtl = null; }
   if (gpCtl) { gpCtl.stop(); gpCtl = null; }
+  syncToggle();
 }
 function startInput() {
   const plat = S.record && S.record.platform;
@@ -391,12 +402,69 @@ function onProgramExit() {
 function currentLayout(prefs) {
   return (prefs.layouts && prefs.layouts[S.id]) || (S.entry && S.entry.touchLayout) || 'dpad-4btn';
 }
+// On-screen controls stay closed until the player opens them with the Controls button.
+let tcOpen = false;
+try { tcOpen = localStorage.getItem('kz-tc-open') === '1'; } catch { /* optional */ }
+function syncToggle() {
+  const b = $('kzp-tc-toggle'), prefs = loadPrefs();
+  b.hidden = !touchCtl || prefs.mode !== 'auto';
+  b.setAttribute('aria-pressed', String(tcOpen));
+  b.textContent = tcOpen ? 'Hide controls' : 'Controls';
+}
+function setTcOpen(v) {
+  tcOpen = v;
+  try { localStorage.setItem('kz-tc-open', v ? '1' : '0'); } catch { /* optional */ }
+  if (touchCtl) { if (v) touchCtl.show(); else touchCtl.hide(); }
+  syncToggle();
+}
 function mountTouch(forceOn = false) {
   if (touchCtl) { touchCtl.destroy(); touchCtl = null; }
   const prefs = loadPrefs();
-  if (prefs.mode === 'off' && !forceOn) return;
-  try { touchCtl = mountTouchControls($('kzp-touch'), currentLayout(prefs), { prefs, gameId: S.id, force: forceOn || prefs.mode === 'on', onEditEnd: () => mountTouch() }); } catch (e) { console.warn('touch controls', e); }
+  if (prefs.mode === 'off' && !forceOn) { syncToggle(); return; }
+  const open = forceOn || prefs.mode === 'on' || tcOpen;
+  try {
+    touchCtl = mountTouchControls($('kzp-touch'), currentLayout(prefs), { prefs, gameId: S.id, manual: true, open, force: true,
+      onEditEnd: () => { tcOpen = true; mountTouch(); } });
+  } catch (e) { console.warn('touch controls', e); }
+  syncToggle();
 }
+
+// ---- Start screen: more games on both sides, sponsor slots below -------------------
+let extrasFor = null;
+function clearExtras() {
+  extrasFor = null;
+  for (const id of ['kzp-rail-l', 'kzp-rail-r', 'kzp-ad-l', 'kzp-ad-under', 'kzp-ad-contact', 'kzp-ad-r']) { const n = $(id); if (n) n.replaceChildren(); }
+}
+async function renderExtras() {
+  if (extrasFor === S.id) return;
+  extrasFor = S.id;
+  const mine = S.id;
+  mountSlot($('kzp-ad-l'), 'side'); mountSlot($('kzp-ad-r'), 'side2'); mountSlot($('kzp-ad-under'), 'under'); mountContact($('kzp-ad-contact'));
+  let originals = [];
+  try { originals = ((await (await fetch('/data/originals.json', { cache: 'no-cache' })).json()).games || []).filter((g) => g.id !== mine); } catch { /* optional */ }
+  const web = await loadWebGames().catch(() => []);
+  if (extrasFor !== mine) return; // the screen changed while loading
+  const own = originals.slice(0, 2).map((g) => ({ id: g.id, title: g.title, tagline: g.tagline || g.description, genres: g.genres, cover: g.cover, assets: !!g.assets, preview: !!g.preview,
+    href: '/emulator/index.html?game=' + encodeURIComponent(g.id), badge: 'Original' }));
+  const genres = (S.entry && S.entry.genres) || [];
+  const cards = own.concat(pickMore(web, 4 - own.length, mine, genres).map(webCardData)).slice(0, 4);
+  railCards = cards;
+  layoutRails();
+}
+// Wide screens: two rails beside the game. Narrower screens: one swipeable row.
+let railCards = [];
+const narrowMQ = matchMedia('(max-width: 1099px)');
+function layoutRails() {
+  const fill = (id, list) => {
+    const rail = $(id); rail.replaceChildren();
+    rail.hidden = !list.length;
+    if (list.length) rail.append(el('h3', { class: 'kzp-rail-h', text: 'More games' }), cardGrid(list));
+  };
+  if (narrowMQ.matches) { fill('kzp-rail-l', railCards); fill('kzp-rail-r', []); }
+  else { fill('kzp-rail-l', railCards.slice(0, 2)); fill('kzp-rail-r', railCards.slice(2, 4)); }
+  $('kzp-rg').classList.toggle('no-rails', !railCards.length);
+}
+narrowMQ.addEventListener('change', () => { if (extrasFor) layoutRails(); });
 
 // ---- Controller dialog -------------------------------------------------------------
 function padStatus(last) {
@@ -525,7 +593,9 @@ async function exitToLibrary(e) {
 
 $('kzp-play').addEventListener('click', () => {
   try { localStorage.setItem('kz-autosave', $('kzp-autosave').checked ? '1' : '0'); } catch { /* optional preference */ }
-  startGame();
+  const b = $('kzp-play'), label = b.querySelector('span');
+  b.disabled = true; label.textContent = 'Starting…'; // feedback: the tap was received
+  Promise.resolve(startGame()).finally(() => { b.disabled = false; label.textContent = 'Play'; });
 });
 $('kzp-error-retry').addEventListener('click', () => {
   const eng = S.record && PLATFORMS[S.record.platform] && PLATFORMS[S.record.platform].engine;
@@ -546,6 +616,7 @@ $('kzp-pause').addEventListener('click', () => (S.paused ? window.KZPlayer.resum
 $('kzp-resume').addEventListener('click', () => window.KZPlayer.resume());
 $('kzp-full').addEventListener('click', toggleFullscreen);
 $('kzp-exit').addEventListener('click', exitToLibrary);
+$('kzp-tc-toggle').addEventListener('click', () => setTcOpen(!tcOpen));
 $('kzp-pad').addEventListener('click', () => { renderPad(); $('kzp-pad-dialog').showModal(); });
 $('kzp-help').addEventListener('click', () => { renderHelp(); $('kzp-help-dialog').showModal(); });
 $('kzp-states').addEventListener('click', async () => {

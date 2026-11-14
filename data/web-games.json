@@ -1,0 +1,1138 @@
+{
+ "version": 1,
+ "source": "Playgama partner feed",
+ "note": "Third-party web games, embedded from their own host. KritZaar does not host these games. Hosts must also be listed in data/site-config.json embedHosts.",
+ "games": [
+  {
+   "id": "pg-hidden-object-clues-and-mysteries",
+   "title": "Hidden Object: Clues and Mysteries",
+   "genres": [
+    "hidden-object",
+    "adventure",
+    "point-and-click"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/hidden-object-clues-and-mysteries/big-preview/918efb60143240eb99d962fecc6cdaf8?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-99671/icon/bdfd60d3d7f79219244f36d82f5cdbe343dc93ae36c5c6c14acc53741390637a?width=448",
+   "url": "https://playgama.com/export/game/hidden-object-clues-and-mysteries?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/hidden-object-clues-and-mysteries",
+   "landscape": false,
+   "portrait": true,
+   "description": "Hidden Object: Clues and Mysteries transforms the classic hidden object genre into an engaging adventure. Immerse yourself in a world of riddles, concealed items, and unsolved enigmas.",
+   "howTo": "In the game, you can freely move left and right across locations and zoom in to find hidden objects. The game is available on both PC and mobile devices, allowing you to play anytime, anywhere."
+  },
+  {
+   "id": "pg-hidden-object-street-of-secrets",
+   "title": "Hidden Object: Street Of Secrets",
+   "genres": [
+    "hidden-object",
+    "adventure",
+    "story"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/hidden-object-street-of-secrets/big_preview/b4e56a265daf458f9027f9fa24f4f10d?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/hidden-object-street-of-secrets/icon/2a108879f486489894de1c7ecbbdbdda?width=448",
+   "url": "https://playgama.com/export/game/hidden-object-street-of-secrets?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/hidden-object-street-of-secrets",
+   "landscape": true,
+   "portrait": true,
+   "description": "Hidden Objects: Street of Secrets is an atmospheric hidden object game where you become the lead detective. A mysterious case awaits, and your insightful assistant is there to help, offering hints and guiding you to crucial details.",
+   "howTo": "Explore each scene: pan left and right, zoom in to examine details, and find all the items on your list. The game is fully optimized for both PC and mobile devices, so you can play anytime, anywhere."
+  },
+  {
+   "id": "pg-mahjong-classic",
+   "title": "Mahjong Classic",
+   "genres": [
+    "mahjong",
+    "matching"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/mahjong-classic/big-preview/730f65084d864a9baffefa86e110b106?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-121631/icon/d9cc661f648e2ba097c3bcf8433389c2033d164a01beb9d2ac4e4bd4ccfb8080?width=448",
+   "url": "https://playgama.com/export/game/mahjong-classic?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/mahjong-classic",
+   "landscape": true,
+   "portrait": false,
+   "description": "\"Mahjong Classic\" is a classic mahjong solitaire with a unique algorithm for generating levels - a random layout of chips always has a solution! Each playthrough becomes unique, allowing you to play your favorite fields an unlimited amount of times!",
+   "howTo": "The goal of the game is to clear the field of chips. Choose chips with the same symbols to remove them. Special chips \"flowers\" are considered paired, and \"seasons\" are paired. A chip can be selected if it is not blocked by other chips. If there are no available pairs left on the field, you have lost. Boosters will help solve solitaire: 1) \"Undo\" - return the last pair. 2) \"Hint\" - show a pair. 3) \"Spotlight\" -…"
+  },
+  {
+   "id": "pg-rivals-fps-online-shooter",
+   "title": "RIVALS FPS: Online Shooter",
+   "genres": [
+    "multiplayer",
+    "first-person-shooter",
+    "shooting"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/rivals-fps-online-shooter/big_preview/f09adf25db724a509d28d6427dfd4d7c?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/rivals-fps-online-shooter/icon/0d5ef6af771b445685c78000fc32a36e?width=448",
+   "url": "https://playgama.com/export/game/rivals-fps-online-shooter?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/rivals-fps-online-shooter",
+   "landscape": true,
+   "portrait": false,
+   "description": "💥Welcome to the world of \"RIVALS FPS: Online Shooter\" — a new free multiplayer online shooter where fun battles, cool guns, and a real arena of clashes await you!",
+   "howTo": "To start a game, create a map or join other players. The controls are the same as in many top shooters. On PC: - Movement - WASD - Camera rotation - Using the mouse - Jump - Space - Crouch - C - Interact with objects - E On mobile: - Movement - Virtual joystick on the left - Camera rotation - Swipes on the right side of the screen - Jump, reload using virtual buttons"
+  },
+  {
+   "id": "pg-favorite-puzzles",
+   "title": "Favorite Puzzles",
+   "genres": [
+    "puzzle",
+    "brain",
+    "logic"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/favorite-puzzles/big_preview/400025cc8973444fac031e1cb75faf61?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/favorite-puzzles/icon/5f1b33d03f3e41d580e18058ea428e49?width=448",
+   "url": "https://playgama.com/export/game/favorite-puzzles?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/favorite-puzzles",
+   "landscape": true,
+   "portrait": true,
+   "description": "Meet Favorite Puzzles, your new favorite jigsaw puzzles! This addictive puzzle game will delight you with an endless gallery of beautiful images for every taste! Favorite Puzzles will be interesting for kids and adult, in this game you can adjust the…",
+   "howTo": "On PC: - Use the cursor and left mouse button to grab and move the puzzle element - Use the mouse wheel to zoom in or out and to scroll through the elements feed On mobile devices: - Use your fingers to move elements and scale the screen"
+  },
+  {
+   "id": "pg-aod--art-of-defense",
+   "title": "AOD - Art Of Defense",
+   "genres": [
+    "cool-games",
+    "tower-defense",
+    "strategy"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/aod--art-of-defense/big_preview/748d6b91ce3c4a309fd6df323115b434?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/aod--art-of-defense/icon/01ed7544e47a43fc9daffd45b0d23c26?width=448",
+   "url": "https://playgama.com/export/game/aod--art-of-defense?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/aod--art-of-defense",
+   "landscape": true,
+   "portrait": false,
+   "description": "AOD - Art Of Defense is a dynamic tower defense game with elements of strategy and RPG in a post-apocalyptic world.",
+   "howTo": "AOD - Art Of Defense is a dynamic tower defense game set in a post-apocalyptic world. As the commander of the A.O.D squad, you lead the fight against the ruthless cutthroats of Mr. Evil, who are seeking to find the lost Project Inola. With stunning isometric graphics, build your tech kingdoms and thwart the destructive ambitions of your enemy. Can you save humanity or will you succumb to darkness? Game Features: *…"
+  },
+  {
+   "id": "pg-nuts-puzzle-sort-by-color",
+   "title": "Nuts Puzzle: Sort By Color",
+   "genres": [
+    "puzzle",
+    "color",
+    "matching"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/nuts-puzzle-sort-by-color/big_preview/faab3ed519024179b5a31afb72cdf675?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/nuts-puzzle-sort-by-color/icon/e5ff5a52e7d94ef188546cedbac10676?width=448",
+   "url": "https://playgama.com/export/game/nuts-puzzle-sort-by-color?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/nuts-puzzle-sort-by-color",
+   "landscape": false,
+   "portrait": true,
+   "description": "Nuts Puzzle: Sort by Color is a classic puzzle game where you sort various colored nuts onto screws until they are all the same color.",
+   "howTo": "Organize the nuts To play Nuts Puzzle: Sort by Color, start by tapping on the nut you want to move, then select the screw where you want to place it. You can only place a nut on another screw if it’s either empty or if the top nut on that screw matches the color of the nut you’re moving. This simple rule sets the stage for the puzzle-solving challenge, as you’ll need to strategically plan your moves to ensure each…"
+  },
+  {
+   "id": "pg-2-minute-football-qb-legend",
+   "title": "2 Minute Football QB Legend",
+   "genres": [
+    "american-football",
+    "sports"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/preview/c636ca027221477282964a767b7c2764?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/icon/3c3732bfda464e64bf6e24fb50e9e1a9?width=448",
+   "url": "https://playgama.com/export/game/2-minute-football-qb-legend?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/2-minute-football-qb-legend",
+   "landscape": true,
+   "portrait": true,
+   "description": "2 Minute Football QB Legend 27 focuses on the best parts of football - strategy, completing passes and scoring TD's! We make it as easy as possible -- just start passing with a single tap on the screen. There are no complicated control schemes, only pure…",
+   "howTo": "Your goal is to complete passes and score Touchdowns! (getting the ball in the end zone) You must have more points than your opponent when the game ends in order to win the games. Select a play by tapping it. When the players start moving, look for the player that is the least guarded by the defense. Tap near the player you'd like to throw the ball to. Running is automatic, but can be controlled by clicking and…"
+  },
+  {
+   "id": "pg-geometry-arrow-2",
+   "title": "Geometry Arrow 2",
+   "genres": [
+    "arcade",
+    "skill",
+    "popular"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/geometry-arrow-2/big-preview/fa9899500c7145d3a791954f399fcb3b?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-99645/icon/879425bddbcc6adb604bb539268e9fc7e5deb8d452aa753aa10d4525876a9e1f?width=448",
+   "url": "https://playgama.com/export/game/geometry-arrow-2?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/geometry-arrow-2",
+   "landscape": true,
+   "portrait": false,
+   "description": "Geometry Arrow 2 ─ sequel of the game about the arrow in the cave.",
+   "howTo": "Choose one of the 13 levels in the menu and start the game by clicking it with the left mouse button, the SPACEBAR or your finger. PC controls: ─ LEFT MOUSE BUTTON or SPACEBAR ─ arrow movement; ─ ESCAPE ─ exit the level. MOBILE controls: ─ TOUCHING THE SCREEN ─ movement of the arrow."
+  },
+  {
+   "id": "pg-tap-3d-wood-block-away",
+   "title": "Tap 3D Wood Block Away",
+   "genres": [
+    "puzzle",
+    "3d",
+    "brain"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/tap-3d-wood-block-away/big_preview/ecdad60b756f4006aec4d3a7d8d3c55d?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/tap-3d-wood-block-away/icon/c2a375f0c6b94420b2b958e797079762?width=448",
+   "url": "https://playgama.com/export/game/tap-3d-wood-block-away?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/tap-3d-wood-block-away",
+   "landscape": true,
+   "portrait": true,
+   "description": "Discover the captivating world of Tap 3D Wood Block Away, a free online puzzle game that combines creativity and logic. Rotate and tap wooden blocks to reveal intricate 3D designs. Enjoy challenging levels that stimulate your mind, whether you play on your…",
+   "howTo": "Tap 3D Wood Block Away is a challenging and addictive puzzle game where you rotate and tap to clear blocks, unlocking complex 3D structures. With intuitive controls, simply swipe to rotate and tap to remove cubes in the correct order. Progress through increasingly tricky levels, sharpen your spatial thinking, and enjoy a satisfying puzzle experience at your own pace!"
+  },
+  {
+   "id": "pg-wild-love",
+   "title": "Wild Love",
+   "genres": [
+    "story",
+    "girls",
+    "mobile"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/wild-love/big-preview/96d2f507a5c24c41a59e22748becd1fe?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-115951/icon/4c0523ba2c56b1c2879767cb37eadc78dfa1fcd4b56e3fe55085cf0ee84c60d0?width=448",
+   "url": "https://playgama.com/export/game/wild-love?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/wild-love",
+   "landscape": false,
+   "portrait": true,
+   "description": "An adventure awaits you on a mysterious island where the heroine is in danger at every turn. Make the right decisions, try to guess who is a friend and who is an enemy.",
+   "howTo": "It's easy to play - flip through the novel, immersing yourself in the amazing story and empathizing with the heroine. Choose what the heroine will say and do by pressing the buttons at times when the game offers choices."
+  },
+  {
+   "id": "pg-sky-wars-battle-of-the-islands",
+   "title": "Sky Wars: Battle of the Islands",
+   "genres": [
+    "action",
+    "3d",
+    "platform"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/sky-wars-battle-of-the-islands/big_preview/c7193ac583984faeb904dbeb31a50086?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/sky-wars-battle-of-the-islands/icon/4961b7ca3a4b4615ab9f84fdf5d62b70?width=448",
+   "url": "https://playgama.com/export/game/sky-wars-battle-of-the-islands?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/sky-wars-battle-of-the-islands",
+   "landscape": true,
+   "portrait": false,
+   "description": "Sky Wars is a blocky island-battle game for one player against seven bots. Everyone spawns in a glass cage on a floating island with three chests. Loot swords, armor, bows, ender pearls and golden apples, bridge block by block to the middle island for better…",
+   "howTo": "Goal: be the last player alive. Open the 3 chests on your island, gear up, then build bridges to the middle island and to enemy islands. Players who fall into the void are out. PC: WASD move, mouse look, Space jump, Shift sneak (sneak at an edge to bridge safely), Ctrl or double W sprint, left click attack or mine, right click place block, open chest, shoot bow or eat, 1-9 or mouse wheel select item, E inventory, F5…"
+  },
+  {
+   "id": "pg-1-speed-escape-prison",
+   "title": "+1 Speed: Escape Prison",
+   "genres": [
+    "obby"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/1-speed-escape-prison/big-preview/415c3326c7724e6cae83d74990cc3020?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-122192/icon/248e3f4537e31c30d2ad784c8a429c1285310c885670d890a8b3955233236cc9?width=448",
+   "url": "https://playgama.com/export/game/1-speed-escape-prison?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/1-speed-escape-prison",
+   "landscape": true,
+   "portrait": false,
+   "description": "Get ready for a wild prison break in this dynamic obstacle parkour game with +1 Speed boosts! Your goal is to escape from prison by navigating challenging obstacles and accelerating with each level. This is a real escape where every mistake can set you back!",
+   "howTo": "✅ Controls On PC: Right-click - rotate camera WASD / arrow keys - move character Spacebar - jump On mobile: Controls via interface elements Rotate camera — swipe on the right side of the screen ✅ Gameplay 🔶 Upgrade your stats in the prison cell. Collect energy or work out on the exercise machines 🔶 For every step you take, you gain a speed boost; the more you move, the faster you become 🔶 Complete levels, collect…"
+  },
+  {
+   "id": "pg-dead-land-survival",
+   "title": "Dead Land: Survival",
+   "genres": [
+    "simulation",
+    "survival",
+    "zombie"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/preview/4a2e9dca0ae44898b575074fc0531065?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/icon/eea30f5c05e84c5d959400b98de18106?width=448",
+   "url": "https://playgama.com/export/game/dead-land-survival?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/dead-land-survival",
+   "landscape": true,
+   "portrait": false,
+   "description": "Dead Land: Survival is a multiplayer survival simulator set in a post-apocalyptic setting. The familiar world is destroyed – cities are in decay, with thousands of bloodthirsty zombies roaming their streets. Improve your hero, restore your shelter, venture…",
+   "howTo": "How to repair items? Broken items can be repaired in the Workshop building under the Repair tab. How to install a new chest in the warehouse? To do this, you need to free up space in the warehouse. Remove one of the installed boxes, clearing it of items, and then place the new chest in its spot. What are lighters, cigarettes, matches, pine cones, and other items for? Most in-game items may be needed for completing…"
+  },
+  {
+   "id": "pg-rise-of-the-dead",
+   "title": "Rise of the Dead",
+   "genres": [
+    "scary",
+    "monster",
+    "halloween"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/rise-of-the-dead/big-preview/123a84fd979245ed93b03fe4b412cfe2?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-98057/icon/5c1b1f310bc56066b9bf0b163a1be5ca53ca0b9e349ad3ecbab106e48596c2a1?width=448",
+   "url": "https://playgama.com/export/game/rise-of-the-dead?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/rise-of-the-dead",
+   "landscape": true,
+   "portrait": false,
+   "description": "Rise of the Dead is a shooting horror game where you must fight off waves of zombies at every angle while completing task-driven quests. As the city falls into chaos, your mission is to uncover the cause of the apocalypse and fight to survive. Upgrade your…",
+   "howTo": "Keyboard Controls: Movement: Arrow keys (W A S D) Menu: Tab Shoot: left click Reload: R Punch: E Change weapon: Q Use prop 1: G Use prop 2: F Zoom: Scrollbar Mobile Controls: Movement: Virtual Joystick [Joystick Image] Actions: Tap corresponding buttons"
+  },
+  {
+   "id": "pg-last-play-ragdoll-sandbox",
+   "title": "Last Play: Ragdoll Sandbox",
+   "genres": [
+    "ragdoll",
+    "funny",
+    "simulation"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/last-play-ragdoll-sandbox/big_preview/f921e3ca468e4bc3a5361109488c568f?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/last-play-ragdoll-sandbox/icon/e5ba47039ed9433bb6f1ce1f5a4cafe5?width=448",
+   "url": "https://playgama.com/export/game/last-play-ragdoll-sandbox?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/last-play-ragdoll-sandbox",
+   "landscape": true,
+   "portrait": false,
+   "description": "Welcome to Last Play: Ragdoll Sandbox, your ultimate sandbox universe where creativity knows no bounds!",
+   "howTo": "Arrange battles in the sandbox and unlock new items by passing challenge in a variety of genres. Go through mini-games to unlock new characters for the sandbox and make the battle of your dreams come true. Use the WASD buttons on the keyboard or touchscreen to move the character. Use the left and right mouse buttons or the touchscreen to interact with sandbox objects and the interface."
+  },
+  {
+   "id": "pg-backrooms-exit-protocol-0",
+   "title": "Backrooms: Exit Protocol 0",
+   "genres": [
+    "horror",
+    "adventure",
+    "running"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/preview/89c731c985b64f68aa280815ebb98f77?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/icon/13ee2e87eb33456bb01abe4a32b81bfa?width=448",
+   "url": "https://playgama.com/export/game/backrooms-exit-protocol-0?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/backrooms-exit-protocol-0",
+   "landscape": true,
+   "portrait": false,
+   "description": "Backrooms: Exit Protocol 0 — a terrifying horror survival game! Explore Level 0, find the keycard, solve puzzles, avoid the monster, and escape the backrooms!",
+   "howTo": "PC Controls: Move — W, A, S, D or Arrow Keys; Jump — Space; Run — Shift; Crouch — C; Interact — E; Drop item — R; Open Menu — Tab; Zoom Camera — Right Mouse Button (RMB); Mobile Controls: Move — Joystick; Jump — Jump Button; Run — Run Button; Drop item - Drop Button; Crouch — Crouch Button; Rotate Camera — Right side of the screen; Interact — Button with the \"E\" icon; Open Menu — Button in the top-right corner."
+  },
+  {
+   "id": "pg-save-the-pets-draw-to-save",
+   "title": "Save The Pets: Draw to Save",
+   "genres": [
+    "puzzle",
+    "drawing",
+    "dog"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/save-the-pets-draw-to-save/big-preview/1fb8c24eaefd4352a866b3e208168d9f?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-121307/icon/158191068f6137ee872fca9e2d67c298f74e9e5ca8f6af9c68d063d06497f366?width=448",
+   "url": "https://playgama.com/export/game/save-the-pets-draw-to-save?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/save-the-pets-draw-to-save",
+   "landscape": true,
+   "portrait": true,
+   "description": "Watch out! The cute dog is in danger.",
+   "howTo": "Touch and drag to draw a protective line. Keep the dog safe for at least 10 seconds. The shorter your line, the more stars you earn. Join the fun and save the dog today!"
+  },
+  {
+   "id": "pg-find-part-in-lovestory",
+   "title": "Find Part in Love Story",
+   "genres": [
+    "adventure",
+    "story",
+    "hidden-object"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/find-part-in-lovestory/big-preview/1f6574da94004f5e8a8dc96833541596?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-86327/icon/7853dc3eaff0674a23f2b63bf0346ba07377bf53835895bb14ebd154890f63bc?width=448",
+   "url": "https://playgama.com/export/game/find-part-in-lovestory?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/find-part-in-lovestory",
+   "landscape": true,
+   "portrait": true,
+   "description": "Find Part in Love Story is an exciting puzzle game where you can dive into a captivating romantic adventure. Play online for free without downloading and immerse yourself in the atmosphere of mystery and humor. The game follows a loving couple as they…",
+   "howTo": "-Read the assignment -Point the scanner at the heroes and their surroundings -Find the desired object and click on it Complete all the levels and help the couple get out of funny situations!"
+  },
+  {
+   "id": "pg-hidden-objects-island-secrets",
+   "title": "Hidden Objects: Island Secrets",
+   "genres": [
+    "hidden-object",
+    "story",
+    "mouse"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/hidden-objects-island-secrets/big-preview/b3ce353c3ceb41be990ddee1759a2144?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-116495/icon/9ef3e301a5e25df7f4c3644e617e4b422578f116b29792c45ebebd2d089bcfc3?width=448",
+   "url": "https://playgama.com/export/game/hidden-objects-island-secrets?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/hidden-objects-island-secrets",
+   "landscape": true,
+   "portrait": true,
+   "description": "Hidden Objects: Island Secrets is an exciting hidden object game where magic and time intertwine in a thrilling adventure. Everything changed when a mysterious magical crystal activated, scattering objects across time! You'll enter a world of riddles, hidden…",
+   "howTo": "🔍 Find Hidden Objects — Explore locations and discover all the hidden items to uncover the island's secrets. 🔄 Free Movement — Move left and right across the location and use zoom to examine every detail. 📱 Play Anywhere — Enjoy the game on your computer or phone anytime. 💡 Hint Help — If an item is too hard to find, use a hint to continue your adventure."
+  },
+  {
+   "id": "pg-hazmob-fps-online-shooter",
+   "title": "Hazmob FPS: Online Shooter",
+   "genres": [
+    "action",
+    "multiplayer",
+    "shooting"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/hazmob-fps-online-shooter/big_preview/df01c609f8c44052b837b336d0e63617?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/hazmob-fps-online-shooter/icon/ee2ef33081624f1eab03827b6f212bb6?width=448",
+   "url": "https://playgama.com/export/game/hazmob-fps-online-shooter?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/hazmob-fps-online-shooter",
+   "landscape": true,
+   "portrait": false,
+   "description": "Hazmob FPS is a multiplayer shooting FPS game where every second counts! Play against other players across multiple game modes in non-stop combat. This first-person shooter game is ideal for those seeking a bit of thrill.",
+   "howTo": "Controls WASD = move Space = jump Left mouse = shoot Right mouse / V = aim P = leaderboard, pause, and settings G = pick up the gun C = crouch Shift = run 1, 2, 3 = switch weapons 4, 5, 6 = skills E = alternative skills Q = alternative skills"
+  },
+  {
+   "id": "pg-moto-x3m",
+   "title": "Moto X3M",
+   "genres": [
+    "racing",
+    "motorbike",
+    "dirt-bike"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/moto-x3m/big_preview/6863e1c77f624087bae1d217cdf4c240?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/moto-x3m/icon/c65bb58f726d4e538f3202f12675cc71?width=448",
+   "url": "https://playgama.com/export/game/moto-x3m?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/moto-x3m",
+   "landscape": true,
+   "portrait": true,
+   "description": "Moto X3M is an awesome bike game with challenging levels. Choose a bike, put your helmet on, pass obstacles, and get ready to beat the time on tons of off-road circuits. Have fun with Moto X3M! The controls are simple – use the keyboard arrow keys to control…",
+   "howTo": "WASD or ARROWS Press the up arrow key to accelerate Balance your bike with the left and right arrow keys Break by pressing the down arrow key Perform flips and other stunts to gain time Don't crash"
+  },
+  {
+   "id": "pg-word-finder",
+   "title": "Word Finder",
+   "genres": [
+    "words",
+    "brain",
+    "logic"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/word-finder/big_preview/781af1adb04747a5b1fafedc05eef869?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/word-finder/icon/f9f24184faad4da2a268bed307505737?width=448",
+   "url": "https://playgama.com/export/game/word-finder?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/word-finder",
+   "landscape": true,
+   "portrait": true,
+   "description": "🐹Playing Word Finder 10 minutes a day sharpens your mind and prepares you for your daily life and challenges!🐹",
+   "howTo": "● Swipe over letters to connect them in the right order to create words. ● Find all related words to clear the level."
+  },
+  {
+   "id": "pg-arrow-exit-puzzle",
+   "title": "Arrow Exit Puzzle",
+   "genres": [
+    "matching",
+    "puzzle",
+    "brain"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/arrow-exit-puzzle/big-preview/8fb99bdb64614846863eeed2c60a222d?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/icon/f5ffdc0eaff74cafbc95e2fcfd21eb02?width=448",
+   "url": "https://playgama.com/export/game/arrow-exit-puzzle?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/arrow-exit-puzzle",
+   "landscape": false,
+   "portrait": true,
+   "description": "🔓 Unlock your logic with Arrow Away!",
+   "howTo": "Click on the arrows to make them move in the designated direction. The arrows will be blocked if they encounter an obstacle, and you will lose 1 health point. Losing all 3 health points means you lose the game."
+  },
+  {
+   "id": "pg-hidden-objects-island",
+   "title": "Hidden Objects: Island",
+   "genres": [
+    "hidden-object",
+    "adventure"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/hidden-objects-island/big_preview/f23b7b464ab64392a1a16f5b1d8b0b0b?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/hidden-objects-island/icon/c0fb39a37f7440e4a4e745b6e8d877c5?width=448",
+   "url": "https://playgama.com/export/game/hidden-objects-island?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/hidden-objects-island",
+   "landscape": true,
+   "portrait": false,
+   "description": "Step into the world of hidden secrets and surprises, where every location tells a story. From serene beaches and tranquil Japanese gardens to magical flying houses and rustic fishing villages, this game takes you to breathtaking destinations. Uncover the…",
+   "howTo": "Controls: Click or tap objects hidden in the picture. Use hints to reveal hard-to-find items faster."
+  },
+  {
+   "id": "pg-block-blast-2048",
+   "title": "Block Blast 2048",
+   "genres": [
+    "blocks",
+    "merge",
+    "puzzle"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/block-blast-2048/big-preview/15f394ba6c12422fb69c4905e35ed8ed?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-118589/icon/16a0c792b9cb45b247e7b1abe67c1f305883ef4dac428dd4d4a3f1f1bebb2d4b?width=448",
+   "url": "https://playgama.com/export/game/block-blast-2048?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/block-blast-2048",
+   "landscape": true,
+   "portrait": true,
+   "description": "Block Blast 2048 is a calm yet engaging number puzzle where it’s easy to relax while sharpening your logic. Merge adjacent blocks with the same numbers, watch them grow into larger values, and move step by step toward new high scores.",
+   "howTo": "- Tap adjacent blocks with the same numbers to merge them into larger values. - Each successful merge increases your score and frees up space on the board. - Plan your moves — space management is the key to long runs. - Enjoy the magic of transformation as small numbers turn into impressive combinations. - Play at your own pace, enjoy the journey, and aim for new heights — records will come naturally!"
+  },
+  {
+   "id": "pg-geometry-black-wave",
+   "title": "Geometry: Black Wave",
+   "genres": [
+    "skill",
+    "platform",
+    "arcade"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/geometry-black-wave/big-preview/66ec5ee2015f407ba0a0e1357ec190fe?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-118340/icon/a0727e09a366aeb693f56cfb5eb1dd5f3b810131b00ac0c195e93862210a4bf4?width=448",
+   "url": "https://playgama.com/export/game/geometry-black-wave?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/geometry-black-wave",
+   "landscape": true,
+   "portrait": false,
+   "description": "“Geometry: Black Wave” is a musical platformer game in which the player controls a small arrow, overcoming various obstacles and hurdles on the way to the finish line. The game features black and white graphics and an exciting soundtrack that is synchronized…",
+   "howTo": "\"Geometry: Black Wave\" can be tricky, but with these detailed instructions, you'll be able to master it in no time: 1. Start the game and select a level. The difficulty of the level depends on the emoji drawn on the button. 3. To move up, tap and hold the screen. The longer you press the screen, the higher the wave will rise, but until it hits the wall. 4. To move downward, release the screen. This will cause the…"
+  },
+  {
+   "id": "pg-swat-ops-body-camera",
+   "title": "SWAT OPS: Body Camera",
+   "genres": [
+    "action",
+    "shooting",
+    "3d"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/preview/d2edb209ce274dc98ea45921ea61fd47?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/icon/05ff6289743e4c2ea0f4683cad386fbf?width=448",
+   "url": "https://playgama.com/export/game/swat-ops-body-camera?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/swat-ops-body-camera",
+   "landscape": true,
+   "portrait": true,
+   "description": "SWAT OPS: Body Camera is a first-person tactical shooter seen through an operator's body cam: lens distortion, camera shake and a gritty retro look. Drop into three-minute Deathmatch or ZOMBIE MODE against bots OR REAL PLAYERS on four maps, from a derelict…",
+   "howTo": "Goal: get the most kills before the three-minute timer ends. First to 15 kills wins Deathmatch; the first team to 30 wins Team Deathmatch. DESKTOP WASD: move. Mouse: look. Left click: shoot. Right click: aim down sights. R: reload. Q or mouse wheel: switch weapon. Shift: sprint. Ctrl: crouch. Space: jump. Tab or Esc: PDA menu and scoreboard. MOBILE (landscape) Left stick: move. Drag on the right side: look. Fire…"
+  },
+  {
+   "id": "pg-jump-to-the-rhythm-of-songs-musical-ball",
+   "title": "Jump to the Rhythm of Songs! Musical Ball!",
+   "genres": [
+    "arcade",
+    "music",
+    "easy"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/jump-to-the-rhythm-of-songs-musical-ball/big-preview/d2bd5fb067b944fb872c22d2c32ced8c?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-120472/icon/2bf0b358b3bbb44cd20146857be4b3c641c9c66a425b568d6b5097c495bc20f9?width=448",
+   "url": "https://playgama.com/export/game/jump-to-the-rhythm-of-songs-musical-ball?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/jump-to-the-rhythm-of-songs-musical-ball",
+   "landscape": false,
+   "portrait": true,
+   "description": "🎵 Dive into the world of bright music, fast jumps and fun rhythms with the game \"\" This is a musical rhythm game, where each of your jumps is a hit in the music beat! Complete all the levels, jumping on the tiles to your favorite songs and trends of 2025! Are…",
+   "howTo": "🎯 Jump on the tiles and try to reach the end of the music track! 🕹️ The game controls are simple and intuitive! On the phone📱 — move your finger left or right to move the ball. On the computer💻 — hold the left mouse button and move the mouse. 🏁 Complete as many levels as possible, earn points and unlock new music tracks!"
+  },
+  {
+   "id": "pg-special-ops",
+   "title": "Special Ops: GO",
+   "genres": [
+    "shooting",
+    "first-person-shooter",
+    "action"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/special-ops/big_preview/379c25433de24d13afadf693d918e11e?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/special-ops/icon/643041e15f5345c5bb5d6e671fc23099?width=448",
+   "url": "https://playgama.com/export/game/special-ops?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/special-ops",
+   "landscape": true,
+   "portrait": false,
+   "description": "Play instantly in your browser. Jump into fast 5v5 PvP firefights, climb the ranks, and dominate with modern weapons in Special Ops: FPS PvP War.",
+   "howTo": "WASD = move Space = jump Left mouse = shoot Right mouse = aim P = pause, and settings TAB= leaderboard, 1, 2, 3 = switch weapons H= Health Kit"
+  },
+  {
+   "id": "pg-geometry-vibes-2-online",
+   "title": "Geometry Vibes 2 Online",
+   "genres": [
+    "arcade",
+    "action",
+    "multiplayer"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/geometry-vibes-2-online/big_preview/e10277b149b24088ac41d28fe11caaf5?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/geometry-vibes-2-online/icon/7cdafdb8009745729e01066bbb8c7102?width=448",
+   "url": "https://playgama.com/export/game/geometry-vibes-2-online?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/geometry-vibes-2-online",
+   "landscape": true,
+   "portrait": false,
+   "description": "Geometry Vibes 2 Online takes the fast, precise and addictive gameplay of the original Geometry Vibes and expands it into a much bigger competitive experience. The familiar arrow mechanics and geometric visual style are still here, but this time there are…",
+   "howTo": "Geometry Vibes 2 Online is easy to learn, but mastering the movement and timing takes practice. Your goal is to reach the end of the level without touching any spikes, walls or other obstacles. Press and hold LEFT MOUSE BUTTON or SPACE to make your arrow fly upward. Release the button or key to make the arrow move downward. Use short taps for small movements and longer holds when you need to climb higher.…"
+  },
+  {
+   "id": "pg-geometry-black-ball",
+   "title": "Geometry: Black Ball",
+   "genres": [
+    "arcade",
+    "skill",
+    "ball"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/geometry-black-ball/big-preview/95d68753e39e435e9c2425fde7b231f6?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-118426/icon/1a2c062718a07eefdcb8a0c38795cbb910ce896309d7cc1243356b05cd2e9b77?width=448",
+   "url": "https://playgama.com/export/game/geometry-black-ball?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/geometry-black-ball",
+   "landscape": true,
+   "portrait": false,
+   "description": "Geometry: Black Ball is an exciting arcade game based on the legendary Geometry Dash. In this game, you have to control the ball and overcome various obstacles using the unique mechanics of gravity change.",
+   "howTo": "In the game \"Geometry: Black Ball\" you play as a ball from \"Geometry Dash\". To start the game, select one of the 10 levels that have different difficulty levels displayed by emojis on the level buttons. After selecting a level, the gameplay begins. During the game, you can change the gravity of the ball by pressing the space bar or right mouse button to overcome obstacles. This will help you change the direction of…"
+  },
+  {
+   "id": "pg-the-escape-series-playgama",
+   "title": "The Escape Series",
+   "genres": [
+    "escape",
+    "adventure",
+    "brain"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/the-escape-series-playgama/big-preview/29528ec6375f47ccbefdb10b9d5b3640?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-6237/icon/ec2562a082d8b6fbf5b9515e617c40f0eea86c855eeef173a745530e31f70ce5?width=448",
+   "url": "https://playgama.com/export/game/the-escape-series-playgama?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/the-escape-series-playgama",
+   "landscape": true,
+   "portrait": true,
+   "description": "The Escape Series is an intriguing game that tests your intellect and analytical abilities. Explore detailed environments for clues and objects to aid your escape. Each space features distinct puzzles and riddles to overcome, ensuring a captivating experience…",
+   "howTo": "Use the mouse to select and interact with objects, solve the codes and find a way out of the room using logic and solving puzzles"
+  },
+  {
+   "id": "pg-smod-sandbox-in-backrooms",
+   "title": "SMod: Sandbox in Backrooms",
+   "genres": [
+    "first-person-shooter",
+    "action",
+    "pve"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/smod-sandbox-in-backrooms/big-preview/76fdbaa3e10b4777a5ad3c5761d6c72e?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-120972/icon/c241296efe0ed36642c1749554a8214f9d90c8f713a889197151c865abf9dfc2?width=448",
+   "url": "https://playgama.com/export/game/smod-sandbox-in-backrooms?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/smod-sandbox-in-backrooms",
+   "landscape": true,
+   "portrait": false,
+   "description": "SMod: Sandbox in Backrooms is a mod-style game based on the sandbox and the Backrooms. It is a real-time simulator with enemies spawning and levels to complete. In this game, you can spawn enemies using a portal gun, complete quests, and search for weapons.",
+   "howTo": "Your task is to destroy as many monsters as possible😎! Save your points and get to the top of the leaderboard🏆! Have fun playing😉! On PC: Left mouse button: shooting. Tab: opening the monster spawn panel. WASD: moving the character. Mouse movement: controlling the camera. Spacebar: flying and jumping. On phone: Left joystick: moving. The jump button on the right side of the screen: flight and jump. The right side of…"
+  },
+  {
+   "id": "pg-tank-1944",
+   "title": "Tank 1944",
+   "genres": [
+    "shooting",
+    "army",
+    "action"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/tank-1944/big-preview/2ca50ee78f6e4fe989cc3d01e77b0d31?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-117224/icon/b71a9ae8b829ee19300970344357c13fda0e20410e071aaa575cc6624d0757f2?width=448",
+   "url": "https://playgama.com/export/game/tank-1944?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/tank-1944",
+   "landscape": true,
+   "portrait": false,
+   "description": "Tanks 1944 is an exciting game about realistic tanks.",
+   "howTo": "Your goal is to defeat everyone on the battlefield! Choose a tank, start the game, calculate the shot of the gun, and pull the trigger. The opponent must be defeated! Good luck!"
+  },
+  {
+   "id": "pg-detective-max-mystery-the-disappearance-of-mr-winters",
+   "title": "Detective Max Mystery: The Disappearance of Mr. Winters",
+   "genres": [
+    "adventure",
+    "point-and-click",
+    "hidden-object"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/detective-max-mystery-the-disappearance-of-mr-winters/big-preview/f21d60d399f84a2e90112f3317c47b0f?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-106390/icon/4ac7e83a6aae17a94463d50b290db31c98b4395af4ddc0ffc8ba278240f58402?width=448",
+   "url": "https://playgama.com/export/game/detective-max-mystery-the-disappearance-of-mr-winters?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/detective-max-mystery-the-disappearance-of-mr-winters",
+   "landscape": true,
+   "portrait": false,
+   "description": "Game description:",
+   "howTo": "How to play: Where did detective Max's neighbour, Mr. Winters, go? Explore his apartment in search of evidence and the mysterious box. 🔍 Point and click the areas of the screen you want to investigate. 🧩 Solve puzzles by clicking and dragging objects. 👆Use the stuff you picked up and placed in the inventory. 💡Use a little hint if you got stuck."
+  },
+  {
+   "id": "pg-ash-of-the-front",
+   "title": "Ash of the Front",
+   "genres": [
+    "action",
+    "tanks",
+    "army"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/ash-of-the-front/big_preview/5021fe2bbf0d49f78789f05feab48f70?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/ash-of-the-front/icon/1d0f31c436bc4ee9b36cf24d140a62d2?width=448",
+   "url": "https://playgama.com/export/game/ash-of-the-front?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/ash-of-the-front",
+   "landscape": true,
+   "portrait": false,
+   "description": "For forty years the war has ground down the Valley of Sorrow, the last pass to Calder, the city where the lights still burn. The Ash Corps holds the valley. The Rust Legion is coming through.",
+   "howTo": "On a phone: tap a squad to select it, then tap the ground and it runs there, firing on the move. Tap a building and the company occupies it and fires from the windows. One finger pans the map, two fingers zoom. Buttons on the right: All selects the whole army, Line lets you draw a firing line with your finger, Halt stops, Clear drops the selection. Swipe the reinforcement and strike cards at the bottom: tap a card,…"
+  },
+  {
+   "id": "pg-car-crash-tricks-simulator-crazy-stunts",
+   "title": "Car Crash Tricks Simulator Crazy Stunts",
+   "genres": [
+    "arcade",
+    "car",
+    "driving"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/car-crash-tricks-simulator-crazy-stunts/big_preview/81b3c64c671348e1b8730801cdcea7c0?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/car-crash-tricks-simulator-crazy-stunts/icon/7a0435a1f79b4911ae08d9f4dcc99ba4?width=448",
+   "url": "https://playgama.com/export/game/car-crash-tricks-simulator-crazy-stunts?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/car-crash-tricks-simulator-crazy-stunts",
+   "landscape": true,
+   "portrait": false,
+   "description": "Car Crash Tricks Simulator – Ultimate Destruction & Stunts!",
+   "howTo": "Controls: W / Up Arrow accelerate S / Down Arrow brake A / Left Arrow steer left D / Right Arrow steer right Space handbrake Esc - pause / options"
+  },
+  {
+   "id": "pg-the-road-home-granny-escape",
+   "title": "The Road Home: Granny Escape",
+   "genres": [
+    "adventure",
+    "escape",
+    "story"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/the-road-home-granny-escape/big-preview/8d43f1cb9fa347d483df6104320d4e4a?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-109560/icon/5086ba5043725a1861d1b43487f25648757c57b75a5f69f1b8d34a2e7fc19635?width=448",
+   "url": "https://playgama.com/export/game/the-road-home-granny-escape?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/the-road-home-granny-escape",
+   "landscape": true,
+   "portrait": false,
+   "description": "The Road Home: Granny Escape is a terrifying 3D horror survival game where your only goal is to escape a haunted house filled with danger, puzzles, and fear. You're not here by accident — Granny and Grandpa brought you here on purpose, and they won’t let you…",
+   "howTo": "WASD — Move C — Crouch Space — Jump The main goal is to escape from the old people's house. Find useful items and use them to your advantage."
+  },
+  {
+   "id": "pg-brick-breaker-chipi-chipi-chapa-chapa",
+   "title": "Brick Breaker Chipi Chipi Chapa Chapa Cat",
+   "genres": [
+    "funny",
+    "cats",
+    "mobile"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/brick-breaker-chipi-chipi-chapa-chapa/big-preview/03230d35380749f1a5c613af360e97a5?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-64009/icon/8642a3bac803863bfa06ab883b270ec6822ea550b45392ec0529f603d0a6b0bb?width=448",
+   "url": "https://playgama.com/export/game/brick-breaker-chipi-chipi-chapa-chapa?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/brick-breaker-chipi-chipi-chapa-chapa",
+   "landscape": true,
+   "portrait": true,
+   "description": "Brick Breaker Chipi Chipi Chapa Chapa Cat is a fun meme game where you need to break bricks, collect power-ups for more fun breaking bricks, and watch Chipy Chipy Chipa Cat and El Primo Bara Bere dancing. Go through interesting and exciting levels in the fun…",
+   "howTo": "Control the bottom area and hit the balls into the green blocks. Once all the green blocks are destroyed, the level will be completed. Collect falling bonuses in order to increase the number of balls and gain extra life."
+  },
+  {
+   "id": "pg-grow-empire",
+   "title": "Grow Empire",
+   "genres": [
+    "strategy",
+    "tower-defense",
+    "army"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/grow-empire/big-preview/87ac17d7036d48a3bcc663ccce1b34d0?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-114501/icon/e7cf695099b4ad90cca0d38564c47de64fac0f4be0d5d5b1915d61a7b8203003?width=448",
+   "url": "https://playgama.com/export/game/grow-empire?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/grow-empire",
+   "landscape": true,
+   "portrait": false,
+   "description": "Strategically upgrade your walls, towers, and warriors. Defend your city from the attacks of elephants, siege guns and waves of enemy troops, covering the sky with arrows and fire.",
+   "howTo": "Your task is either to defend the fortress or to attack! Release troops to attack or defend - they will fight automatically. To defeat the enemy, use various abilities and upgrade your warriors."
+  },
+  {
+   "id": "pg-twisted-rope-3d",
+   "title": "Twisted Rope 3D",
+   "genres": [
+    "puzzle",
+    "3d",
+    "logic"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/twisted-rope-3d/big-preview/00a92e3e38c04f4288e7732a91c66d17?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-93481/icon/27c8f9b6fdfc21f2278b6bef755b4140509683d6dbe4766575adfcd2dbabc67d?width=448",
+   "url": "https://playgama.com/export/game/twisted-rope-3d?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/twisted-rope-3d",
+   "landscape": false,
+   "portrait": true,
+   "description": "Rope Tangle Puzzle is a captivating mobile game for Android that challenges players to untangle ropes arranged in intricate configurations. This free-to-play puzzle game requires strategic thinking as players manipulate ropes without creating new knots. Using…",
+   "howTo": "Jump into Twisted wonderland and become a Tangle master with Twisted Rope 3D! 🪢 🎀Challenge yourself with this immersive tangle rope 3D puzzle game where untangle knots becomes an art. Twisted Rope 3D is designed to test your mental sharpness as you work through increasingly complex twisted tangle puzzles. Use precision and strategy to untie the most challenging knots 3D and become a true Tangle master."
+  },
+  {
+   "id": "pg-five-nights-at-christmas",
+   "title": "Five Nights at Christmas",
+   "genres": [
+    "scary",
+    "horror",
+    "christmas"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/five-nights-at-christmas/big-preview/ff5f8b877e88481da903a946bc4eb1ff?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-118485/icon/775e31a1bbdcbf14b32c4db6bfb7962e262ce9f78179aa35426cbcc0e45a4435?width=448",
+   "url": "https://playgama.com/export/game/five-nights-at-christmas?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/five-nights-at-christmas",
+   "landscape": true,
+   "portrait": false,
+   "description": "Five Nights at Christmas - Is Horror Survival game where you have to survive the nights in a snowy forest there will be",
+   "howTo": "[ WASD ] - Move [ Mouse ] - Look [ E ] - Intract Just survive as many days as you can and make sure you didn't get freezed up!"
+  },
+  {
+   "id": "pg-extreme-police-chase",
+   "title": "Extreme Police Chase",
+   "genres": [
+    "arcade",
+    "action",
+    "racing"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/extreme-police-chase/big_preview/2a8f18c845d645d18bef808960ac7bac?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/extreme-police-chase/icon/e9041d6aa2964f4d81bbef513506b0d8?width=448",
+   "url": "https://playgama.com/export/game/extreme-police-chase?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/extreme-police-chase",
+   "landscape": true,
+   "portrait": false,
+   "description": "Get ready for Extreme Police Chase, a high-speed police car driving game where every second counts. Race through highway traffic, chase fleeing cars and prove you have what it takes to master the pursuit!",
+   "howTo": "Use the arrow keys or WASD to drive and control your vehicle. Accelerate, brake, steer, and explore the different maps while avoiding obstacles. Your goal is to drive as fast as possible, explore the environments, and unlock new vehicles. Use the arrow keys or WASD to steer and drive"
+  },
+  {
+   "id": "pg-mfps-military-combat",
+   "title": "MFPS:Military Combat",
+   "genres": [
+    "action",
+    "multiplayer",
+    "shooting"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/mfps-military-combat/big_preview/0871016162b64e05980ef8f2e1a56391?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/mfps-military-combat/icon/231c5b0f6ae14c809753f31b441d344d?width=448",
+   "url": "https://playgama.com/export/game/mfps-military-combat?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/mfps-military-combat",
+   "landscape": true,
+   "portrait": false,
+   "description": "Engage in gunfights, survive the chaos, eliminate rivals and rise as champion of the battlefield .",
+   "howTo": "WASD keys to move, Left Mouse Click to attack, Right Mouse Click for special actions . '"
+  },
+  {
+   "id": "pg-wild-wolf-simulator-animal-games",
+   "title": "Wild Wolf Simulator Animal Games",
+   "genres": [
+    "arcade",
+    "wolf",
+    "simulation"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/wild-wolf-simulator-animal-games/big_preview/87476d4025e645f28e58aa1161173c3d?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/wild-wolf-simulator-animal-games/icon/938ccfc96e2a40a4b013d0451d218e1b?width=448",
+   "url": "https://playgama.com/export/game/wild-wolf-simulator-animal-games?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/wild-wolf-simulator-animal-games",
+   "landscape": true,
+   "portrait": false,
+   "description": "Enter the wilderness and experience life as a powerful wolf in Wild Wolf Simulator Animal Games! Explore forests, mountains, snowy areas, plains, and deserts while hunting animals, protecting your territory, and completing exciting survival missions.",
+   "howTo": "Desktop: F = action Tab = Skip Cutscene Shift = Run Q = Attack R = Special attack 1 V = Special attack 2 C = Special attack 3 X = Special attack 4 Z = Special attack 5 p = Pause N = Skip level I = Info Mobile: On-Screen Joystick: Move in all directions by dragging the joystick. Use the screen drag to move the camera"
+  },
+  {
+   "id": "pg-mini-golf-battle",
+   "title": "Mini Golf Battle",
+   "genres": [
+    "mini-golf",
+    "ball",
+    "mobile"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/mini-golf-battle/big-preview/efb0bcca91644898a68b12cb834923ce?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-110346/icon/3ec712fbcbbd62b09ec33a96803bd3a4a3f3a9b769e76db140d614488c693556?width=448",
+   "url": "https://playgama.com/export/game/mini-golf-battle?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/mini-golf-battle",
+   "landscape": true,
+   "portrait": true,
+   "description": "Mini Golf Battle is a fun and casual mini golf challenge where your goal is simple: hit the ball into the hole with as few shots as possible. The game combines easy controls with tricky levels full of slopes, angles, and obstacles that test your timing and…",
+   "howTo": "Drag/swipe in the direction you want the ball to move. Pull back and release to adjust the strength of your shot. The longer you drag, the stronger the hit. Try to sink the ball into the hole in the fewest strokes possible. Watch out for walls, ramps, and barriers that can deflect your ball. Use angles to bounce around corners smartly. Fire Power: This bonus gives your ball a flaming speed boost. It’s useful for…"
+  },
+  {
+   "id": "pg-sumo-fury",
+   "title": "Sumo Fury",
+   "genres": [
+    "action",
+    "fighting",
+    "wrestling"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/sumo-fury/big-preview/f85f2ae208264464aea61ab5d3f5869c?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-97964/icon/d220ea18e93c0b2b280d55addbc04c04bfa012953c0f34a48f41f164f5d34faf?width=448",
+   "url": "https://playgama.com/export/game/sumo-fury?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/sumo-fury",
+   "landscape": true,
+   "portrait": false,
+   "description": "Dive into the thrilling world of Sumo Fury, where you can acquire powerful wrestlers with superior stats and challenge rivals globally. Show your mastery in combat, earn in-game currency through victories, and unlock stronger fighters to dominate the arena.…",
+   "howTo": "Keyboard Controls: Movement: Arrow keys (← ↑ → ↓) Punch: Z Kick: X Defend: C Jump: Spacebar Mobile Controls: Movement: Virtual Joystick [Joystick Image] Actions: Tap corresponding buttons"
+  },
+  {
+   "id": "pg-locked-in-grandmas-basement-2",
+   "title": "Locked in Grandma’s Basement 2: Revenge - Horror Escape",
+   "genres": [
+    "horror",
+    "point-and-click",
+    "escape"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/locked-in-grandmas-basement-2/big-preview/2d86c6518a1c4434ba55cae0bb9b3325?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-112483/icon/85b0b3fe3b18f5641f26d74776e946d61d040ed1b9541f5cebc98ac81eca2efe?width=448",
+   "url": "https://playgama.com/export/game/locked-in-grandmas-basement-2?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/locked-in-grandmas-basement-2",
+   "landscape": true,
+   "portrait": false,
+   "description": "Locked in Grandma’s Basement 2: Revenge – Horror Escape is the chilling sequel to the cult classic point-and-click horror game.",
+   "howTo": "This is a classic point-and-click adventure with a first-person view. You don’t move around freely — instead, you explore each scene from a fixed perspective. Click on objects to examine them, collect useful items, and use them in the right places to solve puzzles and progress through the story. Every interaction matters, so pay attention to details and think logically to escape."
+  },
+  {
+   "id": "pg-Super-Frog-Adventure",
+   "title": "Super Frog Adventure",
+   "genres": [
+    "platform",
+    "retro",
+    "mobile"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/super-frog-adventure/big_preview/fbac1b2dd90446e0b9d53f1ba5da5976?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-106328/icon/aafd511b89758b0c07d7e3f2efc24604b9a8d4a1f55434ca27fe923a1037484d?width=448",
+   "url": "https://playgama.com/export/game/Super-Frog-Adventure?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/Super-Frog-Adventure",
+   "landscape": true,
+   "portrait": false,
+   "description": "\"Super Frog Adventure\" is a great platformer that takes you into the world of classic Super Mario style games. The game features 8 incredible and challenging levels, each offering unique obstacles and challenges. Control the super frog, overcome obstacles,…",
+   "howTo": "Desktop: Left/Right or A/D keyboard keys to move the character. Up arrow or W keyboard key to make the character jump. Mobile: Use touch screen buttons. Press jump button in the air to perform a double jump. Collect all the fruits to pass the level!"
+  },
+  {
+   "id": "pg-trial-xtreme",
+   "title": "Trial Xtreme",
+   "genres": [
+    "bike",
+    "motorbike",
+    "driving"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/trial-xtreme/big-preview/985bb31f53d947d381d1035f772daa38?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-119993/icon/2d1b0baa269ff4a150d68dff1500d37d2edf2649d765d89580e9988963cb9bca?width=448",
+   "url": "https://playgama.com/export/game/trial-xtreme?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/trial-xtreme",
+   "landscape": true,
+   "portrait": false,
+   "description": "Trial Xtreme is a thrilling motorcycle racing game that puts your balance, precision, and endurance to the test. Ride through challenging obstacle-filled tracks packed with ramps, pipes, rocks, and tricky barriers where every move can lead to victory or a…",
+   "howTo": "Ride your motorcycle from start to finish while overcoming difficult obstacles along the track. Use the controls to accelerate, brake, and balance your bike carefully to avoid falling. Try to finish each level as fast as possible and collect as many stars as you can during the run. The more stars you earn, the more new tracks you unlock. To win, you need both quick reflexes and strong control skills."
+  },
+  {
+   "id": "pg-real-cod-strike",
+   "title": "Real COD Strike",
+   "genres": [
+    "action",
+    "shooting",
+    "first-person-shooter"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/real-cod-strike/big-preview/3e0852bfa659449c8d0e94c3771f711f?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-114233/icon/3045c57df7821127450281ab16ebaee8c3c6c26d17dd957fae2a4a6a0a369751?width=448",
+   "url": "https://playgama.com/export/game/real-cod-strike?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/real-cod-strike",
+   "landscape": true,
+   "portrait": false,
+   "description": "Real COD Strike is a fast-paced modern-warfare shooter where precision, reflex, and tactical skill decide every battle. Enter intense frontline combat inspired by realistic military operations, featuring high-impact gunplay, explosive missions, and…",
+   "howTo": "WASD to move, Left mouse button to shoot, Shift to run, Left mouse button to zoom, space to jump Whether you’re clearing enemy bases, defending strategic points, or surviving ambushes behind enemy lines, every mission challenges you to think fast and shoot faster."
+  },
+  {
+   "id": "pg-horizon-flight-into-the-light",
+   "title": "Horizon: Flight Into the Light",
+   "genres": [
+    "arcade",
+    "runner",
+    "action"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/horizon-flight-into-the-light/big_preview/de3ddafc7c1d4450abc0670a146d7995?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/horizon-flight-into-the-light/icon/5b0d32efb4ca4c1dbf06c9de5876b1d3?width=448",
+   "url": "https://playgama.com/export/game/horizon-flight-into-the-light?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/horizon-flight-into-the-light",
+   "landscape": true,
+   "portrait": true,
+   "description": "Glide toward the setting sun: weave between white towers, collect triangles and catch blue crystals that lift the sun back up and throw your glider forward in a rush. Every 3 km a new world begins with new obstacles — ramps, rolling balls, gates, grinders,…",
+   "howTo": "Desktop: arrow keys or A/D to steer, Space, Up arrow or W to jump. Mobile: hold the left or right half of the screen to steer, swipe up to jump. The sun slowly sets. Blue crystals raise it back up, building shadows make it set faster. Green crystals give you jumps. The flight ends when the light is gone or you crash. Spend collected triangles in the Hangar on permanent upgrades."
+  },
+  {
+   "id": "pg-a-mothers-grief",
+   "title": "A Mother's Grief",
+   "genres": [
+    "adventure",
+    "horror",
+    "3d"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/a-mothers-grief/big_preview/91ba6295492147cea5c281f15e3a46f8?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/a-mothers-grief/icon/d1b748f3569d4d4295572eb98ef8cd8c?width=448",
+   "url": "https://playgama.com/export/game/a-mothers-grief?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/a-mothers-grief",
+   "landscape": true,
+   "portrait": false,
+   "description": "Winter, 1892. In a remote cabin, a grieving mother named Elara lost her daughter, Lily, to a fever. Consumed by grief, she performed a forbidden ritual hidden inside the cabin's walls to bring her daughter back. The girl returned - but her eyes were black,…",
+   "howTo": "- Walk through a fully explorable 1892 cabin: hallway, living room, bedroom, kitchen, fireplace nook and the L-leg evidence room. - Find and photograph 8 haunted objects - Lily's rag doll, the grimoire, the bone blade, the pentagram, the demon-child and more. - Every photograph you take is a piece of evidence. Open your journal (TAB) to read the cabin's history and pin each proof to the evidence board. - Real…"
+  },
+  {
+   "id": "pg-words-story",
+   "title": "Words Story",
+   "genres": [
+    "words",
+    "adventure",
+    "story"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/words-story/big-preview/831a7a1eb7e6492b98141fe5f68a2b94?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-119335/icon/a872dd068bcf0880de402bd688355aa45f70b2816620ddbed4dd57cea95940bd?width=448",
+   "url": "https://playgama.com/export/game/words-story?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/words-story",
+   "landscape": false,
+   "portrait": true,
+   "description": "A man is framed and imprisoned, but he never gives up and plans to self-salvation. Persevere, day after day, year after year. He need your help to take freedom.",
+   "howTo": "♥ Type the correct word to win a level! ♥ Get useful tools to help the man. ♥ Upgrade tools for faster progress."
+  },
+  {
+   "id": "pg-wildkin-isles",
+   "title": "Wildkin Isles",
+   "genres": [
+    "obby",
+    "arcade",
+    "simulation"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/wildkin-isles/big_preview/ce3fecf9ecda423198797819afe80a90?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/wildkin-isles/icon/4a8c98a3642940c8984f585e71fa8304?width=448",
+   "url": "https://playgama.com/export/game/wildkin-isles?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/wildkin-isles",
+   "landscape": true,
+   "portrait": true,
+   "description": "Explore, gather, and rescue in Wildkin Isles! Roam a colorful voxel world, collect resources, craft stronger axes, and bring stranded specialists safely back to camp. Each rescued helper brings a useful skill, from gathering materials to unlocking upgrades.",
+   "howTo": "Desktop: Move with WASD or arrow keys, jump with Space, and hit or interact with left-click or P. Press Escape to pause. Mobile: Use the touch joystick to move and the Jump and Hit/Use buttons. Hit trees and rocks to gather materials. Carry up to five items; heavier loads slow you down. Enter marked circles to deposit materials or craft equipment when requirements are met. Rescue specialists and escort them safely…"
+  },
+  {
+   "id": "pg-the-depth-of-the-limbo",
+   "title": "The Depth of the Limbo",
+   "genres": [
+    "platform",
+    "horror",
+    "escape"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/the-depth-of-the-limbo/big-preview/79d0678cc5be4c6c912bcef46ec674be?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-111802/icon/aace7df4edca385dcae347bed40376bcd2effabae9f06a12414cc4dfeee284cb?width=448",
+   "url": "https://playgama.com/export/game/the-depth-of-the-limbo?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/the-depth-of-the-limbo",
+   "landscape": true,
+   "portrait": false,
+   "description": "The game is about a girl in limbo who has to complete all the levels to wake up. Top view: The character must overcome 13 levels. Each level is a one—minute test cycle, but the camera rotates around the hero, changing the orientation of the space. Due to the…",
+   "howTo": "On the computer: To make the character move to the right, left, up or down, press the D, A, W, S keys or the arrows to the right, left, up or down, respectively. On a smartphone or tablet: To make the character move to the right, left, up or down, press the arrow buttons to the right, left, up or down, respectively."
+  },
+  {
+   "id": "pg-lifecode",
+   "title": "LifeCode",
+   "genres": [
+    "horror",
+    "survival",
+    "adventure"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/lifecode/big_preview/bd4d070d3e4b4194a2f36b71dfe93deb?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/lifecode/icon/712a660cb47347adb44096ce25dd37b3?width=448",
+   "url": "https://playgama.com/export/game/lifecode?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/lifecode",
+   "landscape": true,
+   "portrait": false,
+   "description": "GAME STORY",
+   "howTo": "HOW TO PLAY Each day begins at 10:00 AM at your base. Your first task is to adjust the antenna angle. The more accurate the alignment, the more memory you will receive during the export process. After that, enter the laboratory and locate an M3N (Memory Export Node). Activate the first export phase. A single M3N operates for 2 to 5 minutes depending on conditions. While the M3N is running, explore the laboratory,…"
+  },
+  {
+   "id": "pg-flippee-ball",
+   "title": "Flippee Ball",
+   "genres": [
+    "arcade",
+    "basketball",
+    "skill"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/flippee-ball/big-preview/d2f45c1f2ab04ea398fd53b8efaa65c3?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-119080/icon/9b0369aa675fc6ac02a517459aa79823184c118bba2c198524e99c8b5d8bd8ca?width=448",
+   "url": "https://playgama.com/export/game/flippee-ball?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/flippee-ball",
+   "landscape": true,
+   "portrait": false,
+   "description": "A HYBRID ARCADE GAME OF PINBALL & BASKETBALL",
+   "howTo": "You control one set of flippers - either red or blue. Flipping uses just one button and flips all five of your flippers. See if you have what it takes to beat the computer. The default settings are \"AMATEUR\" speed against the computer on \"EASY\" difficulty with \"AIM ASSIST\" enabled (this gives you a little help with shot accuracy). Once you feel comfortable, try the other difficulties, \"PROFFESSIONAL\" speed, then…"
+  },
+  {
+   "id": "pg-cavern-of-gears",
+   "title": "Cavern of Gears",
+   "genres": [
+    "adventure",
+    "action"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/cavern-of-gears/big_preview/fc202b35e4594617a450821418268096?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/cavern-of-gears/icon/71976de6d769403eb407e499e106116c?width=448",
+   "url": "https://playgama.com/export/game/cavern-of-gears?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/cavern-of-gears",
+   "landscape": true,
+   "portrait": false,
+   "description": "Cavern of Gears is a 2D action-adventure set in a steampunk underworld. Fight through gear-driven caverns with a growing arsenal of weapons, uncover the fate of the workers who vanished below, and face down the powers that took their place.",
+   "howTo": "Fight your way through caverns, defeating enemies and collecting weapons and power-ups as you travel deeper. Clear all the stages and the bosses to discover the century-old secret that they are hiding. WASD to move, SHIFT to dash, J/K to attack, R to switch weapon, L to use power-up"
+  },
+  {
+   "id": "pg-fit-in-the-wall",
+   "title": "Fit in the Wall",
+   "genres": [
+    "arcade",
+    "3d",
+    "skill"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/fit-in-the-wall/big_preview/c54872847b524c819a2e393e7e5727dd?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/fit-in-the-wall/icon/4cb150da0e82412aa1958f0a790bb578?width=448",
+   "url": "https://playgama.com/export/game/fit-in-the-wall?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/fit-in-the-wall",
+   "landscape": true,
+   "portrait": true,
+   "description": "Fit in the Wall challenges you to guide a floating block into the matching slot on moving walls. Using quick reflexes and perfect timing is essential, as each wall offers just one correct fit. Success means survival, but a miss ends the game. Stay alert and…",
+   "howTo": "Score as much as you can by adjusting the yellow cube to fit in the pattern. Desktop: Use arrow keys to move the yellow cube Mobile: Tp on left and right side of screen to move the yellow cube in that direction."
+  },
+  {
+   "id": "pg-mole-in-the-hole",
+   "title": "Mole In The Hole",
+   "genres": [
+    "arcade"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/mole-in-the-hole/big-preview/eb48b5d7835840c185aa9004f10af6af?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-99723/icon/821a45c1b38c418a71b8122863c65eca4a084104f165de23145a39ef76beb6d1?width=448",
+   "url": "https://playgama.com/export/game/mole-in-the-hole?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/mole-in-the-hole",
+   "landscape": true,
+   "portrait": false,
+   "description": "Gameplay Overview",
+   "howTo": "Keyboard: Movement: Use the arrow keys (Left, Right, Down) or (W, A, S) to guide the mole's direction. Tool Switching: Press the Spacebar or 'Q' to toggle between the pickaxe and shovel. Enter Shop: Press 'E' or click on shop icon to choose from shop upgrades Roguelike gameplay Buy upgrades to increase the value of sand and stone tiles that will affect your final score. Choose from perks that affect gameplay and…"
+  },
+  {
+   "id": "pg-ball-jump-switch-the-colors",
+   "title": "Ball Jump Switch The Colors",
+   "genres": [
+    "arcade",
+    "ball",
+    "color"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/ball-jump-switch-the-colors/big-preview/2fa1787804374084a1d54f6859730500?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-117674/icon/b11fd5057972196723f39464e8033bba8ed7eae18bfd371015b27a509757491f?width=448",
+   "url": "https://playgama.com/export/game/ball-jump-switch-the-colors?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/ball-jump-switch-the-colors",
+   "landscape": false,
+   "portrait": true,
+   "description": "Tap on the screen, that will make the ball bounce higher and higher. The ball has one color, and can pass through obstacle with the same color, or sneak in between obstacles with different colors.",
+   "howTo": "Master the Colors! Bounce your way through an endless whirlwind of vibrant obstacles in this addictive color-matching challenge. Guide your colorful ball upward, timing your jumps perfectly to pass through rotating barriers and collect stars to switch colors on the fly! In this fast-paced arcade game, you'll tap to make the ball bounce higher and higher, changing its color by collecting stars to match obstacle…"
+  },
+  {
+   "id": "pg-orbital",
+   "title": "Orbital",
+   "genres": [
+    "arcade",
+    "skill",
+    "action"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/orbital/big_preview/b5d4b9c79a6f472a9ed345ac1891c94f?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/orbital/icon/bf0babca8a004f4ba4ba5e3468f1c98c?width=448",
+   "url": "https://playgama.com/export/game/orbital?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/orbital",
+   "landscape": true,
+   "portrait": true,
+   "description": "Orbital is a fast reflex game. Rings close in on the glowing core from every side, and you steer a spark around it to slip through the gaps. Crystals appear in the riskiest openings: grab them in a row to build your combo. Survive to earn stars and unlock new…",
+   "howTo": "- Move: Left / Right arrow keys, A / D, or left / right mouse button - Focus (slow time, after upgrade): Shift - Mobile: touch and hold the left or right half of the screen; two fingers for focus - Retry: Space, Menu: Esc, Mute: M"
+  },
+  {
+   "id": "pg-bridge",
+   "title": "Bridge",
+   "genres": [
+    "arcade",
+    "platform",
+    "skill"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/bridge/big_preview/9f92cf8f349c4aeab5a351283453fbd5?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/bridge/icon/8f643c94004e48229c2e6457ea2b307d?width=448",
+   "url": "https://playgama.com/export/game/bridge?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/bridge",
+   "landscape": true,
+   "portrait": true,
+   "description": "BRIDGE is a stylish, minimalist physics platformer and timing runner where precision and composure are everything.",
+   "howTo": "Goal: Build a bridge just long enough to reach the next pillar. If the bridge is too short or too long, it will tumble into the abyss! Aim for the red center dot for bonus shards and combo multipliers. Controls: Mobile & Tablet: Tap and hold anywhere on the screen to extend the bridge release to drop it. Desktop / PC: Click and hold the Left Mouse Button (LMB) or Spacebar to grow the bridge release to lower it. Pro…"
+  },
+  {
+   "id": "pg-egg-empire",
+   "title": "Egg Empire",
+   "genres": [
+    "management",
+    "3d",
+    "tycoon"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/egg-empire/big_preview/f49edcfd67c14e6eb81f53d89fc64e99?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/egg-empire/icon/e8a63f92639f424e9d588e981072f8fb?width=448",
+   "url": "https://playgama.com/export/game/egg-empire?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/egg-empire",
+   "landscape": true,
+   "portrait": true,
+   "description": "Egg Empire is a cozy 3D idle tycoon about growing a chicken farm into an egg empire. Buy hens, collect the eggs they lay, sell them at the stall and merge hens into rarer breeds that lay pricier eggs.",
+   "howTo": "Desktop: - WASD or arrow keys: move - Space: jump - Right mouse button (hold and drag): turn the camera - Mouse wheel: zoom - E: pet the dog - R: back to the start Mobile: - Joystick (bottom left): move - Jump button (bottom right): jump - Drag on the screen: turn the camera"
+  },
+  {
+   "id": "pg-space-obby",
+   "title": "Space Obby",
+   "genres": [
+    "arcade",
+    "mobile",
+    "obby"
+   ],
+   "image": "https://static.playgama.com/p-img/pg/space-obby/big-preview/b6d915e8c7874a188d1770047d4d7968?width=448",
+   "icon": "https://static.playgama.com/p-img/pg/backfill/game-113935/icon/7c71a371f57ae4205d885b150636b14fc3101ec63843ddc28e6a3ff0065c3d8f?width=448",
+   "url": "https://playgama.com/export/game/space-obby?clid=p_7e6ab578-e184-4459-9e99-5edc4618644e",
+   "page": "https://playgama.com/game/space-obby",
+   "landscape": true,
+   "portrait": false,
+   "description": "A fun and lighthearted platformer set in outer space. Join other intrepid astronauts as you adventure to the far reaching corners of a destroyed space station, using your trusty jetpack to navigate the floating wreckage. Featuring six unlockable characters…",
+   "howTo": "Objective: Explore the space station wreckage, collect power cells to open doors to new levels and unlock characters. Mouse and Keyboard Controls: Movement: WASD or arrow keys Jump: Spacebar Jetpack : Hold spacebar midair Camera Rotation: Move mouse Camera Zoom: Scroll wheel Settings Menu: P key Mobile Touch Controls: Movement: Touch and drag the on-screen joystick on the left of the screen Jump: Tap jump button on…"
+  }
+ ]
+}

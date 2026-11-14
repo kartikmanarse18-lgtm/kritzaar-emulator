@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f0f14">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/icons/icon-192.png">
+  <title>Web game | KritZaar</title>
+  <link rel="stylesheet" href="/css/emulator-shared.css">
+  <link rel="stylesheet" href="/css/cards.css">
+  <link rel="stylesheet" href="/emulator/player.css">
+  <link rel="stylesheet" href="/play/play.css">
+  <link rel="manifest" href="/manifest.webmanifest">
+</head>
+<body class="kzp">
+  <header class="kzp-bar">
+    <a class="kzp-btn" href="/games/" aria-label="Back to games">&larr; <span>Games</span></a>
+    <h1 class="kzp-title" id="kzw-title">Loading&hellip;</h1>
+    <div class="kzp-tools"><button type="button" class="kzp-btn" id="kzw-full" hidden>Fullscreen</button></div>
+  </header>
+  <main class="kzw">
+    <div class="kzw-stage-wrap"><div class="kzw-stage" id="kzw-stage" hidden></div></div>
+    <p class="kzw-error" id="kzw-error" role="alert" hidden>That game is not available. <a href="/games/">Back to all games</a></p>
+    <section class="kzw-info" id="kzw-info" hidden>
+      <p id="kzw-desc"></p>
+      <h2>How to play</h2><p id="kzw-how"></p>
+      <p class="kzp-note">This game is provided by <strong>Playgama</strong> and runs from their servers. KritZaar does not host it. The game may show its own ads and store its own cookies. <a href="/legal/privacy.html">Privacy</a> &middot; <a href="/legal/dmca.html">Report a problem</a></p>
+    </section>
+    <section class="kzw-more" id="kzw-more" hidden><h2>More games</h2><div id="kzw-grid"></div></section>
+  </main>
+  <script type="module" src="/play/play.js"></script>
+</body>
+</html>

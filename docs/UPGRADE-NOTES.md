@@ -15,3 +15,18 @@
 - The 3 Originals ship with real gameplay clips (webm + mp4), cover, banner, icon and 3 screenshots.
 - To add assets for another game: put files in `assets/games/<id>/`, set `"assets": true` (plus `"preview": true`, `"shots": N`) and run `node scripts/validate-originals.mjs`.
 - `sw.js` bumped to v4.
+
+## Start screen, ads and web games (round 2)
+- Start screen (`emulator/index.html`, `emulator/player.js`): previews of other games on both sides (2 Originals + Playgama picks), sponsor slots and an "Advertise on KritZaar" contact card below. Rails and ads exist only on this screen and are removed when the game starts.
+- Ads (`js/ads.js`, `data/ads.json`): direct-sponsor banners only (images from your own domain, labelled Sponsored, weighted, date-limited). Slots: `under` 728x90, `side` and `side2` 300x250, `strip` 970x90. **Set `contact` in `data/ads.json`** (currently `mailto:CONTACT_EMAIL_HERE`); until then the card says contact details are not set up.
+- Web games (`play/`, `data/web-games.json`): 67 Playgama games from your feed, embedded in a sandboxed iframe from `playgama.com` (allow-list in `data/site-config.json` `embedHosts`). Three feed games on other hosts were left out. No ads are placed on the web-game page: check Playgama's partner terms before adding any.
+- Controls: on-screen controls are closed by default. A **Controls** button (top-left of the game) opens and closes them and remembers the choice. Controller dialog: closed-until-tapped / always open / never.
+- `legal/privacy.html` and `legal/how-it-works.html` updated (they said "no ads on the player page" and had no mention of embedded web games). Please review the wording.
+- `sw.js` bumped to v5.
+
+## Design pass (round 3)
+- Buttons: one system. Tonal by default, one solid orange primary (Play) with a crisp press edge. No glow. Orange label contrast is about 8:1.
+- Start screen: hero with title and genre tags over the game art (phones: art on top at true 16:9, title below), fixed Play bar in the thumb zone on phones, Auto-save as a switch, More games as a swipeable row, one compact sponsor slot on phones (300x250 slots return on tablet and desktop).
+- Frames: crisp purple-to-orange edge on the hero, the game window and the web-game window (desktop and tablet). Phones go edge to edge.
+- Enter or Space starts the game from the start screen. Play shows "Starting..." while loading.
+- Applied: Shneiderman's eight golden rules (consistency, shortcuts, feedback, closure, easy reversal, user control, low memory load), an 8 px spacing grid, 44 px minimum touch targets, and one primary action per screen.

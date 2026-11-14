@@ -169,3 +169,27 @@ export function mountHero(container, games) {
   }
   return () => clearInterval(timer);
 }
+
+// ---- Web games (third-party, embedded from their own host; see /data/web-games.json) ----
+let webPromise;
+export function loadWebGames() {
+  webPromise = webPromise || Promise.all([
+    fetch('/data/web-games.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : { games: [] })).catch(() => ({ games: [] })),
+    fetch('/data/site-config.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
+  ]).then(([w, c]) => {
+    const hosts = (c.embedHosts || []).map(String);
+    return (w.games || []).filter((g) => allowedEmbed(g.url, hosts) && /^https:\/\//.test(g.image || ''));
+  });
+  return webPromise;
+}
+export function allowedEmbed(url, hosts) {
+  try { const u = new URL(url); return u.protocol === 'https:' && hosts.includes(u.hostname); } catch { return false; }
+}
+export const webCardData = (g) => ({ id: g.id, title: g.title, tagline: g.description, genres: g.genres, cover: g.image, assets: false, preview: false,
+  href: '/play/index.html?g=' + encodeURIComponent(g.id), badge: 'Web game' });
+/** n games for a rail: same genre first, then a stable shuffle so the rails differ per game. */
+export function pickMore(list, n, key = '', genres = []) {
+  const h = (s) => [...(key + s)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+  const scored = list.filter((g) => g.id !== key).map((g) => ({ g, k: (g.genres || []).some((x) => genres.includes(x)) ? 0 : 1, r: h(g.id) }));
+  return scored.sort((a, b) => a.k - b.k || a.r - b.r).slice(0, n).map((x) => x.g);
+}

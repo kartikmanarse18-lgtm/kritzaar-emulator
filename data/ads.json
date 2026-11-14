@@ -1,0 +1,34 @@
+{
+  "contact": "mailto:CONTACT_EMAIL_HERE",
+  "contactLabel": "Advertise on KritZaar",
+  "contactNote": "Direct sponsor banners from your own domain. Static image, labelled Sponsored. Reach players while they pick a game.",
+  "slots": {
+    "strip": {
+      "w": 970,
+      "h": 90
+    },
+    "under": {
+      "w": 728,
+      "h": 90
+    },
+    "side": {
+      "w": 300,
+      "h": 250
+    },
+    "side2": {
+      "w": 300,
+      "h": 250
+    }
+  },
+  "creatives": [],
+  "_example": {
+    "slot": "side",
+    "sponsor": "Brand name",
+    "image": "/assets/promos/brand-300x250.webp",
+    "href": "https://brand.example/offer",
+    "alt": "Short text",
+    "weight": 1,
+    "from": "2026-12-01",
+    "to": "2026-12-31"
+  }
+}

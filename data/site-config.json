@@ -1,1 +1,8 @@
-{ "reportEmail": "", "_note": "Put the address that should receive problem reports, e.g. reports@yourdomain. Leave empty to offer only Copy and Download." }
+{
+  "reportEmail": "",
+  "_note": "Put the address that should receive problem reports, e.g. reports@yourdomain. Leave empty to offer only Copy and Download.",
+  "embedHosts": [
+    "playgama.com"
+  ],
+  "_embedNote": "Hostnames web games may be embedded from (see data/web-games.json). Keep the contract/terms from each distributor in your records."
+}
