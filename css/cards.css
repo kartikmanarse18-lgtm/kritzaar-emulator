@@ -61,3 +61,13 @@ a.kz-ad-free:hover b{text-decoration:underline}
 .kz-ad-btn:focus-visible{outline:3px solid var(--kz-accent-text,#a994ff);outline-offset:2px}
 .kz-pc-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 @media (hover:none){.kz-pc-hover{display:none}}
+
+/* Card art placeholder: icon only (the title is already in the caption) */
+.kz-pc .kz-art-ph{font-size:0}.kz-pc .kz-art-ph::before{content:"\1F3AE";font-size:2.2rem;filter:grayscale(.2) drop-shadow(0 2px 8px #0008)}
+/* One ad box style everywhere: fixed ratio from the slot size, never taller than its banner */
+.kz-ad{min-height:0;aspect-ratio:var(--ratio,728 / 90);width:100%;max-width:var(--w,728px)}
+.kz-ad-gone{display:none}
+.kz-ad .kz-ad-free{width:100%;height:100%;box-sizing:border-box;align-content:center}
+.kz-ad img{height:100%;object-fit:contain}
+.kz-ad::after{content:"Advertisement";position:absolute;left:8px;top:4px;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none}
+.kz-ad:not(.is-empty)::after{display:none}

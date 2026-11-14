@@ -31,7 +31,7 @@ export async function mountSlot(container, slot, extraClass = '') {
   const ads = await loadAds();
   const size = (ads.slots && ads.slots[slot]) || { w: 728, h: 90 };
   const box = el('aside', { class: 'kz-ad kz-ad--' + slot + ' ' + extraClass, 'aria-label': 'Sponsored' });
-  box.style.setProperty('--w', size.w + 'px'); box.style.setProperty('--h', size.h + 'px');
+  box.style.setProperty('--w', size.w + 'px'); box.style.setProperty('--h', size.h + 'px'); box.style.setProperty('--ratio', size.w + ' / ' + size.h);
   const c = pick(ads, slot);
   if (c) {
     const pic = el('picture');
@@ -40,7 +40,10 @@ export async function mountSlot(container, slot, extraClass = '') {
     box.append(el('a', { href: c.href, target: '_blank', rel: 'sponsored noopener noreferrer' }, pic), el('small', { class: 'kz-ad-tag', text: 'Sponsored' + (c.sponsor ? ' · ' + c.sponsor : '') }));
   } else {
     const contact = safeContact(ads.contact);
+    // Nothing to show and nobody to call: collapse the slot instead of leaving an empty box on the page.
+    if (!contact && ads.showPlaceholders === false) { container.replaceChildren(); container.classList.add('kz-ad-gone'); return; }
     const inner = [el('b', { text: 'Your banner here' }), el('span', { text: size.w + ' × ' + size.h })];
+    box.style.setProperty('--ratio', size.w + ' / ' + size.h);
     box.classList.add('is-empty');
     box.append(contact ? el('a', { class: 'kz-ad-free', href: contact }, ...inner) : el('div', { class: 'kz-ad-free' }, ...inner));
   }
@@ -51,11 +54,12 @@ export async function mountSlot(container, slot, extraClass = '') {
 export async function mountContact(container) {
   const ads = await loadAds();
   const contact = safeContact(ads.contact);
+  if (!contact && ads.showPlaceholders === false) { container.replaceChildren(); return; }
   const card = el('section', { class: 'kz-ad-contact', 'aria-label': 'Advertise on KritZaar' },
     el('h3', { text: ads.contactLabel || 'Advertise on KritZaar' }),
     el('p', { class: 'kz-ad-note', text: ads.contactNote || 'Direct sponsor banners, clearly labelled.' }),
     el('p', { class: 'kz-ad-sizes', text: 'Banner sizes: 728×90 · 300×250 · 970×90' }));
   if (contact) card.append(el('a', { class: 'kz-ad-btn', href: contact, text: contact.startsWith('mailto:') ? 'Email: ' + contact.slice(7) : 'Contact us' }));
-  else card.append(el('p', { class: 'kz-ad-notset', text: 'Contact details are not set up yet.' }));
+  else card.append(el('p', { class: 'kz-ad-notset', text: 'Sponsor slots open soon.' }));
   container.replaceChildren(card);
 }

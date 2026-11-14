@@ -21,8 +21,8 @@
     <div class="kzp-tools" id="kzp-tools" hidden>
       <button type="button" class="kzp-btn" id="kzp-pause" aria-pressed="false">Pause</button>
       <button type="button" class="kzp-btn" id="kzp-states">Saves</button>
-      <button type="button" class="kzp-btn" id="kzp-pad">Controller</button>
-      <button type="button" class="kzp-btn" id="kzp-help">Keys</button>
+      <button type="button" class="kzp-btn" id="kzp-pad">🎮 <span>Controller</span></button>
+      <button type="button" class="kzp-btn" id="kzp-help">⌨ <span>Keys</span></button>
       <button type="button" class="kzp-btn" id="kzp-full">Fullscreen</button>
     </div>
   </header>
@@ -50,14 +50,17 @@
       <div class="kzp-rg" id="kzp-rg">
         <aside class="kzp-rail kzp-rail-l" id="kzp-rail-l" aria-label="More games" hidden></aside>
         <div class="kzp-ready-main">
-          <div class="kzp-hero" id="kzp-hero">
-            <div class="kzp-hero-media" id="kzp-poster"></div>
-            <div class="kzp-hero-cap">
-              <span class="kzp-kicker">Ready to play</span>
-              <h2 id="kzp-ready-title"></h2>
-              <p class="kzp-hero-tag" id="kzp-ready-tag" hidden></p>
-              <ul class="kzp-tags" id="kzp-ready-tags"></ul>
+          <div class="kzp-card" id="kzp-card">
+            <div class="kzp-hero" id="kzp-hero">
+              <div class="kzp-hero-media" id="kzp-poster"></div>
+              <div class="kzp-hero-cap">
+                <span class="kzp-kicker">Ready to play</span>
+                <h2 id="kzp-ready-title"></h2>
+                <p class="kzp-hero-tag" id="kzp-ready-tag" hidden></p>
+                <ul class="kzp-tags" id="kzp-ready-tags"></ul>
+              </div>
             </div>
+            <div class="kzp-card-ad" id="kzp-ad-card" aria-label="Sponsored"></div>
           </div>
           <div class="kzp-playbar">
             <button type="button" class="kzp-btn kzp-btn-primary kzp-big" id="kzp-play"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span>Play</span></button>
@@ -65,12 +68,13 @@
           <div class="kzp-options">
             <label class="kzp-switch"><input type="checkbox" id="kzp-autosave"><span class="kzp-switch-ui" aria-hidden="true"></span><span>Auto-save when I exit</span></label>
             <span class="kzp-hint">Uses slot 3</span>
+            <button type="button" class="kzp-btn kzp-btn-ghost" id="kzp-pad-start">🎮 Controller settings</button>
           </div>
           <div class="kzp-shots" id="kzp-shots" hidden></div>
         </div>
         <aside class="kzp-rail kzp-rail-r" id="kzp-rail-r" aria-label="More games" hidden></aside>
         <div class="kzp-ad-l" id="kzp-ad-l"></div>
-        <div class="kzp-ad-c"><div id="kzp-ad-under"></div><div id="kzp-ad-contact"></div></div>
+        <div class="kzp-ad-c"><div id="kzp-ad-contact"></div></div>
         <div class="kzp-ad-r" id="kzp-ad-r"></div>
       </div>
     </section>
@@ -99,6 +103,7 @@
       <div id="kzp-dos" class="kzp-dos"></div>
       <div id="kzp-touch" class="kzp-touch"></div>
       <button type="button" class="kzp-tc-toggle" id="kzp-tc-toggle" aria-pressed="false" hidden>Controls</button>
+      <button type="button" class="kzp-fab" id="kzp-fab" aria-label="Controller and key settings">🎮</button>
       <div class="kzp-paused" id="kzp-paused" hidden>
         <p>Paused</p>
         <button type="button" class="kzp-btn kzp-btn-primary" id="kzp-resume">Resume</button>
@@ -106,35 +111,62 @@
     </section>
   </main>
 
-  <dialog class="kzp-dialog" id="kzp-help-dialog" aria-labelledby="kzp-help-h">
-    <h2 id="kzp-help-h">Controls</h2>
-    <table class="kzp-table"><thead><tr><th scope="col">Keys</th><th scope="col">Action</th></tr></thead><tbody id="kzp-help-body"></tbody></table>
-    <p class="kzp-note" id="kzp-help-note" hidden>No controls listed for this game. Try the arrow keys, Enter, Space and Ctrl.</p>
-    <form method="dialog"><button class="kzp-btn">Close</button></form>
-  </dialog>
-
-  <dialog class="kzp-dialog kzp-dialog-wide" id="kzp-pad-dialog" aria-labelledby="kzp-pad-h">
-    <h2 id="kzp-pad-h">Controller</h2>
-    <p class="kzp-note" id="kzp-pad-unsupported" hidden>This kind of game has its own on-screen and gamepad controls built into the emulator.</p>
-    <div id="kzp-pad-body">
-      <fieldset class="kzp-fs" id="kzp-tc-fs"><legend>On-screen controls</legend>
-        <label class="kzp-field">Show them <select id="kzp-tc-mode"><option value="auto">Only when I tap the Controls button</option><option value="on">Always open</option><option value="off">Never show</option></select></label>
-        <label class="kzp-field">Layout <select id="kzp-tc-layout"></select></label>
-        <label class="kzp-field">Size <input type="range" id="kzp-tc-size" min="0.7" max="1.5" step="0.05"></label>
-        <label class="kzp-field">Opacity <input type="range" id="kzp-tc-alpha" min="0.3" max="1" step="0.05"></label>
-        <label class="kzp-check"><input type="checkbox" id="kzp-tc-haptics"> Vibrate on press</label>
-        <label class="kzp-check"><input type="checkbox" id="kzp-tc-left"> Left-handed (swap sides)</label>
-        <p class="kzp-row"><button type="button" class="kzp-btn kzp-btn-primary" id="kzp-tc-edit">Customize buttons&hellip;</button></p>
-        <p class="kzp-note">Move, resize, re-key, hide or add buttons. Saved per game on this device.</p>
-      </fieldset>
-      <fieldset class="kzp-fs"><legend>Gamepad</legend>
-        <p class="kzp-note" id="kzp-gp-status" role="status">No gamepad found. Connect one and press any button.</p>
-        <label class="kzp-field">Stick mode <select id="kzp-gp-mode"></select></label>
-        <table class="kzp-table"><thead><tr><th scope="col">Button</th><th scope="col">Sends key</th></tr></thead><tbody id="kzp-gp-body"></tbody></table>
-        <button type="button" class="kzp-btn" id="kzp-gp-reset">Reset gamepad buttons</button>
-      </fieldset>
+  <dialog class="kzp-sheet" id="kzp-pad-dialog" aria-labelledby="kzp-pad-h">
+    <header class="kzp-sheet-head">
+      <h2 id="kzp-pad-h">Controls</h2>
+      <button type="button" class="kzp-x" id="kzp-pad-close" aria-label="Close">&times;</button>
+    </header>
+    <div class="kzp-tabs" role="tablist" aria-label="Control type">
+      <button type="button" role="tab" class="kzp-tab" id="kzp-tab-b-touch" data-tab="touch" aria-controls="kzp-tab-touch">Touch</button>
+      <button type="button" role="tab" class="kzp-tab" id="kzp-tab-b-pad" data-tab="pad" aria-controls="kzp-tab-pad">Gamepad</button>
+      <button type="button" role="tab" class="kzp-tab" id="kzp-tab-b-keys" data-tab="keys" aria-controls="kzp-tab-keys">Keyboard</button>
     </div>
-    <form method="dialog"><button class="kzp-btn">Done</button></form>
+    <div class="kzp-sheet-body">
+      <section class="kzp-pane" id="kzp-tab-touch" role="tabpanel" aria-labelledby="kzp-tab-b-touch">
+        <p class="kzp-note" id="kzp-touch-native" hidden>This game is played by tapping or clicking the game itself, so it needs no on-screen pad. Gamepads work too: see the Gamepad tab.</p>
+        <p class="kzp-note" id="kzp-pad-unsupported" hidden>This kind of game has its own on-screen and gamepad controls built into the emulator. Use its menu inside the game.</p>
+        <div id="kzp-tc-fs">
+          <div class="kzp-seg" role="radiogroup" aria-label="Show on-screen controls">
+            <button type="button" role="radio" data-mode="auto">Tap to open</button>
+            <button type="button" role="radio" data-mode="on">Always on</button>
+            <button type="button" role="radio" data-mode="off">Off</button>
+          </div>
+          <p class="kzp-label">Layout</p>
+          <div class="kzp-layouts" id="kzp-tc-layouts" role="radiogroup" aria-label="Layout"></div>
+          <label class="kzp-field">Size <input type="range" id="kzp-tc-size" min="0.7" max="1.5" step="0.05"></label>
+          <label class="kzp-field">Opacity <input type="range" id="kzp-tc-alpha" min="0.3" max="1" step="0.05"></label>
+          <label class="kzp-toggle"><input type="checkbox" id="kzp-tc-haptics"><span class="kzp-switch-ui" aria-hidden="true"></span><span>Vibrate on press</span></label>
+          <label class="kzp-toggle"><input type="checkbox" id="kzp-tc-left"><span class="kzp-switch-ui" aria-hidden="true"></span><span>Left-handed (swap sides)</span></label>
+          <p class="kzp-row"><button type="button" class="kzp-btn kzp-btn-primary" id="kzp-tc-edit">Customize buttons&hellip;</button><button type="button" class="kzp-btn" id="kzp-vibe-test">Test vibration</button></p>
+          <p class="kzp-note">Move, resize, re-key, hide or add buttons. Saved per game on this device.</p>
+        </div>
+      </section>
+
+      <section class="kzp-pane" id="kzp-tab-pad" role="tabpanel" aria-labelledby="kzp-tab-b-pad">
+        <div class="kzp-gp-card" id="kzp-gp-card">
+          <span class="kzp-dot" id="kzp-gp-dot" aria-hidden="true"></span>
+          <div><b id="kzp-gp-name">No controller found</b><p class="kzp-note" id="kzp-gp-status" role="status">Connect one by Bluetooth or USB, then press any button. On a phone, pair it in the system Bluetooth settings first.</p></div>
+        </div>
+        <div class="kzp-live" id="kzp-live" aria-label="Live controller view">
+          <div class="kzp-sticks"><span class="kzp-stick" id="kzp-stick-l"><i></i></span><span class="kzp-stick" id="kzp-stick-r"><i></i></span></div>
+          <div class="kzp-btns" id="kzp-live-btns"></div>
+        </div>
+        <p class="kzp-label">Presets</p>
+        <div class="kzp-row" id="kzp-gp-presets"></div>
+        <label class="kzp-field">Stick mode <select id="kzp-gp-mode"></select></label>
+        <details class="kzp-details" id="kzp-gp-details">
+          <summary>Remap every button</summary>
+          <div class="kzp-map" id="kzp-gp-body"></div>
+        </details>
+        <p class="kzp-row"><button type="button" class="kzp-btn" id="kzp-rumble">Test rumble</button><button type="button" class="kzp-btn" id="kzp-gp-reset">Reset buttons</button></p>
+      </section>
+
+      <section class="kzp-pane" id="kzp-tab-keys" role="tabpanel" aria-labelledby="kzp-tab-b-keys">
+        <table class="kzp-table" id="kzp-help-table"><thead><tr><th scope="col">Keys</th><th scope="col">Action</th></tr></thead><tbody id="kzp-help-body"></tbody></table>
+        <p class="kzp-note" id="kzp-help-note" hidden>No controls are listed for this game. Try the arrow keys, Enter, Space and Ctrl.</p>
+      </section>
+    </div>
+    <footer class="kzp-sheet-foot"><button type="button" class="kzp-btn kzp-btn-primary" id="kzp-pad-done">Done</button></footer>
   </dialog>
 
   <dialog class="kzp-dialog" id="kzp-states-dialog" aria-labelledby="kzp-states-h">

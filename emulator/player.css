@@ -117,9 +117,9 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 .kzp-rg.no-rails { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "ac" "al" "ar"; }
 
 /* Hero: artwork or preview clip behind the title. Frame is a crisp two-colour edge, no glow. */
-.kzp-hero { position: relative; order: 1; border-radius: 20px; overflow: hidden; isolation: isolate; aspect-ratio: 16 / 9; max-height: 480px;
+.kzp-hero { position: relative; border-radius: 0; overflow: hidden; isolation: isolate; aspect-ratio: 16 / 9; max-height: 480px;
   background: linear-gradient(135deg, hsl(var(--h, 260) 60% 32%), hsl(calc(var(--h, 260) + 50) 60% 12%)); }
-.kzp-hero::before, .kzw-stage::before, .kzp-stage::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 3px; z-index: 3; pointer-events: none;
+.kzp-card::before, .kzw-stage::before, .kzp-stage::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 3px; z-index: 4; pointer-events: none;
   background: linear-gradient(135deg, var(--accent), var(--cta)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
 .kzp-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(8, 8, 18, .94) 0, rgba(8, 8, 18, .6) 42%, rgba(8, 8, 18, 0) 78%); }
 .kzp-hero-media { position: absolute; inset: 0; z-index: 0; }
@@ -152,24 +152,27 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 
 /* Tablet and phone: one column. More games becomes a swipeable row. */
 @media (max-width: 1099px) {
-  .kzp-rg { grid-template-columns: 1fr 1fr; gap: 16px; grid-template-areas: "main main" "rl rl" "ac ac" "al ar"; }
+  .kzp-rg { grid-template-columns: 1fr 1fr; gap: 16px; grid-template-areas: "main main" "rl rl" "al ar" "ac ac"; }
+  .kzp-ad-l { justify-self: end; } .kzp-ad-r { justify-self: start; }
   .kzp-rail .kz-pc-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; gap: 12px; margin: 0 -16px; padding: 4px 16px 8px; scrollbar-width: none; }
   .kzp-rail .kz-pc-grid > li { flex: 0 0 min(220px, 62vw); scroll-snap-align: start; }
 }
 @media (max-width: 699px) {
   .kzp-ready { padding: 0 0 calc(104px + env(safe-area-inset-bottom, 0px)); }
   .kzp-rg { gap: 16px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "main" "rl" "ac"; }
+  .kzp-card-ad { padding: 8px 12px 12px; }
+  .kzp-card-ad .kz-ad-free { display: flex; flex-direction: row; gap: 8px; justify-content: center; font-size: .78rem; }
   .kzp-ready-main { gap: 12px; }
   .kzp-ready-main > :not(.kzp-hero), .kzp-rail, .kzp-ad-c { margin-inline: 16px; }
   .kzp-rail .kz-pc-grid { margin-inline: -16px; }
   .kzp-ad-l, .kzp-ad-r { display: none; }               /* 300x250 slots are for larger screens */
   /* Phone: artwork on top at its true 16:9 (nothing cropped), title below on solid colour for legibility */
-  .kzp-hero { display: flex; flex-direction: column; border-radius: 0 0 24px 24px; aspect-ratio: auto; max-height: none; background: var(--surface); }
+  .kzp-card { border-radius: 0 0 24px 24px; }
+  .kzp-hero { display: flex; flex-direction: column; border-radius: 0; aspect-ratio: auto; max-height: none; background: var(--surface); }
   .kzp-hero::after { display: none; }
   .kzp-hero-media { position: relative; aspect-ratio: 16 / 9; }
   .kzp-hero-cap { position: relative; padding: 16px 16px 20px; }
-  .kzp-ad-c .kz-ad { min-height: 72px; }
-  .kzp-hero::before { display: none; }
+  .kzp-card::before { display: none; }
   .kzp-hero-cap { padding: 16px; }
   .kzp-options { order: 2; }
   .kzp-ready-main > .kzp-shots { order: 3; margin-inline: 0; padding-inline: 16px; scroll-padding-inline: 16px; }
@@ -178,10 +181,6 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
   .kzp-playbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; margin: 0 !important; padding: 16px 16px calc(12px + env(safe-area-inset-bottom, 0px));
     background: linear-gradient(to top, var(--bg) 72%, rgba(15, 15, 20, 0)); }
   .kzp-playbar .kzp-big { width: 100%; }
-  .kzp-ad-c .kz-ad-contact { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .kzp-ad-c .kz-ad-note, .kzp-ad-c .kz-ad-sizes { display: none; }
-  .kzp-ad-c .kz-ad-contact h3 { margin: 0; font-size: .95rem; }
-  .kzp-ad-c .kz-ad-contact p { margin: 0; }
 }
 @media (min-width: 1400px) { .kzp-ready { max-width: 1480px; } .kzp-rg { grid-template-columns: 300px minmax(0, 1fr) 300px; } }
 .kz-pc .kz-art img { transition: transform .5s cubic-bezier(.2, .8, .2, 1); }
@@ -195,3 +194,87 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
   .kzp-stage.kzp-soft-fs::before, .kzp-stage:fullscreen::before { display: none; }
 }
 @media (max-width: 699px) { .kzp-stage::before { display: none; } }
+
+/* ================= Round 4 ================= */
+/* Preview card: artwork + title + sponsor strip share one frame */
+.kzp-card { position: relative; order: 1; border-radius: 20px; overflow: hidden; isolation: isolate; background: #0b0b16; }
+.kzp-card-ad { position: relative; z-index: 2; padding: 10px 16px 14px; background: #0b0b16; border-top: 1px solid rgba(255, 255, 255, .08); }
+.kzp-card-ad:empty, .kzp-card-ad:has(.kz-ad-gone) { display: none; }
+.kzp-card-ad .kz-ad { margin: 0 auto; border-radius: 10px; }
+.kzp-card-ad .kz-ad-free { display: flex; flex-direction: row; gap: 10px; justify-content: center; }
+.kzp-ad-l, .kzp-ad-r { width: 100%; max-width: 300px; }
+.kzp-ad-l .kz-ad, .kzp-ad-r .kz-ad { width: 100%; }
+.kzp-ad-c .kz-ad-contact { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 16px; width: 100%; box-sizing: border-box; max-width: 728px; }
+.kzp-ad-c .kz-ad-contact h3 { margin: 0; font-size: .95rem; }
+.kzp-ad-c .kz-ad-contact p { margin: 0; }
+.kzp-ad-c .kz-ad-note, .kzp-ad-c .kz-ad-sizes { display: none; }
+.kzp-ad-l:empty, .kzp-ad-r:empty { display: none; }
+.kzp-btn-ghost { background: transparent; border: 1px solid rgba(255, 255, 255, .22); min-height: 44px; }
+
+/* Floating controller button: also reachable in fullscreen */
+.kzp-fab { position: absolute; z-index: 30; right: calc(10px + env(safe-area-inset-right, 0px)); top: 10px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .45);
+  background: rgba(15, 16, 32, .72); color: #fff; font-size: 1.15rem; cursor: pointer; display: grid; place-items: center; transition: transform .1s, background .15s; }
+.kzp-fab:hover { background: var(--accent); } .kzp-fab:active { transform: scale(.94); }
+.kzp-fab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.kzp-fab { opacity: .55; } .kzp-stage:hover .kzp-fab, .kzp-fab:focus-visible, .kzp-stage:focus-within .kzp-fab { opacity: 1; }
+@media (hover: none) { .kzp-fab { opacity: .8; } }
+
+/* Controls sheet: bottom sheet on phones, centred panel on larger screens. Always fits the screen. */
+.kzp-sheet { box-sizing: border-box; padding: 0; margin: 0; border: 0; color: var(--text); background: var(--surface); width: 100%; max-width: none; max-height: 90dvh;
+  position: fixed; inset: auto 0 0 0; border-radius: 22px 22px 0 0; flex-direction: column; overflow: hidden; box-shadow: 0 -12px 40px rgba(0, 0, 0, .55); }
+.kzp-sheet[open] { display: flex; animation: kzp-up .22s cubic-bezier(.2, .8, .2, 1); }
+.kzp-sheet::backdrop { background: rgba(4, 4, 12, .72); backdrop-filter: blur(2px); }
+@keyframes kzp-up { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+@media (min-width: 700px) {
+  .kzp-sheet { inset: 0; margin: auto; width: min(640px, 94vw); height: fit-content; max-height: 86dvh; border-radius: 22px; border: 1px solid rgba(255, 255, 255, .16); box-shadow: 0 24px 60px rgba(0, 0, 0, .6); }
+}
+.kzp-sheet *, .kzp-sheet *::before, .kzp-sheet *::after { box-sizing: border-box; }
+.kzp-sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 6px 20px; }
+.kzp-sheet-head h2 { margin: 0; font-size: 1.2rem; }
+.kzp-x { width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .09); color: var(--text); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+.kzp-x:hover { background: rgba(255, 255, 255, .18); }
+.kzp-tabs { display: flex; gap: 6px; padding: 4px 16px 0; border-bottom: 1px solid rgba(255, 255, 255, .12); }
+.kzp-tab { flex: 1; min-height: 46px; border: 0; background: none; color: var(--muted); font: 700 .95rem var(--kz-font, system-ui); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.kzp-tab.on { color: var(--text); border-bottom-color: var(--cta); }
+.kzp-tab:focus-visible { outline: 2px solid #fff; outline-offset: -4px; border-radius: 8px; }
+.kzp-sheet-body { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 16px 20px 8px; overscroll-behavior: contain; }
+.kzp-sheet-foot { padding: 10px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid rgba(255, 255, 255, .1); }
+.kzp-sheet-foot .kzp-btn { width: 100%; }
+.kzp-pane[hidden] { display: none !important; }
+.kzp-label { margin: 16px 0 8px; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.kzp-seg { display: grid; grid-template-columns: repeat(3, 1fr); background: rgba(255, 255, 255, .07); border-radius: 14px; padding: 4px; gap: 4px; }
+.kzp-seg button { min-height: 44px; border: 0; border-radius: 10px; background: none; color: var(--text); font: 600 .88rem var(--kz-font, system-ui); cursor: pointer; }
+.kzp-seg button[aria-checked="true"] { background: var(--accent); }
+.kzp-layouts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.kzp-layouts button { display: grid; gap: 4px; justify-items: start; text-align: left; padding: 12px; min-height: 64px; border-radius: 14px; border: 2px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .04); color: var(--text); font: 600 .82rem/1.25 var(--kz-font, system-ui); cursor: pointer; }
+.kzp-layouts button[aria-checked="true"] { border-color: var(--cta); background: rgba(255, 122, 61, .12); }
+.kzp-lay-ic { font-size: .95rem; letter-spacing: .06em; color: var(--cta); }
+.kzp-sheet .kzp-field { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0; }
+.kzp-sheet .kzp-field select, .kzp-map select { font: inherit; color: var(--text); background: var(--bg); border: 1px solid rgba(255, 255, 255, .25); border-radius: 10px; min-height: 44px; padding: 0 8px; max-width: 62%; min-width: 0; }
+.kzp-sheet .kzp-field input[type="range"] { flex: 1; max-width: 62%; accent-color: var(--cta); }
+.kzp-toggle { display: flex; align-items: center; gap: 12px; min-height: 48px; cursor: pointer; position: relative; }
+.kzp-toggle input { position: absolute; opacity: 0; width: 44px; height: 28px; margin: 0; cursor: pointer; }
+.kzp-toggle input:checked + .kzp-switch-ui { background: var(--cta); }
+.kzp-toggle input:checked + .kzp-switch-ui::after { transform: translateX(16px); background: var(--cta-ink); }
+.kzp-toggle input:focus-visible + .kzp-switch-ui { outline: 2px solid #fff; outline-offset: 3px; }
+.kzp-gp-card { display: flex; gap: 12px; align-items: center; padding: 12px 14px; border-radius: 14px; background: rgba(255, 255, 255, .06); }
+.kzp-gp-card b { display: block; } .kzp-gp-card .kzp-note { margin: 2px 0 0; font-size: .82rem; }
+.kzp-dot { flex: none; width: 12px; height: 12px; border-radius: 50%; background: #666; box-shadow: 0 0 0 4px rgba(255, 255, 255, .06); }
+.kzp-dot.on { background: #3ddc84; box-shadow: 0 0 0 4px rgba(61, 220, 132, .2); }
+.kzp-live { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; margin: 14px 0 0; padding: 14px; border-radius: 14px; background: #0b0b16; }
+.kzp-sticks { display: grid; gap: 10px; }
+.kzp-stick { position: relative; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .22); }
+.kzp-stick i { width: 22px; height: 22px; border-radius: 50%; background: var(--cta); transition: transform .04s linear; }
+.kzp-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.kzp-gb { display: inline-grid; place-items: center; min-width: 36px; height: 32px; padding: 0 8px; border-radius: 9px; background: rgba(255, 255, 255, .1); color: var(--muted); font-size: .8rem; font-weight: 800; transition: background .05s, color .05s, transform .05s; }
+.kzp-gb.on { background: var(--cta); color: var(--cta-ink); transform: scale(1.12); }
+#kzp-gp-presets .kzp-btn[aria-pressed="true"] { background: var(--accent); }
+.kzp-details { margin: 8px 0 12px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 14px; padding: 0 14px; }
+.kzp-details summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+.kzp-map { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; padding-bottom: 12px; }
+.kzp-mapi { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: 2px 8px; align-items: center; padding: 6px 0; }
+.kzp-mapi .kzp-gb { grid-row: span 2; } .kzp-mapn { font-size: .8rem; color: var(--muted); } .kzp-mapi select { max-width: none; width: 100%; min-height: 40px; grid-column: 2; }
+@media (max-width: 420px) { .kzp-map { grid-template-columns: 1fr; } .kzp-layouts button { padding: 10px; } }
+.kzp-sheet kbd { padding: 1px 6px; border-radius: 5px; background: rgba(255, 255, 255, .14); font: inherit; font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .kzp-sheet[open] { animation: none; } .kzp-gb, .kzp-stick i { transition: none; } }
+.kzp-card-ad .kz-ad::after { display: none; }

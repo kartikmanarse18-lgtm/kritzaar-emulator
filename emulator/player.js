@@ -6,7 +6,7 @@ import { detectFormat } from '/js/detect.js';
 import { PLATFORMS, ENGINES, ALL_EXTS, platformLabel } from '/js/engines.js';
 import * as report from '/js/report.js';
 import { mountTouchControls, loadPrefs, savePrefs, LAYOUT_INFO } from '/js/touch-controls.js';
-import { startGamepad, GP_BUTTONS, KEY_CHOICES, GP_MODES } from '/js/gamepad.js';
+import { startGamepad, GP_BUTTONS, KEY_CHOICES, GP_MODES, DEFAULT_MAP, loadGamepadConfig, saveGamepadConfig } from '/js/gamepad.js';
 import { asset, hue, previewVideo, previewsAllowed, cardGrid, loadWebGames, webCardData, pickMore } from '/js/cards.js';
 import { mountSlot, mountContact } from '/js/ads.js';
 
@@ -433,13 +433,13 @@ function mountTouch(forceOn = false) {
 let extrasFor = null;
 function clearExtras() {
   extrasFor = null;
-  for (const id of ['kzp-rail-l', 'kzp-rail-r', 'kzp-ad-l', 'kzp-ad-under', 'kzp-ad-contact', 'kzp-ad-r']) { const n = $(id); if (n) n.replaceChildren(); }
+  for (const id of ['kzp-rail-l', 'kzp-rail-r', 'kzp-ad-l', 'kzp-ad-card', 'kzp-ad-contact', 'kzp-ad-r']) { const n = $(id); if (n) n.replaceChildren(); }
 }
 async function renderExtras() {
   if (extrasFor === S.id) return;
   extrasFor = S.id;
   const mine = S.id;
-  mountSlot($('kzp-ad-l'), 'side'); mountSlot($('kzp-ad-r'), 'side2'); mountSlot($('kzp-ad-under'), 'under'); mountContact($('kzp-ad-contact'));
+  mountSlot($('kzp-ad-l'), 'side'); mountSlot($('kzp-ad-r'), 'side2'); mountSlot($('kzp-ad-card'), 'under', 'kz-ad--card'); mountContact($('kzp-ad-contact'));
   let originals = [];
   try { originals = ((await (await fetch('/data/originals.json', { cache: 'no-cache' })).json()).games || []).filter((g) => g.id !== mine); } catch { /* optional */ }
   const web = await loadWebGames().catch(() => []);
@@ -466,52 +466,142 @@ function layoutRails() {
 }
 narrowMQ.addEventListener('change', () => { if (extrasFor) layoutRails(); });
 
-// ---- Controller dialog -------------------------------------------------------------
-function padStatus(last) {
-  const n = $('kzp-gp-status'); if (!n) return;
-  const id = gpCtl && gpCtl.connected();
-  n.textContent = id ? 'Connected: ' + id.slice(0, 60) + (last ? '. Last button: ' + last : '. Press a button to test it.') : 'No gamepad found. Connect one and press any button.';
+// ---- Controls sheet: Touch / Gamepad / Keyboard ----------------------------------------
+const SHORT = { 0: 'A', 1: 'B', 2: 'X', 3: 'Y', 4: 'LB', 5: 'RB', 6: 'LT', 7: 'RT', 8: 'Back', 9: 'Start', 10: 'L3', 11: 'R3', 12: '↑', 13: '↓', 14: '←', 15: '→' };
+const LAYOUT_ICON = { 'dpad-2btn': '✚  ● ●', 'dpad-4btn': '✚  ● ● ● ●', fps: '◉  Fire Use Run', 'mouse-pad': '▭  Click' };
+const GP_PRESETS = {
+  Classic: { mode: 'classic', map: { ...DEFAULT_MAP } },
+  Platformer: { mode: 'classic', map: { ...DEFAULT_MAP, 0: 'Space', 1: 'ControlLeft', 2: 'AltLeft', 3: 'ShiftLeft' } },
+  Shooter: { mode: 'shooter', map: { ...DEFAULT_MAP, 0: 'Space', 1: 'ShiftLeft', 6: 'AltLeft', 7: 'ControlLeft' } },
+};
+const padSupported = () => { const plat = S.record && S.record.platform; return plat === 'dos' || plat === 'native'; };
+const gpGet = () => (gpCtl ? gpCtl.getConfig() : loadGamepadConfig(S.id));
+const gpSet = (cfg) => { if (gpCtl) gpCtl.setConfig(cfg); else saveGamepadConfig(S.id, cfg); };
+let liveRaf = 0, sheetPaused = false, liveSig = '';
+
+function setTab(tab) {
+  const ok = padSupported();
+  if (tab === 'pad' && !ok) tab = 'touch';
+  document.querySelectorAll('#kzp-pad-dialog .kzp-tab').forEach((b) => {
+    const on = b.dataset.tab === tab;
+    b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; b.classList.toggle('on', on);
+    $('kzp-tab-' + b.dataset.tab).hidden = !on;
+  });
+}
+function padStatus(last) { // kept for the player's gamepad press hook
+  if (last) { const n = $('kzp-gp-status'); if (n) n.dataset.last = last; }
+}
+function liveLoop() {
+  liveRaf = requestAnimationFrame(liveLoop);
+  const pads = navigator.getGamepads ? Array.from(navigator.getGamepads()).filter(Boolean) : [];
+  const p = pads.find((x) => x.connected) || null;
+  const sig = p ? p.id : '';
+  if (sig !== liveSig) {
+    liveSig = sig;
+    $('kzp-gp-dot').classList.toggle('on', !!p);
+    $('kzp-gp-name').textContent = p ? p.id.replace(/\s*\(.*?\)\s*/g, ' ').trim().slice(0, 60) || 'Controller' : 'No controller found';
+    $('kzp-gp-status').textContent = p ? 'Connected. Press buttons to test them below.' : 'Connect one by Bluetooth or USB, then press any button. On a phone, pair it in the system Bluetooth settings first.';
+  }
+  document.querySelectorAll('#kzp-live-btns .kzp-gb').forEach((n) => {
+    const b = p && p.buttons[Number(n.dataset.i)];
+    n.classList.toggle('on', !!(b && (b.pressed || b.value > 0.5)));
+  });
+  const stick = (id, x, y) => { const i = $(id).firstElementChild; i.style.transform = `translate(${(x || 0) * 14}px, ${(y || 0) * 14}px)`; };
+  stick('kzp-stick-l', p && p.axes[0], p && p.axes[1]); stick('kzp-stick-r', p && p.axes[2], p && p.axes[3]);
 }
 function renderPad() {
-  const plat = S.record && S.record.platform, ok = plat === 'dos' || plat === 'native';
-  $('kzp-pad-unsupported').hidden = ok; $('kzp-pad-body').hidden = !ok;
-  if (!ok) return;
-  $('kzp-tc-fs').hidden = plat !== 'dos'; // Originals handle touch themselves
+  const ok = padSupported(), plat = S.record && S.record.platform;
+  $('kzp-tab-b-pad').hidden = !ok;
+  $('kzp-touch-native').hidden = plat !== 'native';
+  $('kzp-pad-unsupported').hidden = ok;
+  $('kzp-tc-fs').hidden = plat !== 'dos';
+
+  // Touch
   const prefs = loadPrefs();
-  const save = () => { savePrefs(prefs); if (plat === 'dos') mountTouch(); };
-  $('kzp-tc-mode').value = prefs.mode;
+  const save = () => { savePrefs(prefs); if (plat === 'dos' && S.started) mountTouch(); };
+  const seg = $('kzp-tc-fs').querySelector('.kzp-seg');
+  const paintSeg = () => seg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.mode === prefs.mode)));
+  seg.querySelectorAll('button').forEach((b) => { b.onclick = () => { prefs.mode = b.dataset.mode; paintSeg(); save(); }; }); paintSeg();
+  const lays = $('kzp-tc-layouts'); lays.replaceChildren();
+  const paintLays = () => lays.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.k === currentLayout(prefs))));
+  for (const [k, label] of Object.entries(LAYOUT_INFO)) {
+    const b = el('button', { type: 'button', role: 'radio', 'data-k': k }, el('span', { class: 'kzp-lay-ic', text: LAYOUT_ICON[k] || '✚' }), el('span', { text: label }));
+    b.onclick = () => { prefs.layouts = { ...prefs.layouts, [S.id]: k }; paintLays(); save(); };
+    lays.append(b);
+  }
+  paintLays();
   $('kzp-tc-size').value = prefs.size; $('kzp-tc-alpha').value = prefs.opacity;
   $('kzp-tc-haptics').checked = !!prefs.haptics; $('kzp-tc-left').checked = !!prefs.leftHanded;
-  const lay = $('kzp-tc-layout'); lay.replaceChildren();
-  for (const [k, label] of Object.entries(LAYOUT_INFO)) lay.append(el('option', { value: k, text: label }));
-  lay.value = currentLayout(prefs);
-  $('kzp-tc-mode').onchange = (e) => { prefs.mode = e.target.value; save(); };
-  lay.onchange = (e) => { prefs.layouts = { ...prefs.layouts, [S.id]: e.target.value }; save(); };
-  $('kzp-tc-edit').onclick = () => { $('kzp-pad-dialog').close(); mountTouch(true); if (touchCtl) setTimeout(() => touchCtl.edit(), 50); };
   $('kzp-tc-size').oninput = (e) => { prefs.size = Number(e.target.value); save(); };
   $('kzp-tc-alpha').oninput = (e) => { prefs.opacity = Number(e.target.value); save(); };
   $('kzp-tc-haptics').onchange = (e) => { prefs.haptics = e.target.checked; save(); };
   $('kzp-tc-left').onchange = (e) => { prefs.leftHanded = e.target.checked; save(); };
-
-  const mode = $('kzp-gp-mode'); mode.replaceChildren();
-  for (const [k, label] of Object.entries(GP_MODES)) mode.append(el('option', { value: k, text: label }));
-  const body = $('kzp-gp-body'); body.replaceChildren();
-  const cfg = gpCtl ? gpCtl.getConfig() : null;
-  const apply = () => {
-    if (!gpCtl) return;
-    const map = {}; body.querySelectorAll('select').forEach((s) => { map[s.dataset.btn] = s.value; });
-    gpCtl.setConfig({ mode: mode.value, map });
+  $('kzp-tc-edit').onclick = () => {
+    if (!S.started) { $('kzp-tc-edit').textContent = 'Start the game first, then customize'; setTimeout(() => { $('kzp-tc-edit').textContent = 'Customize buttons…'; }, 2200); return; }
+    closeSheet(false); mountTouch(true); if (touchCtl) setTimeout(() => touchCtl.edit(), 50);
   };
-  mode.value = cfg ? cfg.mode : 'classic'; mode.onchange = apply;
-  for (const [i, name] of GP_BUTTONS) {
-    const sel = el('select', { 'data-btn': String(i), 'aria-label': 'Key for ' + name });
-    for (const [code, label] of KEY_CHOICES) sel.append(el('option', { value: code, text: label }));
-    sel.value = cfg ? (cfg.map[i] || '') : '';
-    sel.addEventListener('change', apply);
-    body.append(el('tr', {}, el('td', { text: name }), el('td', {}, sel)));
+  $('kzp-vibe-test').onclick = (e) => {
+    const b = e.currentTarget, old = 'Test vibration';
+    const done = navigator.vibrate ? (navigator.vibrate(80), 'Did you feel that?') : 'Not supported on this device';
+    b.textContent = done; setTimeout(() => { b.textContent = old; }, 1800);
+  };
+
+  // Gamepad
+  if (ok) {
+    const live = $('kzp-live-btns'); live.replaceChildren();
+    for (const [i] of GP_BUTTONS) live.append(el('span', { class: 'kzp-gb', 'data-i': String(i), text: SHORT[i] }));
+    const mode = $('kzp-gp-mode'); mode.replaceChildren();
+    for (const [k, label] of Object.entries(GP_MODES)) mode.append(el('option', { value: k, text: label }));
+    const body = $('kzp-gp-body');
+    const fill = () => {
+      const cfg = gpGet(); mode.value = cfg.mode; body.replaceChildren();
+      for (const [i, name] of GP_BUTTONS) {
+        const sel = el('select', { 'data-btn': String(i), 'aria-label': 'Key for ' + name });
+        for (const [code, label] of KEY_CHOICES) sel.append(el('option', { value: code, text: label }));
+        sel.value = cfg.map[i] || '';
+        sel.addEventListener('change', apply);
+        body.append(el('label', { class: 'kzp-mapi' }, el('span', { class: 'kzp-gb', text: SHORT[i] }), el('span', { class: 'kzp-mapn', text: name.replace(/ \(.*\)/, '') }), sel));
+      }
+    };
+    const apply = () => {
+      const map = {}; body.querySelectorAll('select').forEach((x) => { map[x.dataset.btn] = x.value; });
+      gpSet({ mode: mode.value, map });
+    };
+    mode.onchange = apply; fill();
+    const pre = $('kzp-gp-presets'); pre.replaceChildren();
+    for (const [name, cfg] of Object.entries(GP_PRESETS)) {
+      const b = el('button', { type: 'button', class: 'kzp-btn', text: name });
+      b.onclick = () => { gpSet({ mode: cfg.mode, map: { ...cfg.map } }); fill(); pre.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); };
+      pre.append(b);
+    }
+    $('kzp-gp-reset').onclick = () => { gpSet({ mode: 'classic', map: { ...DEFAULT_MAP } }); fill(); };
+    $('kzp-rumble').onclick = (e) => {
+      const p = (navigator.getGamepads ? Array.from(navigator.getGamepads()) : []).find((x) => x && x.connected);
+      const act = p && p.vibrationActuator;
+      const b = e.currentTarget, old = 'Test rumble';
+      if (act && act.playEffect) { act.playEffect('dual-rumble', { duration: 350, strongMagnitude: 1, weakMagnitude: 0.6 }).catch(() => {}); b.textContent = 'Rumbling…'; }
+      else b.textContent = p ? 'This controller has no rumble' : 'Connect a controller first';
+      setTimeout(() => { b.textContent = old; }, 1600);
+    };
   }
-  $('kzp-gp-reset').onclick = () => { if (gpCtl) { gpCtl.reset(); renderPad(); } };
-  padStatus();
+  renderHelp();
+}
+
+function openSheet(tab) {
+  const d = $('kzp-pad-dialog');
+  const host = document.fullscreenElement || document.body; // a dialog can only show above a fullscreen game if it lives inside it
+  if (d.parentElement !== host) host.append(d);
+  renderPad();
+  setTab(tab || (padSupported() && !matchMedia('(pointer: coarse)').matches ? 'pad' : 'touch'));
+  if (S.started && !S.paused) { window.KZPlayer.pause(); sheetPaused = true; } // never lose a life while changing settings
+  liveSig = '\0'; cancelAnimationFrame(liveRaf); liveRaf = requestAnimationFrame(liveLoop);
+  d.showModal();
+  d.querySelector('.kzp-tab.on').focus();
+}
+function closeSheet(resume = true) {
+  const d = $('kzp-pad-dialog');
+  if (d.open) d.close();
+  if (!resume) sheetPaused = false;
 }
 
 // ---- states ----------------------------------------------------------------------
@@ -568,7 +658,7 @@ function renderHelp() {
   const controls = (S.entry && S.entry.controls) || [];
   controls.forEach((c) => body.append(el('tr', {}, el('td', { text: c.keys }), el('td', { text: c.action }))));
   $('kzp-help-note').hidden = controls.length > 0;
-  $('kzp-help-dialog').querySelector('table').hidden = controls.length === 0;
+  $('kzp-help-table').hidden = controls.length === 0;
 }
 
 function toggleFullscreen() {
@@ -617,13 +707,36 @@ $('kzp-resume').addEventListener('click', () => window.KZPlayer.resume());
 $('kzp-full').addEventListener('click', toggleFullscreen);
 $('kzp-exit').addEventListener('click', exitToLibrary);
 $('kzp-tc-toggle').addEventListener('click', () => setTcOpen(!tcOpen));
-$('kzp-pad').addEventListener('click', () => { renderPad(); $('kzp-pad-dialog').showModal(); });
-$('kzp-help').addEventListener('click', () => { renderHelp(); $('kzp-help-dialog').showModal(); });
+$('kzp-pad').addEventListener('click', () => openSheet());
+$('kzp-help').addEventListener('click', () => openSheet('keys'));
+$('kzp-fab').addEventListener('click', () => openSheet());
+$('kzp-pad-start').addEventListener('click', () => openSheet());
+$('kzp-pad-close').addEventListener('click', () => closeSheet());
+$('kzp-pad-done').addEventListener('click', () => closeSheet());
+document.querySelectorAll('#kzp-pad-dialog .kzp-tab').forEach((b) => {
+  b.addEventListener('click', () => setTab(b.dataset.tab));
+  b.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const tabs = [...document.querySelectorAll('#kzp-pad-dialog .kzp-tab')].filter((x) => !x.hidden);
+    const n = tabs[(tabs.indexOf(b) + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+    setTab(n.dataset.tab); n.focus();
+  });
+});
+// Tap on the dimmed area closes the sheet.
+$('kzp-pad-dialog').addEventListener('click', (e) => { if (e.target === e.currentTarget) closeSheet(); });
+$('kzp-pad-dialog').addEventListener('close', () => {
+  cancelAnimationFrame(liveRaf);
+  if (sheetPaused) { sheetPaused = false; window.KZPlayer.resume(); }
+});
+document.addEventListener('fullscreenchange', () => {
+  const d = $('kzp-pad-dialog'); if (d.open) closeSheet();
+  if (!document.fullscreenElement && d.parentElement !== document.body) document.body.append(d);
+});
 $('kzp-states').addEventListener('click', async () => {
   const d = $('kzp-states-dialog');
   try { await renderStates(); } catch (e) { $('kzp-states-status').textContent = friendly(e); }
   d.showModal();
 });
-['kzp-help-dialog', 'kzp-states-dialog', 'kzp-pad-dialog'].forEach((id) => $(id).addEventListener('close', focusGame));
+['kzp-states-dialog', 'kzp-pad-dialog'].forEach((id) => $(id).addEventListener('close', focusGame));
 try { $('kzp-autosave').checked = localStorage.getItem('kz-autosave') === '1'; } catch { /* optional preference */ }
 init();

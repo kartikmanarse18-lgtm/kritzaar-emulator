@@ -1,0 +1,25 @@
+/* KritZaar arcade browser (js/arcade.js): search, chips, game grid. */
+.kz-ax-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:4px 0 10px;position:sticky;top:0;z-index:12;padding:8px 0;background:linear-gradient(var(--kz-bg,#0f1020) 80%,transparent)}
+.kz-ax-search{flex:1 1 260px;min-height:48px;box-sizing:border-box;padding:0 16px 0 44px;border-radius:99px;border:1px solid var(--kz-border,#2c2d4a);color:var(--kz-text,#f1f0fa);font:inherit;
+  background:var(--kz-surface,#191a2e) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a5a3c2' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4-4'/%3E%3C/svg%3E") no-repeat 16px center}
+.kz-ax-search:focus{outline:3px solid var(--kz-accent-text,#a994ff);outline-offset:2px}
+.kz-ax-count{margin:0;color:var(--kz-muted,#a5a3c2);font-size:.88rem;white-space:nowrap}
+.kz-ax-chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.kz-ax-chips::-webkit-scrollbar{display:none}
+.kz-ax-chips .kz-chip{white-space:nowrap}
+.kz-chip--sm{min-height:34px;padding:0 13px;font-size:.84rem}
+.kz-ax-genres{padding-bottom:12px}
+.kz-ax-grid{padding-top:8px}
+.kz-ax-foot{display:grid;place-items:center;padding:18px 0 6px}
+.kz-ax-more{min-width:240px}
+.kz-ax-more[hidden],.kz-ax-genres[hidden]{display:none}
+.kz-ax-sentinel{height:1px}
+.kz-ax-status{padding:28px 0;text-align:center;color:var(--kz-muted,#a5a3c2)}
+.kz-ax-status[hidden]{display:none}
+/* Compact cards on phones: two per row so more games fit on screen */
+@media (max-width:560px){
+  .kz-ax-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kz-ax-grid .kz-pc-title{font-size:.88rem}
+  .kz-ax-grid .kz-pc-info{padding:18px 9px 8px}
+  .kz-ax-more{width:100%}
+}
