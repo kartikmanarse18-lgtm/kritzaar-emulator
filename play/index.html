@@ -7,6 +7,9 @@
   <meta name="robots" content="noindex">
   <link rel="icon" href="/icons/icon-192.png">
   <title>Web game | KritZaar</title>
+  <!-- Warm up the connection to the game host so the first byte arrives sooner. -->
+  <link rel="preconnect" href="https://playgama.com" crossorigin>
+  <link rel="dns-prefetch" href="https://playgama.com">
   <link rel="stylesheet" href="/css/emulator-shared.css">
   <link rel="stylesheet" href="/css/cards.css">
   <link rel="stylesheet" href="/css/shell.css">
@@ -22,8 +25,12 @@
         <div class="kzw-stage-wrap"><div class="kzw-stage" id="kzw-stage"></div></div>
         <div class="kzw-bar">
           <h1 id="kzw-title">Loading&hellip;</h1>
-          <button type="button" class="kz-btn" id="kzw-full" hidden>⛶ Fullscreen</button>
+          <div class="kzw-actions" id="kzw-actions">
+            <button type="button" class="kz-btn" id="kzw-reload" hidden aria-label="Reload the game"><span aria-hidden="true">↻</span> Reload</button>
+            <button type="button" class="kz-btn" id="kzw-full" hidden aria-label="Fullscreen"><span aria-hidden="true">⛶</span> <span id="kzw-full-l">Fullscreen</span></button>
+          </div>
         </div>
+        <p class="kzw-help" id="kzw-help" hidden>Click the game once so your keyboard and controller work in it.</p>
         <ul class="kzw-tags" id="kzw-tags"></ul>
         <section class="kzw-card" id="kzw-info" hidden>
           <h2>About this game</h2><p id="kzw-desc"></p>
@@ -34,6 +41,22 @@
       <aside class="kzw-more" id="kzw-more" aria-label="More games" hidden><h2>More games</h2><div id="kzw-grid"></div></aside>
     </div>
   </main>
+
+  <!-- Shown when the game is loading in the background and the player has scrolled away from it -->
+  <button type="button" class="kzw-pill" id="kzw-pill" hidden></button>
+
+  <!-- The choice offered before the first Play -->
+  <dialog class="kzw-ask" id="kzw-ask" aria-labelledby="kzw-ask-h">
+    <h2 id="kzw-ask-h">Load the game in the background?</h2>
+    <p>This game comes from Playgama. It shows a short ad and then downloads the game files, which can take a while. We can start loading it right now and tell you the moment it is ready, so you can keep reading or look at other games while you wait.</p>
+    <p class="kzw-ask-note">Stay on this page while it loads. Some ads make sound, and that sound may play before you open the game.</p>
+    <label class="kzw-remember" id="kzw-remember-wrap"><input type="checkbox" id="kzw-remember"><span class="kzw-switch" aria-hidden="true"></span><span>Remember my choice on this device</span></label>
+    <div class="kzw-ask-row">
+      <button type="button" class="kzw-primary" id="kzw-ask-bg">Load in background</button>
+      <button type="button" class="kz-btn" id="kzw-ask-now">Play now</button>
+    </div>
+  </dialog>
+
   <script type="module" src="/play/play.js"></script>
 </body>
 </html>

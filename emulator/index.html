@@ -17,19 +17,25 @@
 </head>
 <body class="kzp">
   <header class="kzp-bar" id="kzp-bar">
-    <a class="kzp-btn kzp-home" id="kzp-home" href="/" data-dest="/" aria-label="KritZaar home"><img src="/icons/icon-192.png" alt="" width="22" height="22"><span>Home</span></a>
-    <a class="kzp-btn" id="kzp-exit" href="/games/" data-dest="/games/" aria-label="Back to all games">&larr; <span>Games</span></a>
+    <a class="kzp-btn kzp-home" id="kzp-home" href="/" data-dest="/" aria-label="KritZaar home"><img src="/icons/icon-192.png" alt="" width="22" height="22"><span class="kzp-lb">Home</span></a>
+    <a class="kzp-btn" id="kzp-exit" href="/games/" data-dest="/games/" aria-label="Back to all games"><span class="kzp-ic" aria-hidden="true">&larr;</span><span class="kzp-lb">Games</span></a>
     <h1 class="kzp-title" id="kzp-title">Loading&hellip;</h1>
     <div class="kzp-tools" id="kzp-tools" hidden>
-      <button type="button" class="kzp-btn" id="kzp-pause" aria-pressed="false">Pause</button>
-      <button type="button" class="kzp-btn" id="kzp-states">Saves</button>
-      <button type="button" class="kzp-btn" id="kzp-pad">🎮 <span>Controller</span></button>
-      <button type="button" class="kzp-btn" id="kzp-help">⌨ <span>Keys</span></button>
-      <button type="button" class="kzp-btn" id="kzp-full">Fullscreen</button>
+      <span class="kzp-chip-slot" id="kzp-padchip"></span>
+      <button type="button" class="kzp-btn" id="kzp-pause" aria-pressed="false" aria-label="Pause"><span class="kzp-ic" aria-hidden="true">⏸</span><span class="kzp-lb">Pause</span></button>
+      <button type="button" class="kzp-btn" id="kzp-states" aria-label="Saves"><span class="kzp-ic" aria-hidden="true">💾</span><span class="kzp-lb">Saves</span></button>
+      <button type="button" class="kzp-btn" id="kzp-pad" aria-label="Controller settings"><span class="kzp-ic" aria-hidden="true">🎮</span><span class="kzp-lb">Controller</span></button>
+      <button type="button" class="kzp-btn" id="kzp-help" aria-label="Keyboard keys"><span class="kzp-ic" aria-hidden="true">⌨</span><span class="kzp-lb">Keys</span></button>
+      <button type="button" class="kzp-btn" id="kzp-full" aria-label="Fullscreen"><span class="kzp-ic" aria-hidden="true">⛶</span><span class="kzp-lb">Fullscreen</span></button>
     </div>
   </header>
 
   <main class="kzp-main" id="kzp-main">
+    <!-- One-time tip on phones held upright -->
+    <div class="kzp-tip" id="kzp-tip" role="note" hidden>
+      <span>Tip: turn your phone sideways or tap <b>⛶</b> for a bigger screen.</span>
+      <button type="button" class="kzp-tip-x" id="kzp-tip-x" aria-label="Dismiss tip">&times;</button>
+    </div>
     <!-- Loading -->
     <section class="kzp-screen" id="kzp-loading" aria-live="polite" hidden>
       <p id="kzp-loading-text">Loading&hellip;</p>
@@ -107,7 +113,13 @@
       <div id="kzp-dos" class="kzp-dos"></div>
       <div id="kzp-touch" class="kzp-touch"></div>
       <button type="button" class="kzp-tc-toggle" id="kzp-tc-toggle" aria-pressed="false" hidden>Controls</button>
-      <button type="button" class="kzp-fab" id="kzp-fab" aria-label="Controller and key settings">🎮</button>
+      <!-- Fullscreen only: the page toolbar is hidden there, so these stay reachable. Fades out when idle. -->
+      <div class="kzp-fsbar" id="kzp-fsbar" role="toolbar" aria-label="Game controls">
+        <button type="button" class="kzp-fsb" id="kzp-fs-pause" aria-label="Pause"><span aria-hidden="true">⏸</span><span class="kzp-fsl">Pause</span></button>
+        <button type="button" class="kzp-fsb" id="kzp-fs-pad" aria-label="Controller settings"><span aria-hidden="true">🎮</span><span class="kzp-fsl">Controller</span></button>
+        <button type="button" class="kzp-fsb" id="kzp-fs-keys" aria-label="Keyboard keys"><span aria-hidden="true">⌨</span><span class="kzp-fsl">Keys</span></button>
+        <button type="button" class="kzp-fsb kzp-fsb-exit" id="kzp-fs-exit" aria-label="Exit fullscreen"><span aria-hidden="true">✕</span><span class="kzp-fsl">Exit</span></button>
+      </div>
       <div class="kzp-paused" id="kzp-paused" hidden>
         <p>Paused</p>
         <button type="button" class="kzp-btn kzp-btn-primary" id="kzp-resume">Resume</button>
@@ -155,14 +167,17 @@
           <div class="kzp-sticks"><span class="kzp-stick" id="kzp-stick-l"><i></i></span><span class="kzp-stick" id="kzp-stick-r"><i></i></span></div>
           <div class="kzp-btns" id="kzp-live-btns"></div>
         </div>
-        <p class="kzp-label">Presets</p>
-        <div class="kzp-row" id="kzp-gp-presets"></div>
-        <label class="kzp-field">Stick mode <select id="kzp-gp-mode"></select></label>
-        <details class="kzp-details" id="kzp-gp-details">
-          <summary>Remap every button</summary>
-          <div class="kzp-map" id="kzp-gp-body"></div>
-        </details>
-        <p class="kzp-row"><button type="button" class="kzp-btn" id="kzp-rumble">Test rumble</button><button type="button" class="kzp-btn" id="kzp-gp-reset">Reset buttons</button></p>
+        <p class="kzp-note" id="kzp-gp-own" hidden>This kind of game reads your controller by itself. Test it above, then use the game's own settings menu (the gear inside the game) if you want to change buttons.</p>
+        <div id="kzp-gp-remap">
+          <p class="kzp-label">Presets</p>
+          <div class="kzp-row" id="kzp-gp-presets"></div>
+          <label class="kzp-field">Stick mode <select id="kzp-gp-mode"></select></label>
+          <details class="kzp-details" id="kzp-gp-details">
+            <summary>Remap every button</summary>
+            <div class="kzp-map" id="kzp-gp-body"></div>
+          </details>
+          <p class="kzp-row"><button type="button" class="kzp-btn" id="kzp-rumble">Test rumble</button><button type="button" class="kzp-btn" id="kzp-gp-reset">Reset buttons</button></p>
+        </div>
       </section>
 
       <section class="kzp-pane" id="kzp-tab-keys" role="tabpanel" aria-labelledby="kzp-tab-b-keys">

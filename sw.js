@@ -20,7 +20,7 @@
  * game type then works offline. KritZaar Originals are small and are always precached.
  */
 
-const VERSION = 'v9';
+const VERSION = 'v10';
 const SHELL_CACHE = `kz-shell-${VERSION}`;
 const RUNTIME_CACHE = `kz-runtime-${VERSION}`;
 const NETWORK_TIMEOUT_MS = 3000;
@@ -32,12 +32,12 @@ const CORE = [
   '/library/index.html', '/library/library.js', '/library/library.css',
   '/css/emulator-shared.css', '/css/catalog.css',
   '/js/storage.js', '/js/dropzone.js', '/js/pwa-install.js', '/js/catalog.js', '/js/search-ui.js',
-  '/js/touch-controls.js', '/js/gamepad.js', '/js/ads.js', '/play/index.html', '/play/play.js', '/play/play.css', '/js/cards.js', '/css/cards.css', '/js/continue-playing.js', '/js/game-files.js',
+  '/js/touch-controls.js', '/js/gamepad.js', '/js/gamepad-hud.js', '/js/emulator-config.js', '/js/ads.js', '/play/index.html', '/play/play.js', '/play/play.css', '/js/cards.js', '/css/cards.css', '/js/continue-playing.js', '/js/game-files.js',
   '/js/detect.js', '/js/engines.js', '/js/report.js', '/js/compat-ui.js', '/js/hub.js', '/css/hub.css', '/js/arcade.js', '/css/arcade.css', '/js/shell.js', '/js/favs.js', '/css/shell.css', '/js/home.js', '/css/gamepage.css', '/emulator/ready.css',
   '/emulator/engines/native.js', '/emulator/engines/emulatorjs.js', '/emulator/engines/ruffle.js',
   '/originals/kit.js', '/originals/index.html', '/originals/games/lantern-run.js', '/originals/games/tidepool.js', '/originals/games/starling-drift.js',
   '/originals/covers/kz-lantern-run.svg', '/originals/covers/kz-tidepool.svg', '/originals/covers/kz-starling-drift.svg',
-  '/data/games.json', '/data/originals.json', '/data/arcade.json', '/data/site-config.json', '/data/allowed-sources.json',
+  '/data/games.json', '/data/emulator-config.json', '/data/originals.json', '/data/arcade.json', '/data/site-config.json', '/data/allowed-sources.json',
   '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png'
 ];
 

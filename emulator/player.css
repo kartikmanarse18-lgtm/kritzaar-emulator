@@ -62,6 +62,7 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 .kzp-list li { display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 8px 12px; background: var(--surface); border-radius: var(--radius); word-break: break-all; }
 
 .kzp-stage { position: relative; flex: 1; min-height: 60vh; background: #000; }
+.kzp-chip-slot { display: inline-flex; align-items: center; }
 .kzp-dos { position: absolute; inset: 0; }
 .kzp-touch { position: absolute; inset: 0; pointer-events: none; }
 .kzp-touch > * { pointer-events: auto; }
@@ -75,7 +76,7 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 
 @media (max-width: 480px) {
   .kzp-btn { padding: 0 10px; font-size: .85rem; }
-  .kzp-bar #kzp-exit span { display: none; }
+  .kzp-bar #kzp-exit .kzp-lb { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .kzp *, .kzp *::before, .kzp *::after { transition: none !important; animation: none !important; }
@@ -211,13 +212,50 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 .kzp-ad-l:empty, .kzp-ad-r:empty { display: none; }
 .kzp-btn-ghost { background: transparent; border: 1px solid rgba(255, 255, 255, .22); min-height: 44px; }
 
-/* Floating controller button: also reachable in fullscreen */
-.kzp-fab { position: absolute; z-index: 30; right: calc(10px + env(safe-area-inset-right, 0px)); top: 10px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .45);
-  background: rgba(15, 16, 32, .72); color: #fff; font-size: 1.15rem; cursor: pointer; display: grid; place-items: center; transition: transform .1s, background .15s; }
-.kzp-fab:hover { background: var(--accent); } .kzp-fab:active { transform: scale(.94); }
-.kzp-fab:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-.kzp-fab { opacity: .55; } .kzp-stage:hover .kzp-fab, .kzp-fab:focus-visible, .kzp-stage:focus-within .kzp-fab { opacity: 1; }
-@media (hover: none) { .kzp-fab { opacity: .8; } }
+/* Fullscreen bar. Replaces the old floating controller button, which sat on top of game scores and HUDs.
+   Only exists in fullscreen (real or soft), centred at the top, fades out when idle and returns on any movement or touch. */
+.kzp-fsbar { position: absolute; z-index: 40; top: calc(8px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%); display: none; gap: 6px; padding: 6px;
+  border-radius: 16px; background: rgba(12, 13, 28, .82); border: 1px solid rgba(255, 255, 255, .28); backdrop-filter: blur(6px); transition: opacity .25s ease; max-width: calc(100% - 16px); }
+.kzp-fsbar.is-shown { display: flex; }
+.kzp-fsbar.is-idle { opacity: 0; pointer-events: none; }
+.kzp-fsb { position: relative; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; min-width: 44px; padding: 0 12px; border: 0; border-radius: 11px; justify-content: center;
+  background: rgba(255, 255, 255, .1); color: #fff; font: 700 .85rem var(--kz-font, system-ui, sans-serif); cursor: pointer; }
+.kzp-fsb:hover { background: rgba(255, 255, 255, .22); } .kzp-fsb:active { transform: scale(.96); }
+.kzp-fsb[aria-pressed="true"] { background: var(--accent); }
+.kzp-fsb-exit { background: rgba(198, 61, 84, .85); }
+@media (max-width: 480px) { .kzp-fsl { display: none; } .kzp-fsb { padding: 0; } }
+/* A green dot when a controller is connected */
+.has-pad::after { content: ""; position: absolute; top: 6px; right: 6px; width: 9px; height: 9px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 2px rgba(15, 16, 32, .9); }
+.kzp-btn { position: relative; }
+.kzp-btn .kzp-ic { font-size: 1.3rem; line-height: 1; }
+
+/* One-time tip for phones held upright */
+.kzp-tip { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 8px 16px; background: #26224a; color: #e9e6ff; font-size: .85rem; }
+.kzp-tip[hidden] { display: none !important; }
+.kzp-tip-x { flex: none; width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 1.5rem; cursor: pointer; }
+.kzp-tip-x:hover { background: rgba(255, 255, 255, .12); }
+
+/* While a game is on screen the page never scrolls: the stage fills exactly the space under the toolbar.
+   (Before, the stage was "60vh minimum" under a toolbar that could wrap to three rows on phones.) */
+.kzp.kzp-playing { height: 100dvh; min-height: 0; overflow: hidden; }
+.kzp.kzp-playing .kzp-main { min-height: 0; }
+.kzp.kzp-playing .kzp-stage { min-height: 0; }
+.kzp.kzp-is-fs { overflow: hidden; }
+.kzp-stage.kzp-soft-fs { height: 100dvh; width: 100vw; margin: 0; border-radius: 0; }
+
+/* Compact toolbar: icons only on narrow screens so it stays on ONE row (it used to wrap to three and cover ~40% of a phone). */
+@media (max-width: 720px) {
+  .kzp-compact .kzp-bar { flex-wrap: nowrap; gap: 6px; padding: 6px 8px; padding-top: max(6px, env(safe-area-inset-top)); }
+  .kzp-compact .kzp-bar .kzp-lb { display: none; }
+  .kzp-compact .kzp-bar .kzp-btn { padding: 0; width: 44px; flex: none; }
+  .kzp-compact .kzp-tools { flex-wrap: nowrap; gap: 4px; flex: none; }
+  .kzp-compact .kzp-title { flex: 1 1 0; min-width: 0; font-size: .95rem; }
+  .kzp-compact .kzp-chip-slot { display: none; }
+  .kzp-compact.kzp-playing .kzp-title { display: none; }
+  .kzp-compact.kzp-playing .kzp-tools { margin-left: auto; }
+  .kzp-compact.kzp-playing #kzp-help { display: none; } /* Keys live in the Controller sheet on phones */
+}
+@media (max-width: 720px) and (orientation: landscape) { .kzp-compact .kzp-bar { padding-block: 4px; } .kzp-tip { display: none; } }
 
 /* Controls sheet: bottom sheet on phones, centred panel on larger screens. Always fits the screen. */
 .kzp-sheet { box-sizing: border-box; padding: 0; margin: 0; border: 0; color: var(--text); background: var(--surface); width: 100%; max-width: none; max-height: 90dvh;

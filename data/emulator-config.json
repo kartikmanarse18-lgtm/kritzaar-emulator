@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "_note": "Central switches for the player and web-game page. Edit by hand or (next release) from the admin panel. Every key is optional: a missing or invalid value falls back to the default shown here.",
+  "player": {
+    "compactToolbar": true,
+    "fullscreenBar": true,
+    "autoHideBarMs": 2600,
+    "landscapeLockOnPhones": true,
+    "rotateTip": true,
+    "gamepadToast": true
+  },
+  "controls": {
+    "_touchDefault": "auto = open on phones, closed on desktop. Other values: on, off, tap",
+    "touchDefault": "auto",
+    "gamepadEnabled": true
+  },
+  "webGames": {
+    "_preload": "ask = show the choice before the first Play. always = load in the background without asking. never = old behaviour (load when Play is pressed)",
+    "preload": "ask",
+    "allowRemember": true,
+    "readyPill": true,
+    "readyTitle": true,
+    "readyVibrate": true,
+    "slowLoadHintSec": 40
+  }
+}

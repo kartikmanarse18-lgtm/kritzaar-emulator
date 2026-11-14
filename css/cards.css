@@ -94,3 +94,7 @@ a.kz-ad-free:hover b{text-decoration:underline}
 .kz-slide-cap h2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 @media (min-width:900px){.kz-slide-cap{left:76px}}
 @media (max-width:700px){.kz-slide-tags{display:none}.kz-slide-cap p{-webkit-line-clamp:2;font-size:.9rem;margin-bottom:10px}.kz-slide-cap h2{font-size:1.35rem}.kz-slide-kick{margin-bottom:2px}}
+
+/* Home hero: the slide has its own title overlay, so the generated placeholder title must never show behind it
+   (it appeared doubled and overlapping whenever the artwork was slow or missing). */
+.kz-hero .kz-art-ph{display:none}

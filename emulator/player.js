@@ -10,8 +10,11 @@ import { mountTouchControls, loadPrefs, savePrefs, LAYOUT_INFO } from '/js/touch
 import { startGamepad, GP_BUTTONS, KEY_CHOICES, GP_MODES, DEFAULT_MAP, loadGamepadConfig, saveGamepadConfig } from '/js/gamepad.js';
 import { asset, hue, previewVideo, previewsAllowed, cardGrid, loadWebGames, webCardData, pickMore } from '/js/cards.js';
 import { mountSlot, mountContact } from '/js/ads.js';
+import { getConfig, DEFAULTS } from '/js/emulator-config.js';
+import { watchGamepads, mountChip, padName } from '/js/gamepad-hud.js';
 
 const VENDOR = '/emulator/vendor/';
+let CFG = DEFAULTS; // replaced by /data/emulator-config.json as soon as it loads (see init)
 const AUTOSAVE_SLOT = 3;
 const EMU_OPTIONS = ['renderBackend', 'renderAspect', 'mouseCapture', 'volume', 'mouseSensitivity'];
 // js-dos (GLFW) key codes, plus aliases for DOM KeyboardEvent.code names.
@@ -65,6 +68,10 @@ function friendly(err) {
 function show(name) {
   for (const id of ['loading', 'missing', 'ready', 'picker', 'error', 'stage']) $('kzp-' + id).hidden = id !== name;
   $('kzp-tools').hidden = name !== 'stage';
+  // While a game is on screen the page itself must not scroll: the stage fills exactly the space under the toolbar.
+  document.body.classList.toggle('kzp-playing', name === 'stage');
+  if (name !== 'stage') { setFullscreen(false); $('kzp-tip').hidden = true; }
+  else maybeShowTip();
   if (name !== 'ready') clearExtras(); // rails and ad slots exist only on the start screen
 }
 function setProgress(text, pct) { $('kzp-loading-text').textContent = text; $('kzp-progress').value = pct; show('loading'); }
@@ -115,14 +122,22 @@ window.KZPlayer = {
 
 function syncPause() {
   $('kzp-paused').hidden = !S.paused;
-  const b = $('kzp-pause');
-  b.textContent = S.paused ? 'Resume' : 'Pause';
-  b.setAttribute('aria-pressed', String(S.paused));
+  for (const [id, label] of [['kzp-pause', '.kzp-lb'], ['kzp-fs-pause', '.kzp-fsl']]) {
+    const b = $(id), word = S.paused ? 'Resume' : 'Pause';
+    b.querySelector(label).textContent = word;
+    b.querySelector('span[aria-hidden]').textContent = S.paused ? '▶' : '⏸';
+    b.setAttribute('aria-label', word);
+    b.setAttribute('aria-pressed', String(S.paused));
+  }
 }
 function focusGame() { const c = $('kzp-dos').querySelector('canvas') || $('kzp-dos').querySelector('[tabindex]'); if (c && c.focus) c.focus(); }
 
 // ---- start-up flow ---------------------------------------------------------
 async function init() {
+  CFG = await getConfig();
+  applyTouchDefault();
+  startPadWatch();
+  document.body.classList.toggle('kzp-compact', !!CFG.player.compactToolbar);
   if (!window.WebAssembly || !window.indexedDB || !window.Worker) return showError(Object.assign(new Error(), { code: 'UNSUPPORTED_BROWSER' }), 'Browser not supported');
   if (requestedId && !ID_RE.test(requestedId)) return showMissing();
   S.id = requestedId || null;
@@ -393,7 +408,7 @@ function stopInput() {
 function startInput() {
   const plat = S.record && S.record.platform;
   if (plat !== 'dos' && plat !== 'native') return; // EmulatorJS and Ruffle bring their own controls
-  if (!gpCtl) gpCtl = startGamepad({ gameId: S.id, onPress: (name) => { const n = $('kzp-gp-status'); if (n && $('kzp-pad-dialog').open) n.dataset.last = name; padStatus(name); } });
+  if (!gpCtl && CFG.controls.gamepadEnabled) gpCtl = startGamepad({ gameId: S.id, onPress: (name) => { const n = $('kzp-gp-status'); if (n && $('kzp-pad-dialog').open) n.dataset.last = name; padStatus(name); } });
   if (plat === 'dos') mountTouch();
 }
 
@@ -418,11 +433,24 @@ function onProgramExit() {
 function currentLayout(prefs) {
   return (prefs.layouts && prefs.layouts[S.id]) || (S.entry && S.entry.touchLayout) || 'dpad-4btn';
 }
-// On-screen controls stay closed until the player opens them with the Controls button.
+// On-screen controls: the player's own choice wins. With no saved choice, phones start with them open
+// (a game with no visible buttons looked like "the controller is missing"); desktop starts closed.
+// /data/emulator-config.json -> controls.touchDefault changes that default without touching saved choices.
 let tcOpen = false;
 try { tcOpen = localStorage.getItem('kz-tc-open') === '1'; } catch { /* optional */ }
+const stored = (k) => { try { return localStorage.getItem(k) !== null; } catch { return false; } };
+function getPrefs() {
+  const p = loadPrefs(), d = CFG.controls.touchDefault;
+  if (!stored('kz-controls') && (d === 'on' || d === 'off')) p.mode = d;
+  return p;
+}
+function applyTouchDefault() {
+  if (stored('kz-tc-open')) return;
+  const d = CFG.controls.touchDefault;
+  tcOpen = d === 'on' || (d === 'auto' && matchMedia('(pointer: coarse)').matches);
+}
 function syncToggle() {
-  const b = $('kzp-tc-toggle'), prefs = loadPrefs();
+  const b = $('kzp-tc-toggle'), prefs = getPrefs();
   b.hidden = !touchCtl || prefs.mode !== 'auto';
   b.setAttribute('aria-pressed', String(tcOpen));
   b.textContent = tcOpen ? 'Hide controls' : 'Controls';
@@ -435,7 +463,7 @@ function setTcOpen(v) {
 }
 function mountTouch(forceOn = false) {
   if (touchCtl) { touchCtl.destroy(); touchCtl = null; }
-  const prefs = loadPrefs();
+  const prefs = getPrefs();
   if (prefs.mode === 'off' && !forceOn) { syncToggle(); return; }
   const open = forceOn || prefs.mode === 'on' || tcOpen;
   try {
@@ -496,8 +524,6 @@ const gpSet = (cfg) => { if (gpCtl) gpCtl.setConfig(cfg); else saveGamepadConfig
 let liveRaf = 0, sheetPaused = false, liveSig = '';
 
 function setTab(tab) {
-  const ok = padSupported();
-  if (tab === 'pad' && !ok) tab = 'touch';
   document.querySelectorAll('#kzp-pad-dialog .kzp-tab').forEach((b) => {
     const on = b.dataset.tab === tab;
     b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; b.classList.toggle('on', on);
@@ -515,7 +541,7 @@ function liveLoop() {
   if (sig !== liveSig) {
     liveSig = sig;
     $('kzp-gp-dot').classList.toggle('on', !!p);
-    $('kzp-gp-name').textContent = p ? p.id.replace(/\s*\(.*?\)\s*/g, ' ').trim().slice(0, 60) || 'Controller' : 'No controller found';
+    $('kzp-gp-name').textContent = p ? padName(p.id) : 'No controller found';
     $('kzp-gp-status').textContent = p ? 'Connected. Press buttons to test them below.' : 'Connect one by Bluetooth or USB, then press any button. On a phone, pair it in the system Bluetooth settings first.';
   }
   document.querySelectorAll('#kzp-live-btns .kzp-gb').forEach((n) => {
@@ -527,13 +553,15 @@ function liveLoop() {
 }
 function renderPad() {
   const ok = padSupported(), plat = S.record && S.record.platform;
-  $('kzp-tab-b-pad').hidden = !ok;
+  // The Gamepad tab is always there: every game type can be tested here, only DOS and Originals can be remapped.
+  $('kzp-tab-b-pad').hidden = false;
+  $('kzp-gp-remap').hidden = !ok; $('kzp-gp-own').hidden = ok;
   $('kzp-touch-native').hidden = plat !== 'native';
   $('kzp-pad-unsupported').hidden = ok;
   $('kzp-tc-fs').hidden = plat !== 'dos';
 
   // Touch
-  const prefs = loadPrefs();
+  const prefs = getPrefs();
   const save = () => { savePrefs(prefs); if (plat === 'dos' && S.started) mountTouch(); };
   const seg = $('kzp-tc-fs').querySelector('.kzp-seg');
   const paintSeg = () => seg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.mode === prefs.mode)));
@@ -562,10 +590,11 @@ function renderPad() {
     b.textContent = done; setTimeout(() => { b.textContent = old; }, 1800);
   };
 
-  // Gamepad
+  // Gamepad: live tester for every game type
+  const live = $('kzp-live-btns'); live.replaceChildren();
+  for (const [i] of GP_BUTTONS) live.append(el('span', { class: 'kzp-gb', 'data-i': String(i), text: SHORT[i] }));
+  // Gamepad: remapping for DOS and Originals
   if (ok) {
-    const live = $('kzp-live-btns'); live.replaceChildren();
-    for (const [i] of GP_BUTTONS) live.append(el('span', { class: 'kzp-gb', 'data-i': String(i), text: SHORT[i] }));
     const mode = $('kzp-gp-mode'); mode.replaceChildren();
     for (const [k, label] of Object.entries(GP_MODES)) mode.append(el('option', { value: k, text: label }));
     const body = $('kzp-gp-body');
@@ -608,7 +637,7 @@ function openSheet(tab) {
   const host = document.fullscreenElement || document.body; // a dialog can only show above a fullscreen game if it lives inside it
   if (d.parentElement !== host) host.append(d);
   renderPad();
-  setTab(tab || (padSupported() && !matchMedia('(pointer: coarse)').matches ? 'pad' : 'touch'));
+  setTab(tab || (!matchMedia('(pointer: coarse)').matches ? 'pad' : 'touch'));
   if (S.started && !S.paused) { window.KZPlayer.pause(); sheetPaused = true; } // never lose a life while changing settings
   liveSig = '\0'; cancelAnimationFrame(liveRaf); liveRaf = requestAnimationFrame(liveLoop);
   d.showModal();
@@ -677,13 +706,64 @@ function renderHelp() {
   $('kzp-help-table').hidden = controls.length === 0;
 }
 
-function toggleFullscreen() {
+// ---- Fullscreen ---------------------------------------------------------------------
+// Real fullscreen where the browser allows it. Otherwise (iPhone Safari) a "soft" fullscreen that fills the viewport.
+// Both show the small auto-hiding bar inside the game (Pause, Controller, Keys, Exit), so there is always a way out
+// and the controller settings stay reachable. The old version hid the whole toolbar in soft mode with no exit button.
+const isCoarse = () => matchMedia('(pointer: coarse)').matches;
+const isFs = () => document.fullscreenElement === $('kzp-stage') || $('kzp-stage').classList.contains('kzp-soft-fs');
+let fsBarTimer = 0;
+function unlockOrientation() { try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch { /* optional */ } }
+function wakeFsBar() {
+  const bar = $('kzp-fsbar'); bar.classList.remove('is-idle');
+  clearTimeout(fsBarTimer);
+  const ms = CFG.player.autoHideBarMs;
+  if (ms > 0 && isFs()) fsBarTimer = setTimeout(() => { if (!S.paused) bar.classList.add('is-idle'); }, ms);
+}
+function syncFs() {
+  const on = isFs();
+  document.body.classList.toggle('kzp-is-fs', on);
+  $('kzp-fsbar').classList.toggle('is-shown', on && CFG.player.fullscreenBar);
+  const b = $('kzp-full');
+  b.setAttribute('aria-pressed', String(on));
+  b.setAttribute('aria-label', on ? 'Exit fullscreen' : 'Fullscreen');
+  b.querySelector('.kzp-lb').textContent = on ? 'Exit full' : 'Fullscreen';
+  if (on) wakeFsBar(); else clearTimeout(fsBarTimer);
+}
+function setFullscreen(on) {
   const stage = $('kzp-stage');
-  if (document.fullscreenElement) { document.exitFullscreen(); return; }
+  if (!on) {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    stage.classList.remove('kzp-soft-fs');
+    unlockOrientation();
+    syncFs();
+    return;
+  }
   // Phones: landscape fills the screen best. Not every browser allows the lock, so it is best effort.
-  const lock = () => { try { if (matchMedia('(pointer: coarse)').matches && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); } catch { /* optional */ } };
-  if (stage.requestFullscreen) stage.requestFullscreen().then(lock, () => stage.classList.toggle('kzp-soft-fs'));
-  else stage.classList.toggle('kzp-soft-fs'); // iPhone Safari has no element fullscreen
+  const lock = () => { try { if (CFG.player.landscapeLockOnPhones && isCoarse() && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); } catch { /* optional */ } };
+  const soft = () => { stage.classList.add('kzp-soft-fs'); syncFs(); focusGame(); };
+  if (stage.requestFullscreen) stage.requestFullscreen({ navigationUI: 'hide' }).then(() => { lock(); syncFs(); focusGame(); }, soft);
+  else soft();
+}
+function toggleFullscreen() { setFullscreen(!isFs()); }
+['pointermove', 'pointerdown', 'touchstart', 'keydown'].forEach((t) => $('kzp-stage').addEventListener(t, () => { if (isFs()) wakeFsBar(); }, { passive: true }));
+
+// Tip for phones held upright: the game is usually landscape. Shown once per visit, never while sideways.
+function maybeShowTip() {
+  const tip = $('kzp-tip');
+  let seen = false; try { seen = sessionStorage.getItem('kz-tip') === '1'; } catch { /* optional */ }
+  tip.hidden = !(CFG.player.rotateTip && !seen && isCoarse() && matchMedia('(orientation: portrait)').matches);
+}
+$('kzp-tip-x').addEventListener('click', () => { $('kzp-tip').hidden = true; try { sessionStorage.setItem('kz-tip', '1'); } catch { /* optional */ } });
+matchMedia('(orientation: landscape)').addEventListener('change', (e) => { if (e.matches) $('kzp-tip').hidden = true; });
+
+// Controller status (toast + chip + green dot on the Controller button). Works for every game type.
+let padWatch = null;
+function startPadWatch() {
+  if (padWatch || !CFG.controls.gamepadEnabled) return;
+  padWatch = watchGamepads({ announce: CFG.player.gamepadToast });
+  mountChip($('kzp-padchip'), padWatch);
+  padWatch.onChange((p) => { $('kzp-pad').classList.toggle('has-pad', !!p); $('kzp-fs-pad').classList.toggle('has-pad', !!p); });
 }
 
 async function exitToLibrary(e) {
@@ -727,7 +807,10 @@ $('kzp-home').addEventListener('click', exitToLibrary);
 $('kzp-tc-toggle').addEventListener('click', () => setTcOpen(!tcOpen));
 $('kzp-pad').addEventListener('click', () => openSheet());
 $('kzp-help').addEventListener('click', () => openSheet('keys'));
-$('kzp-fab').addEventListener('click', () => openSheet());
+$('kzp-fs-pause').addEventListener('click', () => (S.paused ? window.KZPlayer.resume() : window.KZPlayer.pause()));
+$('kzp-fs-pad').addEventListener('click', () => openSheet());
+$('kzp-fs-keys').addEventListener('click', () => openSheet('keys'));
+$('kzp-fs-exit').addEventListener('click', () => setFullscreen(false));
 $('kzp-pad-start').addEventListener('click', () => openSheet());
 $('kzp-pad-close').addEventListener('click', () => closeSheet());
 $('kzp-pad-done').addEventListener('click', () => closeSheet());
@@ -749,6 +832,8 @@ $('kzp-pad-dialog').addEventListener('close', () => {
 document.addEventListener('fullscreenchange', () => {
   const d = $('kzp-pad-dialog'); if (d.open) closeSheet();
   if (!document.fullscreenElement && d.parentElement !== document.body) document.body.append(d);
+  if (!document.fullscreenElement) unlockOrientation(); // the old code left phones locked to landscape after leaving fullscreen
+  syncFs();
 });
 $('kzp-states').addEventListener('click', async () => {
   const d = $('kzp-states-dialog');

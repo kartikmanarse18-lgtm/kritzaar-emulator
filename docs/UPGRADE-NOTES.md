@@ -37,3 +37,21 @@
 - **Controller** (`emulator/index.html`, `emulator/player.js`, `emulator/player.css`): the old dialog was wider than a phone screen, so its Close button could not be reached. It is now a bottom sheet (centred panel on larger screens) with Touch, Gamepad and Keyboard tabs. Gamepad tab: live view of every button and both sticks, presets (Classic, Platformer, Shooter), remap list, rumble test. Touch tab: tap-to-open / always / off, layout cards, size, opacity, vibration, left-handed, customize. It opens from the header, from a floating gamepad button on the game (works in fullscreen) and from "Controller settings" on the start screen. The game pauses while the sheet is open and resumes when it closes.
 - Cards without artwork show a game icon instead of repeating the title.
 - `sw.js` bumped to v6.
+
+## Round 5 (controller, fullscreen, background loading)
+**Fixed**
+- **Toolbar covered ~40% of a phone.** It wrapped to three rows. It is now one icon row (56 px). Labels return on wider screens.
+- **Floating controller button sat on top of game scores/HUDs.** Removed. In fullscreen a small bar (Pause, Controller, Keys, Exit) appears at the top, fades when idle and returns on movement or touch.
+- **iPhone fullscreen had no way out.** The fallback "soft" fullscreen hid the whole toolbar. It now shows the same bar with an Exit button.
+- **Phones stayed locked to landscape after leaving fullscreen.** The orientation lock is now released.
+- **The page scrolled while a game was running** (stage was "60vh minimum"). The stage now fills exactly the space under the toolbar.
+- **Controller missing:** on-screen controls now start open on phones when the player has not chosen otherwise. The Gamepad tab now exists for every game type (NES/Game Boy/Flash included) with the live tester; remapping stays DOS and Originals. A toast, a "controller connected" chip and a green dot show the connection state everywhere, including web games.
+- Web-game fullscreen: works on iPhone, has an Exit button, and Reload was added.
+- Home hero: the generated placeholder title no longer shows doubled behind the real one.
+
+**New: load web games in the background.** First Play on a Playgama game asks "Load the game in the background?". Background loading starts the game frame invisibly under the poster, shows progress, a floating pill when you scroll away, a tab title "Ready", a toast and a short vibration. "Remember my choice" is optional. Cancel is always available.
+Note: the game page is on another site, so "ready" means its page finished loading. KritZaar cannot see inside it (ads, game files). Ad sound can play before you open it; the dialog says so.
+
+**Config** (`data/emulator-config.json`, all keys optional, bad values fall back to defaults): `player.*`, `controls.touchDefault` (auto/on/off/tap), `controls.gamepadEnabled`, `webGames.preload` (ask/always/never), `webGames.allowRemember`, `readyPill`, `readyTitle`, `readyVibrate`, `slowLoadHintSec`. Loader: `js/emulator-config.js`. The admin panel (next release) edits this file.
+
+New files: `js/emulator-config.js`, `js/gamepad-hud.js`, `data/emulator-config.json`. `sw.js` bumped to v10 and lists them.
