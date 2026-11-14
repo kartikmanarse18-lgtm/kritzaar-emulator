@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const LICENSES = ['freeware', 'shareware', 'open-source', 'homebrew', 'commercial-official'];
 const STATUSES = ['draft', 'approved', 'removed'];
-const LAYOUTS = ['dpad-2btn', 'dpad-4btn', 'mouse-pad'];
+const LAYOUTS = ['dpad-2btn', 'dpad-4btn', 'fps', 'mouse-pad'];
 // Third-party platforms and the engine each one must use (mirrors js/engines.js; native is for Originals only).
 const PLATFORM_ENGINE = { dos: 'jsdos', nes: 'emulatorjs', gb: 'emulatorjs', gbc: 'emulatorjs', gba: 'emulatorjs', flash: 'ruffle' };
 const COMPAT_STATUSES = ['verified', 'playable', 'issues', 'broken', 'untested'];

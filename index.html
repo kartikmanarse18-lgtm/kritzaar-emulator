@@ -11,9 +11,10 @@
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="/css/emulator-shared.css">
 <link rel="stylesheet" href="/css/hub.css">
+<link rel="stylesheet" href="/css/cards.css">
 <style>
   body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-  .kz-home{box-sizing:border-box;max-width:720px;margin:0 auto;padding:20px 16px}
+  .kz-home{box-sizing:border-box;max-width:960px;margin:0 auto;padding:20px 16px}
   .kz-home-brand{font-weight:800;font-size:1.3rem}
   .kz-home h1{margin:28px 0 8px;font-size:1.9rem;line-height:1.2}
   .kz-home-lead{color:var(--kz-muted,#a5a3c2);margin:0 0 22px}
@@ -32,6 +33,7 @@
       <a class="kz-btn" href="/emulator/index.html">Open a game file</a>
       <a class="kz-btn" href="/library/">My Games</a>
     </div>
+    <div id="kz-hero" hidden></div>
     <div id="kz-continue" hidden></div>
     <h2 style="margin:26px 0 8px;font-size:1.2rem">Play now</h2>
     <div id="kz-originals"></div>
@@ -49,7 +51,8 @@ import { mountContinuePlaying } from '/js/continue-playing.js';
 mountContinuePlaying(document.getElementById('kz-continue'));
 </script>
 <script type="module">
-import { mountOriginals, mountArcade } from '/js/hub.js';
+import { mountOriginals, mountArcade, mountHero } from '/js/hub.js';
+mountHero(document.getElementById('kz-hero'));
 mountOriginals(document.getElementById('kz-originals'));
 mountArcade(document.getElementById('kz-arcade-section'), document.getElementById('kz-arcade'));
 </script>

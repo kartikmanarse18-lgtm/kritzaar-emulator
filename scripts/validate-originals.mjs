@@ -17,6 +17,12 @@ for (const g of data.games || []) {
   if (g.developer !== 'KritZaar') err(w, 'developer must be "KritZaar"');
   if (!/^\/originals\/games\/[a-z0-9-]+\.js$/.test(g.module || '') || !existsSync(join(root, g.module || 'x'))) err(w, 'module must be an existing /originals/games/*.js file');
   if (!/^\/originals\/covers\//.test(g.cover || '') || !existsSync(join(root, g.cover || 'x'))) err(w, 'cover must be an existing file under /originals/covers/');
+  if (g.assets) { // asset standard: /assets/games/<id>/ (every file optional, but a flag must not lie)
+    const dir = join(root, 'assets/games', g.id);
+    if (!existsSync(join(dir, 'cover.webp'))) err(w, 'assets=true needs assets/games/<id>/cover.webp');
+    if (g.preview && !(existsSync(join(dir, 'preview.webm')) && existsSync(join(dir, 'preview.mp4')))) err(w, 'preview=true needs preview.webm and preview.mp4');
+    for (let n = 1; n <= (g.shots || 0); n++) if (!existsSync(join(dir, 'shots', n + '.webp'))) err(w, `shots=${g.shots} needs shots/${n}.webp`);
+  } else if (g.preview || g.shots) err(w, 'preview and shots need assets=true');
   if (!Array.isArray(g.controls) || !g.controls.length) err(w, 'controls required');
   if (!g.description) err(w, 'description required');
   if (!['published', 'draft', 'removed'].includes(g.status)) err(w, 'status must be published, draft or removed');

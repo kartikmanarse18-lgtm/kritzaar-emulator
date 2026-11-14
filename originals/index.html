@@ -11,6 +11,7 @@
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="/css/emulator-shared.css">
 <link rel="stylesheet" href="/css/hub.css">
+<link rel="stylesheet" href="/css/cards.css">
 <style>body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}a{color:var(--kz-link,#b9a8ff)}</style>
 </head>
 <body>
@@ -21,7 +22,7 @@
   <main><div id="kz-originals"><noscript>Games need JavaScript.</noscript></div></main>
   <p class="kz-legal-note">Everything here is © KritZaar: our own code and art, no third-party game files. <a href="/originals/LICENSE.txt">License</a> · <a href="/games/">All games</a> · <a href="/library/">My Games</a></p>
 </div>
-<script type="module">import { mountOriginals } from '/js/hub.js'; mountOriginals(document.getElementById('kz-originals'));</script>
+<script type="module">import { mountOriginals } from '/js/hub.js'; mountOriginals(document.getElementById('kz-originals'), { chips: true });</script>
 <script type="module">import { initPwa } from '/js/pwa-install.js'; initPwa();</script>
 </body>
 </html>

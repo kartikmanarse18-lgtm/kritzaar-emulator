@@ -1,0 +1,47 @@
+/* KritZaar preview cards, hero slider and category chips. Variables fall back when shared.css is absent. */
+.kz-art{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,hsl(var(--h,260) 65% 34%),hsl(calc(var(--h,260) + 60) 65% 14%))}
+.kz-art img,.kz-art video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.kz-art-ph{position:absolute;inset:0;display:grid;place-items:center;padding:10px;text-align:center;font-weight:800;font-size:1.1rem;text-shadow:0 2px 10px #0009}
+.kz-art img+.kz-art-ph{display:none}
+.kz-pv{opacity:0;transition:opacity .3s}.is-previewing .kz-pv{opacity:1}
+
+.kz-pc-grid{list-style:none;margin:0;padding:6px 0 10px;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.kz-pc{position:relative;display:block;border-radius:16px;overflow:hidden;color:#fff;text-decoration:none;background:#10102a;border:1px solid var(--kz-border,#2c2d4a);isolation:isolate;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s,border-color .22s}
+.kz-pc:hover,.kz-pc:focus-visible{transform:scale(1.06);z-index:4;border-color:var(--kz-accent,#7c5cff);box-shadow:0 14px 34px rgba(124,92,255,.5)}
+.kz-pc:focus-visible{outline:3px solid var(--kz-accent-text,#a994ff);outline-offset:2px}
+.kz-pc-info{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 10px;background:linear-gradient(transparent,rgba(5,5,16,.94) 70%)}
+.kz-pc-title{display:block;font-size:1rem;line-height:1.25}
+.kz-pc-sub{display:block;font-size:.78rem;color:#c9c6e6;text-transform:capitalize}
+.kz-pc-hover{display:flex;flex-wrap:wrap;gap:6px;align-items:center;max-height:0;opacity:0;overflow:hidden;transition:max-height .25s,opacity .25s,margin .25s}
+.kz-pc:hover .kz-pc-hover,.kz-pc:focus-visible .kz-pc-hover{max-height:90px;opacity:1;margin-top:6px}
+.kz-pc-tag{flex:1 1 100%;font-size:.8rem;color:#e6e4fa}
+.kz-pc-play{background:linear-gradient(135deg,var(--kz-accent,#7c5cff),#00c9a7);color:#06120f;font-weight:800;font-size:.8rem;padding:4px 12px;border-radius:99px}
+.kz-pc-badge{position:absolute;left:8px;top:8px;z-index:2;background:rgba(15,16,32,.78);border:1px solid rgba(255,255,255,.25);font-style:normal;font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:99px}
+/* Touch screens have no hover: keep the tagline and play pill visible */
+@media (hover:none){.kz-pc-hover{max-height:none;opacity:1;margin-top:6px}.kz-pc:hover{transform:none}}
+
+.kz-chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.kz-chip{flex:none;min-height:40px;padding:0 16px;border-radius:99px;border:1px solid var(--kz-border,#2c2d4a);background:var(--kz-surface,#191a2e);color:var(--kz-muted,#a5a3c2);font:inherit;text-transform:capitalize;cursor:pointer}
+.kz-chip.on{background:var(--kz-accent,#7c5cff);border-color:var(--kz-accent,#7c5cff);color:#fff;font-weight:700}
+.kz-chip:focus-visible{outline:3px solid var(--kz-accent-text,#a994ff);outline-offset:2px}
+
+.kz-hero{position:relative;margin:6px 0 14px;border-radius:20px;overflow:hidden;aspect-ratio:21/8;min-height:230px;border:1px solid var(--kz-border,#2c2d4a);background:#0b0d14}
+.kz-slide{position:absolute;inset:0;opacity:0;transition:opacity .6s;pointer-events:none;visibility:hidden}
+.kz-slide.on{opacity:1;pointer-events:auto;visibility:visible}
+.kz-slide .kz-art{position:absolute;inset:0;aspect-ratio:auto}
+.kz-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,13,20,.94) 5%,rgba(11,13,20,.2) 75%);pointer-events:none}
+.kz-slide-cap{position:absolute;z-index:2;left:clamp(14px,4vw,40px);bottom:clamp(14px,4vw,36px);max-width:min(480px,82%)}
+.kz-slide-cap h2{margin:0 0 4px;font-size:clamp(1.4rem,4.5vw,2.4rem);line-height:1.1}
+.kz-slide-cap p{margin:0 0 12px;color:#d5dbf5}
+.kz-slide-play{font-size:1.05rem}
+.kz-hero-dots{position:absolute;z-index:3;right:14px;bottom:12px;display:flex;gap:4px}
+.kz-hero-dot{width:24px;height:24px;border:0;background:none;padding:0;cursor:pointer;position:relative}
+.kz-hero-dot::after{content:"";position:absolute;inset:6px;border-radius:50%;background:rgba(255,255,255,.4)}
+.kz-hero-dot.on::after{background:var(--kz-accent,#00e5b0)}
+.kz-hero-dot:focus-visible{outline:3px solid var(--kz-accent-text,#a994ff)}
+
+@media (prefers-reduced-motion:reduce){.kz-pc,.kz-pv,.kz-slide,.kz-pc-hover{transition:none}.kz-pc:hover,.kz-pc:focus-visible{transform:none}}
+.kz-pc-extra{position:absolute;left:8px;top:8px;z-index:2;max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;font-size:.66rem!important;padding:2px 8px!important;background-clip:padding-box;box-shadow:0 0 0 1px rgba(0,0,0,.5)}
+.kz-pc:hover .kz-pc-sub,.kz-pc:focus-visible .kz-pc-sub{display:none}
+.kz-pc-tag{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}

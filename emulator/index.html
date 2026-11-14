@@ -9,6 +9,7 @@
 <title>Player | KritZaar</title>
   <!-- No ads and no third-party scripts on this page (Global Rules 7 and 13). -->
   <link rel="stylesheet" href="/css/emulator-shared.css">
+  <link rel="stylesheet" href="/css/cards.css">
   <link rel="stylesheet" href="/emulator/player.css">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
@@ -20,7 +21,8 @@
     <div class="kzp-tools" id="kzp-tools" hidden>
       <button type="button" class="kzp-btn" id="kzp-pause" aria-pressed="false">Pause</button>
       <button type="button" class="kzp-btn" id="kzp-states">Saves</button>
-      <button type="button" class="kzp-btn" id="kzp-help">Controls</button>
+      <button type="button" class="kzp-btn" id="kzp-pad">Controller</button>
+      <button type="button" class="kzp-btn" id="kzp-help">Keys</button>
       <button type="button" class="kzp-btn" id="kzp-full">Fullscreen</button>
     </div>
   </header>
@@ -44,10 +46,13 @@
     </section>
 
     <!-- Ready to play: one tap unlocks audio -->
-    <section class="kzp-screen" id="kzp-ready" hidden>
+    <section class="kzp-screen kzp-ready" id="kzp-ready" hidden>
+      <div class="kzp-poster" id="kzp-poster" hidden></div>
       <h2 id="kzp-ready-title"></h2>
+      <p class="kzp-note" id="kzp-ready-tag" hidden></p>
       <button type="button" class="kzp-btn kzp-btn-primary kzp-big" id="kzp-play">Play</button>
       <label class="kzp-check"><input type="checkbox" id="kzp-autosave"> Auto-save when I exit (uses slot 3)</label>
+      <div class="kzp-shots" id="kzp-shots" hidden></div>
     </section>
 
     <!-- Program picker, shown once for plain zips with several programs -->
@@ -85,6 +90,30 @@
     <table class="kzp-table"><thead><tr><th scope="col">Keys</th><th scope="col">Action</th></tr></thead><tbody id="kzp-help-body"></tbody></table>
     <p class="kzp-note" id="kzp-help-note" hidden>No controls listed for this game. Try the arrow keys, Enter, Space and Ctrl.</p>
     <form method="dialog"><button class="kzp-btn">Close</button></form>
+  </dialog>
+
+  <dialog class="kzp-dialog kzp-dialog-wide" id="kzp-pad-dialog" aria-labelledby="kzp-pad-h">
+    <h2 id="kzp-pad-h">Controller</h2>
+    <p class="kzp-note" id="kzp-pad-unsupported" hidden>This kind of game has its own on-screen and gamepad controls built into the emulator.</p>
+    <div id="kzp-pad-body">
+      <fieldset class="kzp-fs" id="kzp-tc-fs"><legend>On-screen controls</legend>
+        <label class="kzp-field">Show them <select id="kzp-tc-mode"><option value="auto">Automatically on touch screens</option><option value="on">Always</option><option value="off">Never</option></select></label>
+        <label class="kzp-field">Layout <select id="kzp-tc-layout"></select></label>
+        <label class="kzp-field">Size <input type="range" id="kzp-tc-size" min="0.7" max="1.5" step="0.05"></label>
+        <label class="kzp-field">Opacity <input type="range" id="kzp-tc-alpha" min="0.3" max="1" step="0.05"></label>
+        <label class="kzp-check"><input type="checkbox" id="kzp-tc-haptics"> Vibrate on press</label>
+        <label class="kzp-check"><input type="checkbox" id="kzp-tc-left"> Left-handed (swap sides)</label>
+        <p class="kzp-row"><button type="button" class="kzp-btn kzp-btn-primary" id="kzp-tc-edit">Customize buttons&hellip;</button></p>
+        <p class="kzp-note">Move, resize, re-key, hide or add buttons. Saved per game on this device.</p>
+      </fieldset>
+      <fieldset class="kzp-fs"><legend>Gamepad</legend>
+        <p class="kzp-note" id="kzp-gp-status" role="status">No gamepad found. Connect one and press any button.</p>
+        <label class="kzp-field">Stick mode <select id="kzp-gp-mode"></select></label>
+        <table class="kzp-table"><thead><tr><th scope="col">Button</th><th scope="col">Sends key</th></tr></thead><tbody id="kzp-gp-body"></tbody></table>
+        <button type="button" class="kzp-btn" id="kzp-gp-reset">Reset gamepad buttons</button>
+      </fieldset>
+    </div>
+    <form method="dialog"><button class="kzp-btn">Done</button></form>
   </dialog>
 
   <dialog class="kzp-dialog" id="kzp-states-dialog" aria-labelledby="kzp-states-h">

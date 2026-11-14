@@ -14,3 +14,9 @@
   Content-Type: application/wasm
 /data/*
   Cache-Control: no-cache
+/assets/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+/assets/*.webm
+  Content-Type: video/webm
+/assets/*.mp4
+  Content-Type: video/mp4

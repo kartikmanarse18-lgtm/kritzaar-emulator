@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/css/emulator-shared.css">
 <link rel="stylesheet" href="/css/catalog.css">
 <link rel="stylesheet" href="/css/hub.css">
+<link rel="stylesheet" href="/css/cards.css">
 <style>
   body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
   .kz-cat-page{box-sizing:border-box;max-width:960px;margin:0 auto;padding:12px 16px}
@@ -30,6 +31,7 @@
   <h1>Games</h1>
   <p class="kz-cat-lead">Play KritZaar's own games with one click, or bring a game you legally own. KritZaar detects the type (DOS, NES, Game Boy, Flash) for you and keeps your saves on this device.</p>
   <main>
+    <div id="kz-hero" hidden></div>
     <section aria-labelledby="h-orig">
       <h2 id="h-orig">Play now: KritZaar Originals</h2>
       <p class="kz-hub-lead">Made by KritZaar. Free to play, works offline after the first visit.</p>
@@ -61,8 +63,9 @@
 </footer>
 <script type="module">
 import { mountCatalogSearch } from '/js/search-ui.js';
-import { mountOriginals, mountArcade } from '/js/hub.js';
-mountOriginals(document.getElementById('kz-originals'));
+import { mountOriginals, mountArcade, mountHero } from '/js/hub.js';
+mountHero(document.getElementById('kz-hero'));
+mountOriginals(document.getElementById('kz-originals'), { chips: true });
 mountArcade(document.getElementById('kz-arcade-section'), document.getElementById('kz-arcade'));
 mountCatalogSearch(document.getElementById('kz-catalog'), {});
 </script>

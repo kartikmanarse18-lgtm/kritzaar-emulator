@@ -5,6 +5,9 @@ import { inspectArchive, buildBundle, applyState, verifyRunnable, WINDOWS_MESSAG
 import { detectFormat } from '/js/detect.js';
 import { PLATFORMS, ENGINES, ALL_EXTS, platformLabel } from '/js/engines.js';
 import * as report from '/js/report.js';
+import { mountTouchControls, loadPrefs, savePrefs, LAYOUT_INFO } from '/js/touch-controls.js';
+import { startGamepad, GP_BUTTONS, KEY_CHOICES, GP_MODES } from '/js/gamepad.js';
+import { asset, previewVideo, previewsAllowed } from '/js/cards.js';
 
 const VENDOR = '/emulator/vendor/';
 const AUTOSAVE_SLOT = 3;
@@ -15,6 +18,10 @@ const KEYS = { Space: 32, Enter: 257, Escape: 256, Tab: 258, Backspace: 259, Arr
 for (let i = 0; i < 12; i++) KEYS['F' + (i + 1)] = 290 + i;
 for (let i = 0; i < 26; i++) KEYS['Key' + String.fromCharCode(65 + i)] = 65 + i;
 for (let i = 0; i < 10; i++) KEYS['Digit' + i] = 48 + i;
+// DOM keyCode numbers (older callers) to js-dos codes.
+const DOM_TO_KEY = { 8: 259, 9: 258, 13: 257, 16: 340, 17: 341, 18: 342, 27: 256, 32: 32, 37: 263, 38: 265, 39: 262, 40: 264 };
+for (let i = 0; i < 12; i++) DOM_TO_KEY[112 + i] = 290 + i;
+const keyName = (c) => (c === 'Space' ? ' ' : c.startsWith('Key') ? c.slice(3).toLowerCase() : c.startsWith('Digit') ? c.slice(5) : c);
 
 const $ = (id) => document.getElementById(id);
 const params = new URLSearchParams(location.search);
@@ -82,9 +89,15 @@ function sizeLabel(n) { return n > 1048576 ? (n / 1048576).toFixed(1) + ' MB' : 
 
 // ---- public API ----------------------------------------------------------
 window.KZPlayer = {
+  // keyCode: a DOM KeyboardEvent.code name ("ControlLeft") or a DOM keyCode number.
   sendKey(keyCode, pressed) {
-    const code = typeof keyCode === 'string' ? KEYS[keyCode] : keyCode;
-    if (S.ci && Number.isInteger(code)) S.ci.sendKeyEvent(code, !!pressed);
+    if (S.ci) {
+      const code = typeof keyCode === 'string' ? KEYS[keyCode] : (DOM_TO_KEY[keyCode] || keyCode);
+      if (Number.isInteger(code)) S.ci.sendKeyEvent(code, !!pressed);
+    } else if (S.handle && S.handle.kind === 'native' && typeof keyCode === 'string') {
+      // KritZaar Originals listen for ordinary keyboard events.
+      window.dispatchEvent(new KeyboardEvent(pressed ? 'keydown' : 'keyup', { code: keyCode, key: keyName(keyCode), bubbles: true, cancelable: true }));
+    }
   },
   pause() { const e = S.handle || S.ci; if (e && !S.paused) { e.pause(); S.paused = true; syncPause(); emit('paused'); } },
   resume() { const e = S.handle || S.ci; if (e && S.paused) { e.resume(); S.paused = false; syncPause(); emit('resumed'); focusGame(); } },
@@ -132,10 +145,35 @@ async function lookupCatalog(id) {
   } catch { return null; }
 }
 
+// Poster above the Play button: the game's preview clip (or banner) and screenshots, when KritZaar has them.
+function renderPoster() {
+  const e = S.entry, poster = $('kzp-poster'), shots = $('kzp-shots');
+  poster.replaceChildren(); shots.replaceChildren();
+  poster.hidden = shots.hidden = true;
+  const tag = $('kzp-ready-tag'); tag.hidden = !(e && e.tagline); tag.textContent = (e && e.tagline) || '';
+  if (!e || !e.assets) return;
+  const img = el('img', { src: asset(e.id, 'banner.webp'), alt: '' });
+  img.addEventListener('error', () => { img.remove(); poster.hidden = !poster.children.length; });
+  poster.append(img);
+  if (e.preview && previewsAllowed()) {
+    const v = previewVideo(e); v.classList.add('kzp-poster-video');
+    v.addEventListener('playing', () => poster.classList.add('is-previewing'), { once: true });
+    poster.append(v); v.play().catch(() => {});
+  }
+  poster.hidden = false;
+  for (let n = 1; n <= (e.shots || 0); n++) {
+    const im = el('img', { src: asset(e.id, 'shots/' + n + '.webp'), alt: e.title + ' screenshot ' + n, loading: 'lazy' });
+    im.addEventListener('error', () => im.remove());
+    shots.append(im);
+  }
+  shots.hidden = !shots.children.length;
+}
+
 function showReady(title) {
   $('kzp-title').textContent = title;
   document.title = title + ' | KritZaar';
   $('kzp-ready-title').textContent = title;
+  renderPoster();
   show('ready');
   $('kzp-play').focus();
 }
@@ -283,7 +321,7 @@ async function startEngine(stateBytes) {
     throw Object.assign(e instanceof Error ? e : new Error(String(e)), { code: e && e.code ? e.code : 'ENGINE_FAILED' });
   }
   if (stateBytes && S.handle.loadState) { try { await S.handle.loadState(stateBytes); } catch (e) { console.warn(e); } }
-  S.started = true; focusGame(); emit('started');
+  S.started = true; startInput(); focusGame(); emit('started');
   storage.touchGame(S.id).catch(() => {});
 }
 
@@ -310,7 +348,7 @@ function boot(bundle, config) {
             clearTimeout(timer);
             S.ci = ci; S.started = true; S.paused = false; syncPause();
             ci.events().onExit(() => { if (gen === S.gen) onProgramExit(); });
-            mountTouch(); focusGame(); emit('started'); resolve();
+            startInput(); focusGame(); emit('started'); resolve();
           } else if (name === 'emu-error' || name === 'bnd-error') {
             clearTimeout(timer); reject(fail('EMULATOR_CRASH', MESSAGES.EMULATOR_CRASH));
           }
@@ -320,7 +358,20 @@ function boot(bundle, config) {
   });
 }
 
+let touchCtl = null, gpCtl = null;
+function stopInput() {
+  if (touchCtl) { touchCtl.destroy(); touchCtl = null; }
+  if (gpCtl) { gpCtl.stop(); gpCtl = null; }
+}
+function startInput() {
+  const plat = S.record && S.record.platform;
+  if (plat !== 'dos' && plat !== 'native') return; // EmulatorJS and Ruffle bring their own controls
+  if (!gpCtl) gpCtl = startGamepad({ gameId: S.id, onPress: (name) => { const n = $('kzp-gp-status'); if (n && $('kzp-pad-dialog').open) n.dataset.last = name; padStatus(name); } });
+  if (plat === 'dos') mountTouch();
+}
+
 async function teardown() {
+  stopInput();
   const h = S.handle; S.handle = null;
   if (h) { try { await h.stop(); } catch { /* already stopped */ } }
   const dos = S.dos;
@@ -337,10 +388,62 @@ function onProgramExit() {
   emit('exit', { reason: 'program' });
 }
 
-async function mountTouch() {
-  const layout = S.entry && S.entry.touchLayout;
-  if (!layout || !matchMedia('(pointer: coarse)').matches) return;
-  try { (await import('/js/touch-controls.js')).mountTouchControls($('kzp-touch'), layout); } catch { /* optional module */ }
+function currentLayout(prefs) {
+  return (prefs.layouts && prefs.layouts[S.id]) || (S.entry && S.entry.touchLayout) || 'dpad-4btn';
+}
+function mountTouch(forceOn = false) {
+  if (touchCtl) { touchCtl.destroy(); touchCtl = null; }
+  const prefs = loadPrefs();
+  if (prefs.mode === 'off' && !forceOn) return;
+  try { touchCtl = mountTouchControls($('kzp-touch'), currentLayout(prefs), { prefs, gameId: S.id, force: forceOn || prefs.mode === 'on', onEditEnd: () => mountTouch() }); } catch (e) { console.warn('touch controls', e); }
+}
+
+// ---- Controller dialog -------------------------------------------------------------
+function padStatus(last) {
+  const n = $('kzp-gp-status'); if (!n) return;
+  const id = gpCtl && gpCtl.connected();
+  n.textContent = id ? 'Connected: ' + id.slice(0, 60) + (last ? '. Last button: ' + last : '. Press a button to test it.') : 'No gamepad found. Connect one and press any button.';
+}
+function renderPad() {
+  const plat = S.record && S.record.platform, ok = plat === 'dos' || plat === 'native';
+  $('kzp-pad-unsupported').hidden = ok; $('kzp-pad-body').hidden = !ok;
+  if (!ok) return;
+  $('kzp-tc-fs').hidden = plat !== 'dos'; // Originals handle touch themselves
+  const prefs = loadPrefs();
+  const save = () => { savePrefs(prefs); if (plat === 'dos') mountTouch(); };
+  $('kzp-tc-mode').value = prefs.mode;
+  $('kzp-tc-size').value = prefs.size; $('kzp-tc-alpha').value = prefs.opacity;
+  $('kzp-tc-haptics').checked = !!prefs.haptics; $('kzp-tc-left').checked = !!prefs.leftHanded;
+  const lay = $('kzp-tc-layout'); lay.replaceChildren();
+  for (const [k, label] of Object.entries(LAYOUT_INFO)) lay.append(el('option', { value: k, text: label }));
+  lay.value = currentLayout(prefs);
+  $('kzp-tc-mode').onchange = (e) => { prefs.mode = e.target.value; save(); };
+  lay.onchange = (e) => { prefs.layouts = { ...prefs.layouts, [S.id]: e.target.value }; save(); };
+  $('kzp-tc-edit').onclick = () => { $('kzp-pad-dialog').close(); mountTouch(true); if (touchCtl) setTimeout(() => touchCtl.edit(), 50); };
+  $('kzp-tc-size').oninput = (e) => { prefs.size = Number(e.target.value); save(); };
+  $('kzp-tc-alpha').oninput = (e) => { prefs.opacity = Number(e.target.value); save(); };
+  $('kzp-tc-haptics').onchange = (e) => { prefs.haptics = e.target.checked; save(); };
+  $('kzp-tc-left').onchange = (e) => { prefs.leftHanded = e.target.checked; save(); };
+
+  const mode = $('kzp-gp-mode'); mode.replaceChildren();
+  for (const [k, label] of Object.entries(GP_MODES)) mode.append(el('option', { value: k, text: label }));
+  const body = $('kzp-gp-body'); body.replaceChildren();
+  const cfg = gpCtl ? gpCtl.getConfig() : null;
+  const apply = () => {
+    if (!gpCtl) return;
+    const map = {}; body.querySelectorAll('select').forEach((s) => { map[s.dataset.btn] = s.value; });
+    gpCtl.setConfig({ mode: mode.value, map });
+  };
+  mode.value = cfg ? cfg.mode : 'classic'; mode.onchange = apply;
+  for (const [i, name] of GP_BUTTONS) {
+    const sel = el('select', { 'data-btn': String(i), 'aria-label': 'Key for ' + name });
+    for (const [code, label] of KEY_CHOICES) sel.append(el('option', { value: code, text: label }));
+    sel.value = cfg ? (cfg.map[i] || '') : '';
+    sel.addEventListener('change', apply);
+    body.append(el('tr', {}, el('td', { text: name }), el('td', {}, sel)));
+  }
+  $('kzp-gp-reset').onclick = () => { if (gpCtl) { gpCtl.reset(); renderPad(); } };
+  padStatus();
 }
 
 // ---- states ----------------------------------------------------------------------
@@ -403,7 +506,9 @@ function renderHelp() {
 function toggleFullscreen() {
   const stage = $('kzp-stage');
   if (document.fullscreenElement) { document.exitFullscreen(); return; }
-  if (stage.requestFullscreen) stage.requestFullscreen().catch(() => stage.classList.toggle('kzp-soft-fs'));
+  // Phones: landscape fills the screen best. Not every browser allows the lock, so it is best effort.
+  const lock = () => { try { if (matchMedia('(pointer: coarse)').matches && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {}); } catch { /* optional */ } };
+  if (stage.requestFullscreen) stage.requestFullscreen().then(lock, () => stage.classList.toggle('kzp-soft-fs'));
   else stage.classList.toggle('kzp-soft-fs'); // iPhone Safari has no element fullscreen
 }
 
@@ -441,12 +546,13 @@ $('kzp-pause').addEventListener('click', () => (S.paused ? window.KZPlayer.resum
 $('kzp-resume').addEventListener('click', () => window.KZPlayer.resume());
 $('kzp-full').addEventListener('click', toggleFullscreen);
 $('kzp-exit').addEventListener('click', exitToLibrary);
+$('kzp-pad').addEventListener('click', () => { renderPad(); $('kzp-pad-dialog').showModal(); });
 $('kzp-help').addEventListener('click', () => { renderHelp(); $('kzp-help-dialog').showModal(); });
 $('kzp-states').addEventListener('click', async () => {
   const d = $('kzp-states-dialog');
   try { await renderStates(); } catch (e) { $('kzp-states-status').textContent = friendly(e); }
   d.showModal();
 });
-['kzp-help-dialog', 'kzp-states-dialog'].forEach((id) => $(id).addEventListener('close', focusGame));
+['kzp-help-dialog', 'kzp-states-dialog', 'kzp-pad-dialog'].forEach((id) => $(id).addEventListener('close', focusGame));
 try { $('kzp-autosave').checked = localStorage.getItem('kz-autosave') === '1'; } catch { /* optional preference */ }
 init();
