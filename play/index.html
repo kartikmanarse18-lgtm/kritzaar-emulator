@@ -26,11 +26,11 @@
         <div class="kzw-bar">
           <h1 id="kzw-title">Loading&hellip;</h1>
           <div class="kzw-actions" id="kzw-actions">
-            <button type="button" class="kz-btn" id="kzw-reload" hidden aria-label="Reload the game"><span aria-hidden="true">↻</span> Reload</button>
-            <button type="button" class="kz-btn" id="kzw-full" hidden aria-label="Fullscreen"><span aria-hidden="true">⛶</span> <span id="kzw-full-l">Fullscreen</span></button>
+            <button type="button" class="kz-btn" id="kzw-reload" hidden aria-label="Reload the game"><span aria-hidden="true"><svg class="kz-i" width="18" height="18" aria-hidden="true"><use href="/icons/ui.svg#reload"/></svg></span> Reload</button>
+            <button type="button" class="kz-btn" id="kzw-full" hidden aria-label="Fullscreen"><span aria-hidden="true"><svg class="kz-i" width="18" height="18" aria-hidden="true"><use href="/icons/ui.svg#maximize"/></svg></span> <span id="kzw-full-l">Fullscreen</span></button>
           </div>
         </div>
-        <p class="kzw-help" id="kzw-help" hidden>Click the game once so your keyboard and controller work in it.</p>
+        <p class="kzw-help" id="kzw-help" hidden>Click the game once so your keyboard and controller work in it. For the smoothest play, use Fullscreen.</p>
         <ul class="kzw-tags" id="kzw-tags"></ul>
         <section class="kzw-card" id="kzw-info" hidden>
           <h2>About this game</h2><p id="kzw-desc"></p>
@@ -47,12 +47,12 @@
 
   <!-- The choice offered before the first Play -->
   <dialog class="kzw-ask" id="kzw-ask" aria-labelledby="kzw-ask-h">
-    <h2 id="kzw-ask-h">Load the game in the background?</h2>
-    <p>This game comes from Playgama. It shows a short ad and then downloads the game files, which can take a while. We can start loading it right now and tell you the moment it is ready, so you can keep reading or look at other games while you wait.</p>
-    <p class="kzw-ask-note">Stay on this page while it loads. Some ads make sound, and that sound may play before you open the game.</p>
+    <h2 id="kzw-ask-h">Keep browsing while it loads?</h2>
+    <p>This game comes from Playgama. After you press Play it shows a short ad and then downloads the game files, which can take a while. We can start right away and keep it in view while it loads, so you can scroll down to read about the game or look at other games, and we tell you the moment it is ready.</p>
+    <p class="kzw-ask-note">Stay on this page while it loads. The ad plays in the game area, and some ads make sound.</p>
     <label class="kzw-remember" id="kzw-remember-wrap"><input type="checkbox" id="kzw-remember"><span class="kzw-switch" aria-hidden="true"></span><span>Remember my choice on this device</span></label>
     <div class="kzw-ask-row">
-      <button type="button" class="kzw-primary" id="kzw-ask-bg">Load in background</button>
+      <button type="button" class="kzw-primary" id="kzw-ask-bg">Load while I browse</button>
       <button type="button" class="kz-btn" id="kzw-ask-now">Play now</button>
     </div>
   </dialog>

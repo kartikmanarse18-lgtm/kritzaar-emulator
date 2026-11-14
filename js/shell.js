@@ -1,4 +1,5 @@
 // Shared header + footer for every public page. Text is set with textContent.
+import { icon, iconLabel } from '/js/icons.js';
 const el = (tag, props = {}, ...kids) => { const n = document.createElement(tag); for (const [k, v] of Object.entries(props)) { if (k === 'class') n.className = v; else if (k === 'text') n.textContent = v; else if (v != null && v !== false) n.setAttribute(k, v); } n.append(...kids); return n; };
 const NAV = [['home', '/', 'Home'], ['games', '/games/', 'All games'], ['original', '/games/?kind=original', 'Originals'], ['web', '/games/?kind=web', 'Web games'], ['classic', '/games/?kind=classic', 'Classic PC'], ['library', '/library/', 'My Games']];
 
@@ -45,12 +46,12 @@ export function mountHeader(active = '') {
   document.body.prepend(hd);
   // Mobile bottom bar: always-reachable Home, Games, Search, My Games.
   const bn = el('nav', { class: 'kz-bnav', 'aria-label': 'Quick navigation' });
-  const item = (href, icon, label, key) => { const a = el('a', { href }, el('span', { class: 'kz-bnav-i', text: icon, 'aria-hidden': 'true' }), el('span', { text: label })); if (key === active) a.setAttribute('aria-current', 'page'); return a; };
-  const searchBtn = el('a', { href: '#search', role: 'button' }, el('span', { class: 'kz-bnav-i', text: '🔍', 'aria-hidden': 'true' }), el('span', { text: 'Search' }));
+  const item = (href, iconName, label, key) => { const a = el('a', { href }, el('span', { class: 'kz-bnav-i', 'aria-hidden': 'true' }, icon(iconName, 22)), el('span', { text: label })); if (key === active) a.setAttribute('aria-current', 'page'); return a; };
+  const searchBtn = el('a', { href: '#search', role: 'button' }, el('span', { class: 'kz-bnav-i', 'aria-hidden': 'true' }, icon('search', 22)), el('span', { text: 'Search' }));
   searchBtn.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); input.focus(); });
-  bn.append(item('/', '🏠', 'Home', 'home'), item('/games/', '🎮', 'Games', 'games'), searchBtn, item('/library/', '📁', 'My Games', 'library'));
+  bn.append(item('/', 'home', 'Home', 'home'), item('/games/', 'gamepad', 'Games', 'games'), searchBtn, item('/library/', 'folder', 'My Games', 'library'));
   document.body.append(bn);
-  const top = el('button', { type: 'button', class: 'kz-top', 'aria-label': 'Back to top', hidden: '', text: '↑' });
+  const top = el('button', { type: 'button', class: 'kz-top', 'aria-label': 'Back to top', hidden: '' }, icon('arrow-up', 22));
   top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   document.body.append(top);
   addEventListener('scroll', () => { top.hidden = scrollY < 700; }, { passive: true });
@@ -67,19 +68,19 @@ export function mountFooter() {
 /** Horizontal rail with arrow buttons. `cards` are elements made by gameCard(). */
 export function rail(title, cards, moreHref) {
   const ul = el('ul', { class: 'kz-rail' }); for (const c of cards) ul.append(el('li', {}, c));
-  const mk = (cls, ch, dir) => { const b = el('button', { type: 'button', class: 'kz-rail-btn ' + cls, 'aria-label': dir < 0 ? 'Scroll left' : 'Scroll right', text: ch }); b.addEventListener('click', () => ul.scrollBy({ left: dir * ul.clientWidth * .8, behavior: 'smooth' })); return b; };
+  const mk = (cls, ch, dir) => { const b = el('button', { type: 'button', class: 'kz-rail-btn ' + cls, 'aria-label': dir < 0 ? 'Scroll left' : 'Scroll right' }, icon(dir < 0 ? 'chevron-left' : 'chevron-right', 20)); b.addEventListener('click', () => ul.scrollBy({ left: dir * ul.clientWidth * .8, behavior: 'smooth' })); return b; };
   const head = el('div', { class: 'kz-sec-h' }, el('h2', { text: title }));
-  if (moreHref) head.append(el('a', { href: moreHref, text: 'See all →' }));
+  if (moreHref) head.append(el('a', { href: moreHref }, 'See all ', icon('arrow-right', 16)));
   return el('section', { class: 'kz-sec' }, head, el('div', { class: 'kz-rail-wrap' }, mk('l', '‹', -1), ul, mk('r', '›', 1)));
 }
 
 /** Share button: native share sheet when available, otherwise copies the link. */
 export function shareButton(title, cls = 'kz-btn') {
-  const b = el('button', { type: 'button', class: cls, text: '↗ Share' });
+  const b = el('button', { type: 'button', class: cls }); iconLabel(b, 'share', 'Share');
   b.addEventListener('click', async () => {
     try { if (navigator.share) { await navigator.share({ title: title + ' on KritZaar', url: location.href }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
-    try { await navigator.clipboard.writeText(location.href); b.textContent = '✓ Link copied'; } catch { b.textContent = 'Copy the address bar link'; }
-    setTimeout(() => { b.textContent = '↗ Share'; }, 2200);
+    try { await navigator.clipboard.writeText(location.href); iconLabel(b, 'check', 'Link copied'); } catch { b.textContent = 'Copy the address bar link'; }
+    setTimeout(() => { iconLabel(b, 'share', 'Share'); }, 2200);
   });
   return b;
 }

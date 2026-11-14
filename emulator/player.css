@@ -227,7 +227,7 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 /* A green dot when a controller is connected */
 .has-pad::after { content: ""; position: absolute; top: 6px; right: 6px; width: 9px; height: 9px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 2px rgba(15, 16, 32, .9); }
 .kzp-btn { position: relative; }
-.kzp-btn .kzp-ic { font-size: 1.3rem; line-height: 1; }
+.kzp-btn .kzp-ic { display: inline-grid; place-items: center; line-height: 1; }
 
 /* One-time tip for phones held upright */
 .kzp-tip { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 8px 16px; background: #26224a; color: #e9e6ff; font-size: .85rem; }
@@ -286,7 +286,7 @@ progress { width: 100%; height: 10px; accent-color: var(--accent); }
 .kzp-layouts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .kzp-layouts button { display: grid; gap: 4px; justify-items: start; text-align: left; padding: 12px; min-height: 64px; border-radius: 14px; border: 2px solid rgba(255, 255, 255, .12); background: rgba(255, 255, 255, .04); color: var(--text); font: 600 .82rem/1.25 var(--kz-font, system-ui); cursor: pointer; }
 .kzp-layouts button[aria-checked="true"] { border-color: var(--cta); background: rgba(255, 122, 61, .12); }
-.kzp-lay-ic { font-size: .95rem; letter-spacing: .06em; color: var(--cta); }
+.kzp-lay-ic { display: inline-grid; place-items: center; color: var(--cta); }
 .kzp-sheet .kzp-field { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px 0; }
 .kzp-sheet .kzp-field select, .kzp-map select { font: inherit; color: var(--text); background: var(--bg); border: 1px solid rgba(255, 255, 255, .25); border-radius: 10px; min-height: 44px; padding: 0 8px; max-width: 62%; min-width: 0; }
 .kzp-sheet .kzp-field input[type="range"] { flex: 1; max-width: 62%; accent-color: var(--cta); }

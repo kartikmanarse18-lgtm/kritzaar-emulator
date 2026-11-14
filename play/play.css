@@ -30,7 +30,6 @@
 .kzw-tags a{color:inherit;text-decoration:none}.kzw-tags li:hover{background:var(--kz-accent-strong)}
 
 /* ================= Round 5: background loading, controller chip, fullscreen ================= */
-.kzw-stage iframe.is-bg{opacity:0;pointer-events:none;z-index:0} /* laid out at full size, invisible, under the poster */
 .kzw-poster{z-index:2}
 .kzw-sub{margin:0;max-width:36ch;padding:8px 14px;border-radius:12px;background:rgba(8,9,21,.62);color:#ece9ff;font-size:.9rem;line-height:1.45}
 .kzw-sub[hidden],.kzw-linkbtn[hidden],.kzw-fsx[hidden],.kzw-pill[hidden]{display:none!important}
@@ -65,3 +64,29 @@ body.kzw-is-fs{overflow:hidden}
 .kzw-remember input:checked+.kzw-switch::after{transform:translateX(16px);background:#190b05}
 .kzw-remember input:focus-visible+.kzw-switch,.kzw-primary:focus-visible,.kzw-pill:focus-visible,.kzw-linkbtn:focus-visible{outline:2px solid #fff;outline-offset:3px}
 @media (prefers-reduced-motion:reduce){.kzw-switch,.kzw-switch::after{transition:none}}
+
+/* ---- Controller badge inside the game area (still visible in fullscreen) ---- */
+.kzw-padbadge{position:absolute;z-index:5;top:calc(8px + env(safe-area-inset-top,0px));right:8px;display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 11px;border-radius:999px;border:1px solid rgba(255,255,255,.28);background:rgba(15,16,32,.74);color:#fff;font:600 .8rem var(--kz-font,system-ui);pointer-events:none}
+.kzw-padbadge[hidden]{display:none!important}
+.kzw-padbadge i{order:2;width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 3px rgba(61,220,132,.25)}
+.kzw-padbadge-t{order:1;display:none;max-width:22ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kzw-padbadge.is-open .kzw-padbadge-t{display:inline}
+.kzw-playbtn,.kzw-fsx{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.kzw-fsx{display:none}
+.kzw-stage:fullscreen .kzw-fsx,.kzw-stage.kzp-soft-fs .kzw-fsx{display:grid}
+
+/* ---- Loading in view: status bar under the game, poster hides without covering the ad ---- */
+.kzw-poster[hidden],.kzw-loadbar[hidden]{display:none!important}
+.kzw-loadbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:8px 14px;border-radius:12px;background:var(--kz-surface,#191a30);border:1px solid rgba(255,255,255,.14)}
+.kzw-loadbar .kzw-sub{margin:0;padding:0;background:none;max-width:none;flex:1 1 220px;color:var(--kz-text,#f1f0fa)}
+
+/* ---- Smoother games: keep the page from competing with the game for the GPU and main thread ---- */
+/* The game gets its own compositor layer, so page repaints never touch it. (No CSS containment on the wrapper: it would trap the
+   iPhone "soft fullscreen", which is position:fixed.) */
+.kzw-stage iframe{will-change:transform;transform:translateZ(0)}
+/* Below-the-fold sections are not laid out or painted until scrolled near. */
+.kzw-card,.kzw-note{content-visibility:auto;contain-intrinsic-size:auto 320px}
+/* While a game runs: no backdrop blur (the sticky header and the phone bottom bar re-blur whatever moves under them,
+   every frame), and no page animations or transitions. */
+body.kzw-playing .kz-hd,body.kzw-playing .kz-bnav{backdrop-filter:none;-webkit-backdrop-filter:none;background:#0b0c1a}
+body.kzw-playing *:not(iframe),body.kzw-playing *::before,body.kzw-playing *::after{animation:none!important;transition:none!important}

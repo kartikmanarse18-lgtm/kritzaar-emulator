@@ -55,7 +55,7 @@ export function watchGamepads({ announce = true } = {}) {
     const changed = (now && now.id) !== (last && last.id);
     last = now;
     if (changed) {
-      if (announce && note) toast(now ? '🎮 ' + padName(now.id) + ' connected' : '🎮 Controller disconnected');
+      if (announce && note) toast(now ? padName(now.id) + ' connected' : 'Controller disconnected');
       emit();
     }
   };

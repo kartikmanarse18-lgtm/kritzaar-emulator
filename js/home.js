@@ -24,7 +24,7 @@ pickFeatured(5).then((l) => mountHero(heroEl, l)).catch(() => { heroEl.hidden = 
   for (const x of top) cats.append(el('a', { href: '/games/?genre=' + encodeURIComponent(x), text: pretty(x) }));
   skel.remove(); root.append(cats);
   const favHost = el('div'); root.append(favHost);
-  const drawFavs = () => { const l = favList().map((id) => all.find((g) => g.id === id)).filter(Boolean); favHost.replaceChildren(); if (l.length) favHost.append(rail('♥ My favorites', l.map(gameCard))); };
+  const drawFavs = () => { const l = favList().map((id) => all.find((g) => g.id === id)).filter(Boolean); favHost.replaceChildren(); if (l.length) favHost.append(rail('My favorites', l.map(gameCard))); };
   drawFavs(); document.addEventListener('kz-favs', drawFavs);
 
   const originals = all.filter((g) => g.kind === 'original');

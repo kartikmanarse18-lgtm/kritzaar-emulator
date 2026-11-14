@@ -92,3 +92,12 @@ body.kz-site{margin:0;background:var(--kz-bg);color:var(--kz-text,#f1f0fa);font-
   .kz-nav .kz-nav-keep{display:none}
 }
 .kz-crumb{font-size:.85rem;color:var(--kz-muted);margin:0 0 14px}.kz-crumb a{color:var(--kz-accent-text);text-decoration:none}.kz-crumb a:hover{text-decoration:underline}
+
+/* ---- SVG icon polish (replaces the old emoji icons) ---- */
+.kz-rail-btn,.kz-hero-nav,.kz-top,.kz-fav{place-items:center}
+@media (hover:hover) and (min-width:900px){.kz-rail-wrap:hover .kz-rail-btn{display:grid}}
+.kz-top{display:grid}.kz-top[hidden]{display:none}
+.kz-bnav-i{display:grid;place-items:center;height:24px}
+.kz-fav.on .kz-i{fill:currentColor}
+.kz-pc-play,.kz-slide-play,.kz-btn{display:inline-flex;align-items:center;gap:6px}
+.kz-sec-h a{display:inline-flex;align-items:center;gap:4px}

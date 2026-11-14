@@ -130,5 +130,5 @@ export async function pickFeatured(max = 6) {
   const web = all.filter((g) => g.kind === 'web');
   const pool = web.length ? web : all.filter((g) => g.kind === 'original');
   const big = (u) => (typeof u === 'string' ? u.replace(/width=\d+/, 'width=1280') : u);
-  return pool.slice(0, max).map((g) => ({ ...g, kicker: web.length ? '🔥 Trending now' : 'Featured', banner: g.kind === 'web' ? big(g.cover) : undefined }));
+  return pool.slice(0, max).map((g) => ({ ...g, kicker: web.length ? 'Trending now' : 'Featured', banner: g.kind === 'web' ? big(g.cover) : undefined }));
 }

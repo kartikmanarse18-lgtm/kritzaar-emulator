@@ -55,3 +55,10 @@ Note: the game page is on another site, so "ready" means its page finished loadi
 **Config** (`data/emulator-config.json`, all keys optional, bad values fall back to defaults): `player.*`, `controls.touchDefault` (auto/on/off/tap), `controls.gamepadEnabled`, `webGames.preload` (ask/always/never), `webGames.allowRemember`, `readyPill`, `readyTitle`, `readyVibrate`, `slowLoadHintSec`. Loader: `js/emulator-config.js`. The admin panel (next release) edits this file.
 
 New files: `js/emulator-config.js`, `js/gamepad-hud.js`, `data/emulator-config.json`. `sw.js` bumped to v10 and lists them.
+
+## Round 6: controller badge in web games, new icon set
+
+- **Controller in shooters.** Shooter web games are played fullscreen, where the toolbar chip is not visible. `play/play.js` now adds a small controller badge inside the game area (green dot, opens to show the controller name for a few seconds when one connects or fullscreen starts), and gives the game focus when a controller appears, because browsers only deliver controller input to the focused page.
+- **Preload now loads in view.** Playgama's partner terms treat hidden or non-viewable ad placements as invalid traffic, so the game iframe is no longer hidden under the poster. After Play, the ad and game load visibly in the game area with a status bar underneath; the ready pill, tab title, vibration and toast still work. `webGames.preload` (ask/always/never) and the remember option are unchanged.
+- **Icons.** Emoji and text glyphs (🎮 💾 ⌨ ⏸ ⛶ ♥ …) replaced with one line-icon set: `icons/ui.svg` (sprite) and `js/icons.js` (`icon(name)`). Service worker cache bumped to v11.
+- **Smoother games.** While a game runs the page switches to a light mode (`body.kzw-playing`): no backdrop blur on the sticky header and phone bottom bar (they re-blur whatever moves under them every frame), no page animations, the game iframe on its own compositor layer, and below-the-fold sections skipped until scrolled near. The help line suggests Fullscreen for the smoothest play. Service worker cache v12.

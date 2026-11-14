@@ -12,6 +12,7 @@ import { asset, hue, previewVideo, previewsAllowed, cardGrid, loadWebGames, webC
 import { mountSlot, mountContact } from '/js/ads.js';
 import { getConfig, DEFAULTS } from '/js/emulator-config.js';
 import { watchGamepads, mountChip, padName } from '/js/gamepad-hud.js';
+import { icon, setIcon } from '/js/icons.js';
 
 const VENDOR = '/emulator/vendor/';
 let CFG = DEFAULTS; // replaced by /data/emulator-config.json as soon as it loads (see init)
@@ -125,7 +126,7 @@ function syncPause() {
   for (const [id, label] of [['kzp-pause', '.kzp-lb'], ['kzp-fs-pause', '.kzp-fsl']]) {
     const b = $(id), word = S.paused ? 'Resume' : 'Pause';
     b.querySelector(label).textContent = word;
-    b.querySelector('span[aria-hidden]').textContent = S.paused ? '▶' : '⏸';
+    const ic = b.querySelector('svg.kz-i'); if (ic) setIcon(ic, S.paused ? 'play' : 'pause');
     b.setAttribute('aria-label', word);
     b.setAttribute('aria-pressed', String(S.paused));
   }
@@ -512,7 +513,7 @@ narrowMQ.addEventListener('change', () => { if (extrasFor) layoutRails(); });
 
 // ---- Controls sheet: Touch / Gamepad / Keyboard ----------------------------------------
 const SHORT = { 0: 'A', 1: 'B', 2: 'X', 3: 'Y', 4: 'LB', 5: 'RB', 6: 'LT', 7: 'RT', 8: 'Back', 9: 'Start', 10: 'L3', 11: 'R3', 12: '↑', 13: '↓', 14: '←', 15: '→' };
-const LAYOUT_ICON = { 'dpad-2btn': '✚  ● ●', 'dpad-4btn': '✚  ● ● ● ●', fps: '◉  Fire Use Run', 'mouse-pad': '▭  Click' };
+const LAYOUT_ICON = { 'dpad-2btn': 'dpad', 'dpad-4btn': 'dpad', fps: 'target', 'mouse-pad': 'mouse' };
 const GP_PRESETS = {
   Classic: { mode: 'classic', map: { ...DEFAULT_MAP } },
   Platformer: { mode: 'classic', map: { ...DEFAULT_MAP, 0: 'Space', 1: 'ControlLeft', 2: 'AltLeft', 3: 'ShiftLeft' } },
@@ -569,7 +570,7 @@ function renderPad() {
   const lays = $('kzp-tc-layouts'); lays.replaceChildren();
   const paintLays = () => lays.querySelectorAll('button').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.k === currentLayout(prefs))));
   for (const [k, label] of Object.entries(LAYOUT_INFO)) {
-    const b = el('button', { type: 'button', role: 'radio', 'data-k': k }, el('span', { class: 'kzp-lay-ic', text: LAYOUT_ICON[k] || '✚' }), el('span', { text: label }));
+    const b = el('button', { type: 'button', role: 'radio', 'data-k': k }, el('span', { class: 'kzp-lay-ic' }, icon(LAYOUT_ICON[k] || 'dpad', 20)), el('span', { text: label }));
     b.onclick = () => { prefs.layouts = { ...prefs.layouts, [S.id]: k }; paintLays(); save(); };
     lays.append(b);
   }

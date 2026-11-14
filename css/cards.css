@@ -98,3 +98,7 @@ a.kz-ad-free:hover b{text-decoration:underline}
 /* Home hero: the slide has its own title overlay, so the generated placeholder title must never show behind it
    (it appeared doubled and overlapping whenever the artwork was slow or missing). */
 .kz-hero .kz-art-ph{display:none}
+
+/* ---- SVG icon polish ---- */
+.kz-hero-nav{display:grid;place-items:center}
+.kz-hero-pause{display:inline-flex;align-items:center;justify-content:center}

@@ -8,6 +8,7 @@ export const asset = (id, file) => `/assets/games/${encodeURIComponent(id)}/${fi
 export const hue = (s) => [...String(s)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 360, 7);
 
 import { isFav, toggleFav } from '/js/favs.js';
+import { icon } from '/js/icons.js';
 
 const el = (tag, props = {}, ...kids) => {
   const n = document.createElement(tag);
@@ -96,12 +97,12 @@ export function gameCard(g) {
   const info = el('div', { class: 'kz-pc-info' },
     el('b', { class: 'kz-pc-title', text: g.title }),
     el('span', { class: 'kz-pc-sub', text: (g.genres || []).join(' · ') }));
-  const hover = el('div', { class: 'kz-pc-hover' }, el('span', { class: 'kz-pc-tag', text: g.tagline || '' }), el('span', { class: 'kz-pc-play', text: '▶ Play' }));
+  const hover = el('div', { class: 'kz-pc-hover' }, el('span', { class: 'kz-pc-tag', text: g.tagline || '' }), el('span', { class: 'kz-pc-play' }, icon('play', 14), ' Play'));
   info.append(hover);
   const a = el('a', { class: 'kz-pc', href: g.href, 'aria-label': 'Play ' + g.title }, art(g, 'cover.webp', g.cover), info);
   if (g.badge) a.append(el('i', { class: 'kz-pc-badge', text: g.badge }));
   if (g.extra) { g.extra.classList.add('kz-pc-extra'); a.append(g.extra); } // compatibility badge stays visible
-  const heart = el('span', { class: 'kz-fav', role: 'button', tabindex: '0', 'aria-label': 'Add ' + g.title + ' to favorites', text: '♥' });
+  const heart = el('span', { class: 'kz-fav', role: 'button', tabindex: '0', 'aria-label': 'Add ' + g.title + ' to favorites' }, icon('heart', 18));
   const paint = () => { const on = isFav(g.id); heart.classList.toggle('on', on); heart.setAttribute('aria-pressed', String(on)); };
   const flip = (e) => { e.preventDefault(); e.stopPropagation(); toggleFav(g.id); paint(); };
   heart.addEventListener('click', flip);
@@ -151,7 +152,7 @@ export function mountHero(container, games) {
         el('span', { class: 'kz-slide-kick', text: g.kicker || '' }),
         el('h2', { text: g.title }), el('p', { text: g.tagline || '' }),
         el('div', { class: 'kz-slide-tags' }, ...(g.genres || []).slice(0, 3).map((t) => el('span', { text: String(t).replace(/-/g, ' ') }))),
-        el('a', { class: 'kz-btn kz-btn--primary kz-slide-play', href: g.href, text: '▶ Play now' })));
+        el('a', { class: 'kz-btn kz-btn--primary kz-slide-play', href: g.href }, icon('play', 18), ' Play now')));
     const ctl = attachPreview(s, g);
     s.__ctl = ctl;
     const im = s.querySelector('.kz-art img');
@@ -173,10 +174,10 @@ export function mountHero(container, games) {
     });
   };
   [...dots.children].forEach((d, k) => d.addEventListener('click', () => show(k)));
-  const nav = (cls, label, ch, d) => { const b = el('button', { type: 'button', class: 'kz-hero-nav ' + cls, 'aria-label': label, text: ch }); b.addEventListener('click', () => show(i + d)); return b; };
+  const nav = (cls, label, ch, d) => { const b = el('button', { type: 'button', class: 'kz-hero-nav ' + cls, 'aria-label': label }, icon(d < 0 ? 'chevron-left' : 'chevron-right', 22)); b.addEventListener('click', () => show(i + d)); return b; };
   if (slides.length > 1) hero.append(nav('l', 'Previous game', '‹', -1), nav('r', 'Next game', '›', 1));
-  const pauseBtn = el('button', { type: 'button', class: 'kz-hero-pause', 'aria-label': 'Pause slideshow', 'aria-pressed': 'false', text: '❚❚' });
-  pauseBtn.addEventListener('click', () => { held = !held; pauseBtn.textContent = held ? '▶' : '❚❚'; pauseBtn.setAttribute('aria-pressed', String(held)); pauseBtn.setAttribute('aria-label', held ? 'Play slideshow' : 'Pause slideshow'); });
+  const pauseBtn = el('button', { type: 'button', class: 'kz-hero-pause', 'aria-label': 'Pause slideshow', 'aria-pressed': 'false' }, icon('pause', 14));
+  pauseBtn.addEventListener('click', () => { held = !held; pauseBtn.replaceChildren(icon(held ? 'play' : 'pause', 14)); pauseBtn.setAttribute('aria-pressed', String(held)); pauseBtn.setAttribute('aria-label', held ? 'Play slideshow' : 'Pause slideshow'); });
   if (slides.length > 1) hero.append(pauseBtn);
   let sx = null;
   hero.addEventListener('pointerdown', (e) => { sx = e.pointerType === 'touch' ? e.clientX : null; });
