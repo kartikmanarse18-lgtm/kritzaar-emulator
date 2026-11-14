@@ -3,7 +3,7 @@
 <head>
 <!-- Generated pages are made from this file by scripts/build-game-pages.mjs. Do not edit them by hand. -->
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{title}} ({{platformLabel}}, {{year}}): how to play in your browser | KritZaar</title>
 <meta name="description" content="{{description}}">
 <link rel="canonical" href="{{url}}">
@@ -13,38 +13,53 @@
 <meta property="og:url" content="{{url}}">
 <meta property="og:image" content="{{coverUrl}}">
 <link rel="stylesheet" href="/css/emulator-shared.css">
-<link rel="stylesheet" href="/css/catalog.css">
+<link rel="stylesheet" href="/css/shell.css">
+<link rel="stylesheet" href="/css/gamepage.css">
 <script type="application/ld+json">{{jsonld}}</script>
 </head>
-<body style="background:var(--kz-bg,#12121a)">
-<main class="kz-game">
-<p><a href="/games/">All games</a></p>
-<h1>{{title}}</h1>
-<p><span class="kz-badge">{{license}}</span> <span class="kz-badge kz-badge--muted">{{platformLabel}}</span> <span class="kz-badge kz-badge--muted">{{compatLabel}}</span> {{year}} · {{developer}}</p>
-<img class="kz-cover" src="{{cover}}" alt="Cover placeholder for {{title}}" width="320" height="200">
-<p class="kz-credit">Cover: {{coverCredit}}</p>
-<p>{{description}}</p>
-<div class="kz-actions">
-<a class="kz-btn" href="{{officialUrl}}" target="_blank" rel="noopener noreferrer">Get it from {{sourceName}}</a>
-<a class="kz-btn kz-secondary" href="/emulator/index.html?game={{id}}">Play on KritZaar</a>
-</div>
-<section><h2>About the game</h2>
-{{editorialHtml}}
+<body>
+<main class="kz-wrap kz-gp">
+<nav class="kz-gp-crumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/games/">All games</a> / <span>{{title}}</span></nav>
+<section class="kz-gp-hero">
+  <img class="kz-gp-cover" src="{{cover}}" alt="Cover art for {{title}}" width="640" height="360">
+  <div class="kz-gp-head">
+    <h1>{{title}}</h1>
+    <p class="kz-gp-badges"><span class="kz-badge">{{license}}</span> <span class="kz-badge kz-badge--muted">{{platformLabel}}</span> <span class="kz-badge kz-badge--muted">{{compatLabel}}</span></p>
+    <p class="kz-gp-lead">{{description}}</p>
+    <div class="kz-gp-actions">
+      <a class="kz-btn kz-btn--primary kz-gp-play" href="/emulator/index.html?game={{id}}">&#9654; Play on KritZaar</a>
+      <a class="kz-btn" href="{{officialUrl}}" target="_blank" rel="noopener noreferrer">Get it from {{sourceName}}</a>
+    </div>
+  </div>
 </section>
-<section><h2>How to get and play it</h2>
-<ol>
+<div class="kz-gp-grid">
+  <div class="kz-gp-main">
+    <section class="kz-gp-card"><h2>About the game</h2>
+{{editorialHtml}}
+    </section>
+    <section class="kz-gp-card"><h2>How to get and play it</h2>
+<ol class="kz-gp-steps">
 {{instructionsHtml}}
 </ol>
-</section>
-<section><h2>Controls</h2>
-<table><thead><tr><th scope="col">Keys</th><th scope="col">Action</th></tr></thead>
+    </section>
+    <section class="kz-gp-card"><h2>Controls</h2>
+<table class="kz-gp-ctl"><thead><tr><th scope="col">Keys</th><th scope="col">Action</th></tr></thead>
 <tbody>
 {{controlsHtml}}
 </tbody></table>
-</section>
-<aside class="kz-box"><h2>How this works</h2>
-<p>KritZaar does not host game files. You get the game from its official source, drop it into the box on the player page, and it is saved in your own browser and played locally. Your files never leave your device. <a href="/legal/how-it-works.html">Read more</a>.</p>
-</aside>
+    </section>
+  </div>
+  <aside class="kz-gp-side">
+    <div class="kz-gp-card"><h2>Quick facts</h2>
+      <dl class="kz-gp-facts"><dt>Developer</dt><dd>{{developer}}</dd><dt>Year</dt><dd>{{year}}</dd><dt>Platform</dt><dd>{{platformLabel}}</dd><dt>License</dt><dd>{{license}}</dd><dt>Status</dt><dd>{{compatLabel}}</dd></dl>
+      <p class="kz-credit">Cover: {{coverCredit}}</p>
+    </div>
+    <div class="kz-gp-card"><h2>How this works</h2>
+      <p>KritZaar does not host game files. You get the game from its official source, drop it into the player, and it is saved and played locally in your browser. Your files never leave your device. <a href="/legal/how-it-works.html">Learn more</a></p>
+    </div>
+  </aside>
+</div>
 </main>
+<script type="module">import { mountHeader, mountFooter } from '/js/shell.js'; mountHeader('games'); mountFooter();</script>
 </body>
 </html>

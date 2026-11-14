@@ -2,7 +2,7 @@
   "contact": "mailto:CONTACT_EMAIL_HERE",
   "contactLabel": "Advertise on KritZaar",
   "contactNote": "Direct sponsor banners from your own domain. Static image, labelled Sponsored. Reach players while they pick a game.",
-  "showPlaceholders": true,
+  "showPlaceholders": false,
   "_showPlaceholdersNote": "true shows dashed 'Your banner here' boxes while you have no sponsors. Set false before launch to hide empty slots.",
   "slots": {
     "strip": {

@@ -15,9 +15,10 @@
 <link rel="stylesheet" href="/css/hub.css">
 <link rel="stylesheet" href="/css/cards.css">
 <link rel="stylesheet" href="/css/arcade.css">
+<link rel="stylesheet" href="/css/shell.css">
 <style>
   body{margin:0;background:var(--kz-bg,#0f1020);color:var(--kz-text,#f1f0fa);font-family:var(--kz-font,system-ui,sans-serif);line-height:1.5;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-  .kz-cat-page{box-sizing:border-box;max-width:1280px;margin:0 auto;padding:12px 16px}
+  .kz-cat-page{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:12px 16px}
   .kz-cat-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0 14px}
   .kz-cat-brand{font-weight:800;font-size:1.25rem;text-decoration:none;color:var(--kz-text,#f1f0fa)}
   .kz-cat-page h1{margin:6px 0 4px;font-size:1.6rem}
@@ -28,13 +29,11 @@
 <body>
 <a class="kz-skip" href="#h-orig">Skip to games</a>
 <div class="kz-cat-page">
-  <div class="kz-cat-top"><a class="kz-cat-brand" href="/">KritZaar</a><a class="kz-btn kz-secondary" href="/library/">My Games</a></div>
-  <h1>Games</h1>
+    <h1>All games</h1>
   <p class="kz-cat-lead">Play KritZaar's own games with one click, or bring a game you legally own. KritZaar detects the type (DOS, NES, Game Boy, Flash) for you and keeps your saves on this device.</p>
   <main>
-    <div id="kz-hero" hidden></div>
     <section aria-labelledby="h-orig">
-      <h2 id="h-orig">All games</h2>
+      <h2 id="h-orig">Everything on KritZaar</h2>
       <p class="kz-hub-lead">KritZaar Originals, web games and classic PC games. Originals and web games start with one tap.</p>
       <div id="kz-arcade"></div>
     </section>
@@ -51,19 +50,11 @@
   </main>
 </div>
 <noscript><p>The game catalog needs JavaScript to search. You can still open each game page directly.</p></noscript>
-<footer class="kz-catalog-footer">
-  <a href="/library/">My Games</a>
-  <a href="/legal/how-it-works.html">How it works</a>
-  <a href="/legal/terms.html">Terms</a>
-  <a href="/legal/privacy.html">Privacy</a>
-  <a href="/legal/dmca.html">Copyright / DMCA</a>
-</footer>
 <script type="module">
 import { mountCatalogSearch } from '/js/search-ui.js';
-import { mountArcadeHub, pickFeatured } from '/js/arcade.js';
-import { mountHero } from '/js/cards.js';
-const heroEl = document.getElementById('kz-hero');
-pickFeatured(5).then((list) => mountHero(heroEl, list)).catch(() => { heroEl.hidden = true; });
+import { mountArcadeHub } from '/js/arcade.js';
+import { mountHeader, mountFooter } from '/js/shell.js';
+mountHeader('games'); mountFooter();
 mountArcadeHub(document.getElementById('kz-arcade'));
 mountCatalogSearch(document.getElementById('kz-catalog'), {});
 </script>

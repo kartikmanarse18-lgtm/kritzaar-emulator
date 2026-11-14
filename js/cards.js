@@ -7,6 +7,8 @@
 export const asset = (id, file) => `/assets/games/${encodeURIComponent(id)}/${file}`;
 export const hue = (s) => [...String(s)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 360, 7);
 
+import { isFav, toggleFav } from '/js/favs.js';
+
 const el = (tag, props = {}, ...kids) => {
   const n = document.createElement(tag);
   for (const [k, v] of Object.entries(props)) {
@@ -45,24 +47,28 @@ export function art(g, file, fallbackSrc) {
 export function previewVideo(g) {
   const v = el('video', { class: 'kz-pv', muted: '', loop: '', playsinline: '', preload: 'none', 'aria-hidden': 'true', tabindex: '-1' });
   v.muted = true;
-  for (const t of ['webm', 'mp4']) v.append(el('source', { src: asset(g.id, 'preview.' + t), type: 'video/' + t }));
+  if (g.video) {
+    for (const u of [].concat(g.video)) { if (/^https:\/\//.test(u) || u.startsWith('/')) v.append(el('source', { src: u, type: /\.webm(\?|$)/i.test(u) ? 'video/webm' : 'video/mp4' })); }
+  } else for (const t of ['webm', 'mp4']) v.append(el('source', { src: asset(g.id, 'preview.' + t), type: 'video/' + t }));
   return v;
 }
 
 /** Start/stop a preview inside `box` (a card or hero slide). Safe to call repeatedly. */
 export function attachPreview(box, g) {
-  if (!g.assets || !g.preview) return { start() {}, stop() {} };
+  if (!((g.assets && g.preview) || g.video)) return { start() {}, stop() {} };
   let v = null;
   return {
     start() {
       if (v || !previewsAllowed()) return;
       v = previewVideo(g);
       box.querySelector('.kz-art').append(v);
-      v.addEventListener('playing', () => box.classList.add('is-previewing'), { once: true });
+      box.classList.add('is-loading');
+      v.addEventListener('playing', () => { box.classList.remove('is-loading'); box.classList.add('is-previewing'); }, { once: true });
+      v.addEventListener('error', () => box.classList.remove('is-loading'), { once: true });
       v.play().catch(() => {});
     },
     stop() {
-      box.classList.remove('is-previewing');
+      box.classList.remove('is-previewing', 'is-loading');
       if (v) { v.pause(); v.remove(); v = null; }
     }
   };
@@ -95,8 +101,15 @@ export function gameCard(g) {
   const a = el('a', { class: 'kz-pc', href: g.href, 'aria-label': 'Play ' + g.title }, art(g, 'cover.webp', g.cover), info);
   if (g.badge) a.append(el('i', { class: 'kz-pc-badge', text: g.badge }));
   if (g.extra) { g.extra.classList.add('kz-pc-extra'); a.append(g.extra); } // compatibility badge stays visible
+  const heart = el('span', { class: 'kz-fav', role: 'button', tabindex: '0', 'aria-label': 'Add ' + g.title + ' to favorites', text: '♥' });
+  const paint = () => { const on = isFav(g.id); heart.classList.toggle('on', on); heart.setAttribute('aria-pressed', String(on)); };
+  const flip = (e) => { e.preventDefault(); e.stopPropagation(); toggleFav(g.id); paint(); };
+  heart.addEventListener('click', flip);
+  heart.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') flip(e); });
+  paint(); a.append(heart);
   const ctl = attachPreview(a, g);
   a.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') ctl.start(); });
+  a.addEventListener('pointerdown', (e) => { if (e.pointerType === 'touch') ctl.start(); });
   a.addEventListener('pointerleave', ctl.stop);
   a.addEventListener('focus', ctl.start);
   a.addEventListener('blur', ctl.stop);
@@ -130,15 +143,20 @@ export function mountHero(container, games) {
   if (!games.length) { container.hidden = true; return; }
   const hero = el('div', { class: 'kz-hero', role: 'region', 'aria-roledescription': 'carousel', 'aria-label': 'Featured games' });
   const dots = el('div', { class: 'kz-hero-dots' });
-  let i = 0, timer = 0, paused = false;
+  let i = 0, timer = 0, paused = false, held = false;
   const slides = games.map((g, k) => {
     const s = el('div', { class: 'kz-slide', role: 'group', 'aria-roledescription': 'slide', 'aria-label': `${k + 1} of ${games.length}: ${g.title}` },
-      art(g, 'banner.webp', g.cover),
+      art(g, 'banner.webp', g.banner || g.cover),
       el('div', { class: 'kz-slide-cap' },
+        el('span', { class: 'kz-slide-kick', text: g.kicker || '' }),
         el('h2', { text: g.title }), el('p', { text: g.tagline || '' }),
+        el('div', { class: 'kz-slide-tags' }, ...(g.genres || []).slice(0, 3).map((t) => el('span', { text: String(t).replace(/-/g, ' ') }))),
         el('a', { class: 'kz-btn kz-btn--primary kz-slide-play', href: g.href, text: '▶ Play now' })));
     const ctl = attachPreview(s, g);
     s.__ctl = ctl;
+    const im = s.querySelector('.kz-art img');
+    if (im && g.banner) im.addEventListener('error', () => { if (im.getAttribute('src') !== g.cover) im.src = g.cover; });
+    s.addEventListener('pointerenter', (e) => { if (e.pointerType !== 'touch') ctl.start(); });
     dots.append(el('button', { type: 'button', class: 'kz-hero-dot', 'aria-label': 'Show ' + g.title, onclick: null }));
     hero.append(s);
     return s;
@@ -155,12 +173,20 @@ export function mountHero(container, games) {
     });
   };
   [...dots.children].forEach((d, k) => d.addEventListener('click', () => show(k)));
+  const nav = (cls, label, ch, d) => { const b = el('button', { type: 'button', class: 'kz-hero-nav ' + cls, 'aria-label': label, text: ch }); b.addEventListener('click', () => show(i + d)); return b; };
+  if (slides.length > 1) hero.append(nav('l', 'Previous game', '‹', -1), nav('r', 'Next game', '›', 1));
+  const pauseBtn = el('button', { type: 'button', class: 'kz-hero-pause', 'aria-label': 'Pause slideshow', 'aria-pressed': 'false', text: '❚❚' });
+  pauseBtn.addEventListener('click', () => { held = !held; pauseBtn.textContent = held ? '▶' : '❚❚'; pauseBtn.setAttribute('aria-pressed', String(held)); pauseBtn.setAttribute('aria-label', held ? 'Play slideshow' : 'Pause slideshow'); });
+  if (slides.length > 1) hero.append(pauseBtn);
+  let sx = null;
+  hero.addEventListener('pointerdown', (e) => { sx = e.pointerType === 'touch' ? e.clientX : null; });
+  hero.addEventListener('pointerup', (e) => { if (sx != null && Math.abs(e.clientX - sx) > 50) show(i + (e.clientX < sx ? 1 : -1)); sx = null; });
   hero.append(dots);
   container.append(hero);
   container.hidden = false;
   show(0);
   if (slides.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const tick = () => { if (!paused && !document.hidden) show(i + 1); };
+    const tick = () => { if (!paused && !held && !document.hidden) show(i + 1); };
     timer = setInterval(tick, 7000);
     hero.addEventListener('pointerenter', () => { paused = true; });
     hero.addEventListener('pointerleave', () => { paused = false; });
@@ -185,7 +211,7 @@ export function loadWebGames() {
 export function allowedEmbed(url, hosts) {
   try { const u = new URL(url); return u.protocol === 'https:' && hosts.includes(u.hostname); } catch { return false; }
 }
-export const webCardData = (g) => ({ id: g.id, title: g.title, tagline: g.description, genres: g.genres, cover: g.image, assets: false, preview: false,
+export const webCardData = (g) => ({ id: g.id, title: g.title, tagline: g.description, genres: g.genres, cover: g.image, assets: false, preview: false, video: g.video || g.preview || null,
   href: '/play/index.html?g=' + encodeURIComponent(g.id), badge: 'Web game' });
 /** n games for a rail: same genre first, then a stable shuffle so the rails differ per game. */
 export function pickMore(list, n, key = '', genres = []) {

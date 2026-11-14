@@ -1,0 +1,58 @@
+/* Game page layout (CrazyGames-style): big 16:9 player, info + description + controls + shots below, "More games" column on the right. Loaded after player.css. */
+.kzp-ready{max-width:1400px;padding:20px 20px 40px}
+.kzp-rg{display:grid;gap:24px;align-items:start;grid-template-columns:minmax(0,1fr) 300px;grid-template-areas:"main rr"}
+.kzp-rail-r{grid-area:rr;position:sticky;top:76px}.kzp-rail-l{grid-area:rl}
+.kzp-ready-main{grid-area:main;max-width:none;margin:0;gap:18px}
+.kzp-ad-l,.kzp-ad-r{display:none}
+/* player frame */
+.kzp-card{position:relative;border-radius:18px;overflow:hidden;background:#000;box-shadow:0 12px 40px rgba(0,0,0,.45)}
+.kzp-card::before{display:none}
+.kzp-hero{position:relative;aspect-ratio:16/9;max-height:none;width:100%;border-radius:0;display:block}
+.kzp-hero::after{background:radial-gradient(ellipse at center,rgba(8,8,18,.15) 0,rgba(8,8,18,.62) 100%)}
+.kzp-hero-play{position:absolute;inset:0;z-index:3;display:grid;place-items:center}
+.kzp-hero-play .kzp-big{min-width:0;padding:16px 44px;font-size:1.2rem;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.kzp-playbar{position:static}
+/* info block */
+.kzp-info{display:flex;flex-direction:column;gap:10px}
+.kzp-info-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.kzp-info h2{margin:0;font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:800;line-height:1.15}
+.kzp-info .kzp-options{order:0;gap:10px}
+.kzp-info .kzp-hero-tag{display:block;-webkit-line-clamp:unset;margin:0;color:var(--muted);font-size:1.05rem}
+.kzp-info .kzp-tags li{background:rgba(124,92,255,.22);transform:none;border-radius:999px;padding:5px 14px}
+.kzp-info .kzp-tags li span{transform:none}
+.kzp-hint{margin:0}
+/* sections under the player */
+.kzp-about{background:var(--surface,#16172b);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px 22px}
+.kzp-about h3{margin:0 0 10px;font-size:1.1rem;font-weight:800}
+.kzp-about p{margin:0 0 12px;line-height:1.65;color:#dcdaf0;max-width:75ch}.kzp-about p:last-child{margin-bottom:0}
+.kzp-ctl{border-collapse:collapse;width:100%;max-width:640px}
+.kzp-ctl th,.kzp-ctl td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+.kzp-ctl tr:last-child th,.kzp-ctl tr:last-child td{border-bottom:0}
+.kzp-ctl th{font-weight:700;white-space:nowrap;color:#fff;width:42%}.kzp-ctl td{color:#cfcde8}
+.kzp-shots{order:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;overflow:visible}
+.kzp-shots img{height:auto;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;flex:none}
+/* More games column */
+.kzp-rail-r .kz-pc-grid,.kzp-rail-l .kz-pc-grid{grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:979px){
+  .kzp-rg{grid-template-columns:minmax(0,1fr);grid-template-areas:"main" "rl"}
+  .kzp-rail-r{display:none}
+  .kzp-rail-l .kz-pc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));overflow:visible;margin:0;padding:4px 0}
+  .kzp-rail-l .kz-pc-grid>li{flex:none}
+  .kzp-ready{padding:0 0 30px}
+  .kzp-card{border-radius:0}
+  .kzp-ready-main>:not(.kzp-card){margin-inline:14px}
+  .kzp-rail-l{margin-inline:14px}
+}
+@media (max-width:600px){
+  .kzp-hero-play .kzp-big{padding:12px 30px;font-size:1.05rem}
+  .kzp-playbar{position:static}
+  .kzp-about{padding:16px}
+  .kzp-ctl th{width:auto;white-space:normal}
+  .kzp-shots{grid-template-columns:1fr 1fr}
+}
+.kzp-ready-main>*{order:0!important}
+.kzp-rail-r .kz-pc-grid{grid-template-columns:1fr;gap:14px}
+.kzp-rail-r .kz-pc{aspect-ratio:16/9}
+.kzp-screen.kzp-ready{padding-left:0;padding-right:0}@media (min-width:980px){.kzp-screen.kzp-ready{padding-left:20px;padding-right:20px}}
+.kzp-home{display:inline-flex;align-items:center;gap:8px;font-weight:800}.kzp-home img{border-radius:6px}
+@media (max-width:520px){.kzp-home span{display:none}}

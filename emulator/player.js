@@ -3,6 +3,7 @@
 import * as storage from '/js/storage.js';
 import { inspectArchive, buildBundle, applyState, verifyRunnable, WINDOWS_MESSAGE } from '/emulator/bundler.js';
 import { detectFormat } from '/js/detect.js';
+import { shareButton } from '/js/shell.js';
 import { PLATFORMS, ENGINES, ALL_EXTS, platformLabel } from '/js/engines.js';
 import * as report from '/js/report.js';
 import { mountTouchControls, loadPrefs, savePrefs, LAYOUT_INFO } from '/js/touch-controls.js';
@@ -147,11 +148,25 @@ async function lookupCatalog(id) {
   } catch { return null; }
 }
 
+// Description and controls under the player.
+function fillAbout(e) {
+  const d = $('kzp-desc'); d.replaceChildren();
+  const paras = e ? (Array.isArray(e.editorial) && e.editorial.length ? e.editorial : (e.description ? [e.description] : [])) : [];
+  paras.forEach((p) => d.append(el('p', { text: String(p) })));
+  $('kzp-about').hidden = !paras.length;
+  const body = $('kzp-ctl-body'); body.replaceChildren();
+  const ctl = e && Array.isArray(e.controls) ? e.controls : [];
+  ctl.forEach((c) => body.append(el('tr', {}, el('th', { scope: 'row', text: String(c.keys) }), el('td', { text: String(c.action) }))));
+  $('kzp-how').hidden = !ctl.length;
+}
+
 // Poster above the Play button: the game's preview clip (or banner) and screenshots, when KritZaar has them.
 function renderPoster() {
   const e = S.entry, poster = $('kzp-poster'), shots = $('kzp-shots');
   poster.replaceChildren(); shots.replaceChildren(); poster.classList.remove('is-previewing');
-  shots.hidden = true;
+  shots.hidden = true; $('kzp-shots-wrap').hidden = true;
+  fillAbout(e);
+  if (!$('kzp-share')) { const sb = shareButton(e ? e.title : 'KritZaar', 'kzp-btn kzp-btn-ghost'); sb.id = 'kzp-share'; $('kzp-pad-start').before(sb); }
   poster.parentElement.style.setProperty('--h', String(hue(S.id || 'x'))); // generated colour card when there is no artwork
   const tag = $('kzp-ready-tag'); tag.hidden = !(e && e.tagline); tag.textContent = (e && e.tagline) || '';
   const tags = $('kzp-ready-tags'); tags.replaceChildren();
@@ -173,6 +188,7 @@ function renderPoster() {
     shots.append(im);
   }
   shots.hidden = !shots.children.length;
+  $('kzp-shots-wrap').hidden = shots.hidden;
 }
 
 function showReady(title) {
@@ -447,13 +463,13 @@ async function renderExtras() {
   const own = originals.slice(0, 2).map((g) => ({ id: g.id, title: g.title, tagline: g.tagline || g.description, genres: g.genres, cover: g.cover, assets: !!g.assets, preview: !!g.preview,
     href: '/emulator/index.html?game=' + encodeURIComponent(g.id), badge: 'Original' }));
   const genres = (S.entry && S.entry.genres) || [];
-  const cards = own.concat(pickMore(web, 4 - own.length, mine, genres).map(webCardData)).slice(0, 4);
+  const cards = own.concat(pickMore(web, 8 - own.length, mine, genres).map(webCardData)).slice(0, 8);
   railCards = cards;
   layoutRails();
 }
 // Wide screens: two rails beside the game. Narrower screens: one swipeable row.
 let railCards = [];
-const narrowMQ = matchMedia('(max-width: 1099px)');
+const narrowMQ = matchMedia('(max-width: 979px)');
 function layoutRails() {
   const fill = (id, list) => {
     const rail = $(id); rail.replaceChildren();
@@ -461,7 +477,7 @@ function layoutRails() {
     if (list.length) rail.append(el('h3', { class: 'kzp-rail-h', text: 'More games' }), cardGrid(list));
   };
   if (narrowMQ.matches) { fill('kzp-rail-l', railCards); fill('kzp-rail-r', []); }
-  else { fill('kzp-rail-l', railCards.slice(0, 2)); fill('kzp-rail-r', railCards.slice(2, 4)); }
+  else { fill('kzp-rail-r', railCards); fill('kzp-rail-l', []); }
   $('kzp-rg').classList.toggle('no-rails', !railCards.length);
 }
 narrowMQ.addEventListener('change', () => { if (extrasFor) layoutRails(); });
@@ -672,13 +688,14 @@ function toggleFullscreen() {
 
 async function exitToLibrary(e) {
   e.preventDefault();
+  const dest = (e.currentTarget && e.currentTarget.dataset.dest) || '/library/';
   S.exiting = true;
   try {
     if (S.ci && $('kzp-autosave').checked) await saveSlot(AUTOSAVE_SLOT);
   } catch (err) { console.error(err); }
   emit('exit', { reason: 'user' });
   await teardown();
-  location.href = '/library/';
+  location.href = dest;
 }
 
 $('kzp-play').addEventListener('click', () => {
@@ -706,6 +723,7 @@ $('kzp-pause').addEventListener('click', () => (S.paused ? window.KZPlayer.resum
 $('kzp-resume').addEventListener('click', () => window.KZPlayer.resume());
 $('kzp-full').addEventListener('click', toggleFullscreen);
 $('kzp-exit').addEventListener('click', exitToLibrary);
+$('kzp-home').addEventListener('click', exitToLibrary);
 $('kzp-tc-toggle').addEventListener('click', () => setTcOpen(!tcOpen));
 $('kzp-pad').addEventListener('click', () => openSheet());
 $('kzp-help').addEventListener('click', () => openSheet('keys'));

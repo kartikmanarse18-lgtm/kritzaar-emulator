@@ -1,0 +1,22 @@
+/* Classic-game detail page. */
+.kz-gp{max-width:1200px}
+.kz-gp-crumb{font-size:.85rem;color:var(--kz-muted);margin-bottom:14px}.kz-gp-crumb a{color:var(--kz-accent-text);text-decoration:none}
+.kz-gp-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center;background:var(--kz-surface);border:1px solid var(--kz-line);border-radius:22px;padding:20px}
+.kz-gp-cover{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:16px;box-shadow:0 12px 36px rgba(0,0,0,.45)}
+.kz-gp-head h1{margin:0 0 10px;font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.12}
+.kz-gp-badges{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.kz-gp-lead{color:#dcdaf0;line-height:1.6;margin:0 0 18px}
+.kz-gp-actions{display:flex;flex-wrap:wrap;gap:12px}
+.kz-gp-play{background:#ff8a3d!important;color:#1a0f05!important;padding:14px 28px;font-weight:800;font-size:1.05rem;border-radius:999px}
+.kz-gp-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;margin-top:24px;align-items:start}
+.kz-gp-main,.kz-gp-side{display:flex;flex-direction:column;gap:18px}
+.kz-gp-card{background:var(--kz-surface);border:1px solid var(--kz-line);border-radius:16px;padding:20px 22px}
+.kz-gp-card h2{margin:0 0 10px;font-size:1.15rem}
+.kz-gp-card p{line-height:1.65;color:#dcdaf0;margin:0 0 12px;max-width:75ch}.kz-gp-card p:last-child{margin-bottom:0}
+.kz-gp-card a{color:var(--kz-accent-text)}
+.kz-gp-steps{margin:0;padding-left:22px;line-height:1.65;color:#dcdaf0}.kz-gp-steps li{margin-bottom:8px}
+.kz-gp-ctl{border-collapse:collapse;width:100%}.kz-gp-ctl th,.kz-gp-ctl td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--kz-line)}
+.kz-gp-ctl th{color:var(--kz-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em}.kz-gp-ctl td:first-child{font-weight:700;white-space:nowrap}
+.kz-gp-facts{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0}.kz-gp-facts dt{color:var(--kz-muted)}.kz-gp-facts dd{margin:0;font-weight:600;text-align:right}
+@media (max-width:900px){.kz-gp-hero,.kz-gp-grid{grid-template-columns:minmax(0,1fr)}.kz-gp-hero{padding:14px}}
+@media (max-width:600px){.kz-gp-ctl td:first-child{white-space:normal}.kz-gp-actions .kz-btn{flex:1 1 100%;text-align:center}}

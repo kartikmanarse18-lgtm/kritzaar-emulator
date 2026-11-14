@@ -47,7 +47,8 @@ export async function mountArcadeHub(container, { pageSize = 24 } = {}) {
   try { all = await loadAllGames(); } catch { all = []; }
   if (!all.length) { container.replaceChildren(el('p', { class: 'kz-ax-status', text: 'The game list could not be loaded. Check your connection and try again.' })); return; }
 
-  const state = { kind: 'all', genre: '', q: new URLSearchParams(location.search).get('q') || '', shown: 0, list: [] };
+  const _p = new URLSearchParams(location.search);
+  const state = { kind: ['original','web','classic'].includes(_p.get('kind')) ? _p.get('kind') : 'all', genre: _p.get('genre') || '', q: new URLSearchParams(location.search).get('q') || '', shown: 0, list: [] };
   const input = el('input', { type: 'search', class: 'kz-ax-search', placeholder: 'Search ' + all.length + ' games', autocomplete: 'off', 'aria-label': 'Search games', value: state.q });
   const count = el('p', { class: 'kz-ax-count', role: 'status', 'aria-live': 'polite' });
   const kindRow = el('div', { class: 'kz-ax-chips', role: 'group', 'aria-label': 'Game type' });
@@ -107,7 +108,7 @@ export async function mountArcadeHub(container, { pageSize = 24 } = {}) {
   }
   function sync() {
     kindRow.querySelectorAll('.kz-chip').forEach((b) => { const on = b.dataset.kind === state.kind; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
-    buildGenres(); filter(); draw(true);
+    const keep = state.genre; buildGenres(); state.genre = keep; filter(); draw(true);
   }
 
   let t = 0;
@@ -123,11 +124,11 @@ export async function mountArcadeHub(container, { pageSize = 24 } = {}) {
   return { games: all };
 }
 
-/** Featured slider over every kind: marked originals first, then the first web games with good art. */
-export async function pickFeatured(max = 5) {
+/** Hero slider: trending web games (feed order = trending). Falls back to Originals only if there are no web games. */
+export async function pickFeatured(max = 6) {
   const all = await loadAllGames();
-  const feat = all.filter((g) => g.featured);
-  const rest = all.filter((g) => !g.featured && g.kind === 'original');
-  const web = all.filter((g) => g.kind === 'web').slice(0, 3);
-  return feat.concat(rest, web).slice(0, max);
+  const web = all.filter((g) => g.kind === 'web');
+  const pool = web.length ? web : all.filter((g) => g.kind === 'original');
+  const big = (u) => (typeof u === 'string' ? u.replace(/width=\d+/, 'width=1280') : u);
+  return pool.slice(0, max).map((g) => ({ ...g, kicker: web.length ? '🔥 Trending now' : 'Featured', banner: g.kind === 'web' ? big(g.cover) : undefined }));
 }

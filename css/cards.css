@@ -71,3 +71,26 @@ a.kz-ad-free:hover b{text-decoration:underline}
 .kz-ad img{height:100%;object-fit:contain}
 .kz-ad::after{content:"Advertisement";position:absolute;left:8px;top:4px;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);pointer-events:none}
 .kz-ad:not(.is-empty)::after{display:none}
+
+/* --- preview polish: motion on hover for every card, spinner while a clip loads --- */
+.kz-art img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.kz-pc:hover .kz-art img,.kz-pc:focus-visible .kz-art img{transform:scale(1.1)}
+.is-loading .kz-art::after{content:"";position:absolute;right:10px;top:10px;width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;animation:kzspin .7s linear infinite;z-index:3}
+@keyframes kzspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.kz-art img{transition:none}.is-loading .kz-art::after{animation:none}}
+
+/* --- hero extras --- */
+.kz-slide-kick{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#ffb27a;margin-bottom:6px}
+.kz-slide-tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.kz-slide-tags span{background:rgba(255,255,255,.16);border-radius:999px;padding:3px 11px;font-size:.74rem;font-weight:700;text-transform:capitalize}
+.kz-hero-nav{position:absolute;top:calc(50% - 22px);z-index:4;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(8,9,21,.6);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;opacity:0;transition:opacity .2s}
+.kz-hero-nav.l{left:12px}.kz-hero-nav.r{right:12px}
+.kz-hero:hover .kz-hero-nav,.kz-hero-nav:focus-visible{opacity:1}
+.kz-hero-nav:hover{background:var(--kz-accent-strong,#6a46f5)}
+@media (hover:none){.kz-hero-nav{display:none}}
+.kz-hero-pause{position:absolute;z-index:4;left:auto;right:150px;bottom:14px;height:26px;padding:0 10px;border-radius:99px;border:0;background:rgba(8,9,21,.6);color:#fff;font-size:.7rem;cursor:pointer}
+@media (max-width:700px){.kz-hero-pause{display:none}}
+.kz-slide-cap p{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kz-slide-cap h2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (min-width:900px){.kz-slide-cap{left:76px}}
+@media (max-width:700px){.kz-slide-tags{display:none}.kz-slide-cap p{-webkit-line-clamp:2;font-size:.9rem;margin-bottom:10px}.kz-slide-cap h2{font-size:1.35rem}.kz-slide-kick{margin-bottom:2px}}
